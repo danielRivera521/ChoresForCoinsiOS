@@ -15,5 +15,5 @@ pod 'GoogleSignIn'
 pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
-
+pod 'KeychainSwift'
 end

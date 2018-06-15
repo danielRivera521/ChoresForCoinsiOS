@@ -17,6 +17,8 @@
 		65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */; };
 		65EF0C8B20D40C2500DD9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EF0C8A20D40C2500DD9A3F /* Main.storyboard */; };
 		65EF0C8D20D422E500DD9A3F /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */; };
+		65EF0C8F20D436F000DD9A3F /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8E20D436F000DD9A3F /* OverviewViewController.swift */; };
+		65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9020D438A500DD9A3F /* DataService.swift */; };
 		A008FE1F511A9F6E625200E2 /* Pods_ChoresForCoinsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580522261D2D4D5A2E444C0B /* Pods_ChoresForCoinsiOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFirebaseClass.swift; sourceTree = "<group>"; };
 		65EF0C8A20D40C2500DD9A3F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
+		65EF0C8E20D436F000DD9A3F /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		65EF0C9020D438A500DD9A3F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		7D46CFFFE584052B03A1F459 /* Pods-ChoresForCoinsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChoresForCoinsiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -99,6 +103,7 @@
 				65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */,
 				65EF0C8420D408AD00DD9A3F /* ViewController.swift */,
 				65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */,
+				65EF0C8E20D436F000DD9A3F /* OverviewViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */,
+				65EF0C9020D438A500DD9A3F /* DataService.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -212,6 +218,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -224,6 +231,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -277,10 +285,12 @@
 			files = (
 				65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */,
 				65EF0C8D20D422E500DD9A3F /* EmailLoginViewController.swift in Sources */,
+				65EF0C8F20D436F000DD9A3F /* OverviewViewController.swift in Sources */,
 				65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */,
 				65EF0C8520D408AD00DD9A3F /* ViewController.swift in Sources */,
 				65EF0C5E20D3533600DD9A3F /* AppDelegate.swift in Sources */,
 				65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */,
+				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
