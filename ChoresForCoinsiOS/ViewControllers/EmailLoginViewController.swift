@@ -22,8 +22,8 @@ class EmailLoginViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
         
     }
     
@@ -34,8 +34,6 @@ class EmailLoginViewController: UIViewController {
             performSegue(withIdentifier: "overviewVC", sender: nil)
         }
     }
-
-  
 
     func CompleteSignIn(id: String){
         //assigns uid to keychain
@@ -67,6 +65,11 @@ class EmailLoginViewController: UIViewController {
             }
         }
         
+    }
+    
+    // closes this view controller
+    @IBAction func doGoBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func alertBuilder(message: String) {
