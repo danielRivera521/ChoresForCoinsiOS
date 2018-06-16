@@ -27,15 +27,6 @@ class EmailLoginViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        //if the user already signed into application then the uid is used to access the app and bypasses the signin page.
-        let keyChain = DataService().keyChain
-        if keyChain.get("uid") != nil {
-            performSegue(withIdentifier: "overviewVC", sender: nil)
-        }
-    }
-
-  
 
     func CompleteSignIn(id: String){
         //assigns uid to keychain
@@ -66,7 +57,6 @@ class EmailLoginViewController: UIViewController {
                 
             }
         }
-        
     }
     
     func alertBuilder(message: String) {
@@ -100,6 +90,4 @@ class EmailLoginViewController: UIViewController {
         }
         
     }
-
-
 }

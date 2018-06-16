@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FBSDKLoginKit
+import KeychainSwift
 
 class ProtectedViewController: UIViewController {
     
@@ -20,6 +22,8 @@ class ProtectedViewController: UIViewController {
         if let googleUserName = GIDSignIn.sharedInstance().currentUser.profile.name{
             print (googleUserName)
         }
+        
+        print (Auth.auth().currentUser?.uid ?? "no user id")
         
     }
     
