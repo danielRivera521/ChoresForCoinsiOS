@@ -22,9 +22,18 @@ class EmailLoginViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //if the user already signed into application then the uid is used to access the app and bypasses the signin page.
+        let keyChain = DataService().keyChain
+        if keyChain.get("uid") != nil {
+            performSegue(withIdentifier: "overviewVC", sender: nil)
+        }
+
     }
     
 
@@ -32,6 +41,9 @@ class EmailLoginViewController: UIViewController {
         //assigns uid to keychain
         let keyChain = DataService().keyChain
         keyChain.set(id, forKey: "uid")
+
+    
+=======
     }
     
     //Code signin Button
@@ -57,10 +69,47 @@ class EmailLoginViewController: UIViewController {
                 
             }
         }
+        
+    }
+    
+    // closes this view controller
+    @IBAction func doGoBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func alertBuilder(message: String) {
 
+        //create the alert controller
+        let alertController = UIAlertController(title: "Login Error", message: message, preferredStyle: .alert)
+        
+        //create the alert action
+        let okAlert = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
+            
+            NSLog("OK Pressed")
+            
+        }
+        //add the action
+        alertController.addAction(okAlert)
+        
+        //show the alert
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    //go to homescreen
+    func gotoRootViewController(){
+        
+        if self.presentingViewController != nil {
+            self.dismiss(animated: false) {
+                self.navigationController?.popToRootViewController(animated: true)
+                
+            }
+        } else {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        
+    }
+
+    func alertBuilder(message: String) {
         //create the alert controller
         let alertController = UIAlertController(title: "Login Error", message: message, preferredStyle: .alert)
         
