@@ -16,20 +16,23 @@ import FBSDKLoginKit
 import KeychainSwift
 
 
-class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
+class ViewController: UIViewController, GIDSignInUIDelegate { //, FBSDKLoginButtonDelegate
     
     var databaseRef: DatabaseReference!
     @IBOutlet weak var facebookLogin: FBSDKLoginButton!
     
     var currentUser: String?
+    var overviewVC: OverviewViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         //sets facebook button delegate
+
         facebookLogin.delegate = self
         facebookLogin.readPermissions = ["email"]
+
         
         //sets the database reference to the 'user' child segment
         databaseRef = Database.database().reference().child("user")
@@ -70,7 +73,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         GIDSignIn.sharedInstance().signIn()
         CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
     }
-    
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
@@ -197,4 +199,10 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         }
         
     }
+
+    @IBAction func toTabBarController(_ sender: UIButton) {
+        // dismiss back to tab bar controller
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
+    }
+    
 }

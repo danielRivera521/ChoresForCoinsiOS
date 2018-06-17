@@ -10,6 +10,8 @@ import UIKit
 
 class ForgotPasswordEnterCodeViewController: UIViewController {
 
+    @IBOutlet weak var codeTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,5 +26,10 @@ class ForgotPasswordEnterCodeViewController: UIViewController {
     
     @IBAction func doGoBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func toOverview(_ sender: UIButton) {
+        // dismiss back to tab bar controller
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
 }
