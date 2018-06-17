@@ -21,6 +21,8 @@
 		65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9220D4D49100DD9A3F /* UserModel.swift */; };
 		A008FE1F511A9F6E625200E2 /* Pods_ChoresForCoinsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580522261D2D4D5A2E444C0B /* Pods_ChoresForCoinsiOS.framework */; };
 		B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */; };
+		B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */; };
+		B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8020D5E687008C7376 /* SettingsViewController.swift */; };
 		B0CC652520D4FAD600E86D41 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
@@ -52,6 +54,8 @@
 		65EF0C9220D4D49100DD9A3F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		7D46CFFFE584052B03A1F459 /* Pods-ChoresForCoinsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChoresForCoinsiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreListViewController.swift; sourceTree = "<group>"; };
+		B0004B8020D5E687008C7376 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				B0CC653A20D525AF00E86D41 /* ChoreEditViewController.swift */,
 				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
 				B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */,
+				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
+				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -318,8 +324,10 @@
 			files = (
 				65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */,
 				B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */,
+				B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
 				65EF0C8D20D422E500DD9A3F /* EmailLoginViewController.swift in Sources */,
+				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
 				B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */,
 				65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */,

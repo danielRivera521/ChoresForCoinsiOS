@@ -15,7 +15,7 @@
         <!--Chore List-->
         <scene sceneID="Z47-gj-Ftc">
             <objects>
-                <viewController id="0aj-d2-s3B" sceneMemberID="viewController">
+                <viewController id="0aj-d2-s3B" customClass="ChoreListViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MmR-Ow-AS6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -478,6 +478,9 @@
                                 <state key="normal" title="Tap to add image">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeChorePicture:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="i0r-4s-Xwh"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftx-ku-Nrh" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="312" width="375" height="48.666666666666686"/>
@@ -554,6 +557,9 @@
                                         <state key="normal" title="SAVE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="saveChore:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="txF-2e-t88"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -798,6 +804,16 @@
                         <viewLayoutGuide key="safeArea" id="zIt-le-Adg"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_S" id="0ie-jw-VkK"/>
+                    <connections>
+                        <outlet property="choreDescriptionTextView" destination="5P0-uy-DTh" id="D48-gA-jxv"/>
+                        <outlet property="choreImageUIButton" destination="E3X-nZ-8sP" id="yMP-zc-736"/>
+                        <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
+                        <outlet property="choreNoteTextView" destination="Atq-bz-GnK" id="KRg-mA-zM4"/>
+                        <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
+                        <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
+                        <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
+                        <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfG-Hm-pjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -806,7 +822,7 @@
         <!--Settings-->
         <scene sceneID="Kna-n0-0xf">
             <objects>
-                <viewController id="mZr-ny-ubW" sceneMemberID="viewController">
+                <viewController id="mZr-ny-ubW" customClass="SettingsViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jc6-mS-8Ng">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -869,6 +885,9 @@
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-Ni-72u">
                                         <rect key="frame" x="302" y="17.666666666666686" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="toggleBonusDay:" destination="mZr-ny-ubW" eventType="valueChanged" id="aSb-a8-beP"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Day:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vww-Fn-Ya1">
                                         <rect key="frame" x="15" y="22.333333333333343" width="86.666666666666671" height="20.333333333333329"/>
@@ -956,19 +975,19 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QX8-QA-bRk">
                                 <rect key="frame" x="0.0" y="295.66666666666674" width="375" height="433.33333333333326"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NpG-mw-sSy">
+                                    <imageView userInteractionEnabled="NO" tag="1" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NpG-mw-sSy">
                                         <rect key="frame" x="19" y="28.666666666666629" width="337.66666666666669" height="64.666666666666671"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Exs-Z0-xhM">
+                                    <imageView userInteractionEnabled="NO" tag="2" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Exs-Z0-xhM">
                                         <rect key="frame" x="19" y="112.66666666666663" width="337.66666666666669" height="65"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GwJ-fg-NQe">
+                                    <imageView userInteractionEnabled="NO" tag="3" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GwJ-fg-NQe">
                                         <rect key="frame" x="19" y="195.66666666666663" width="337" height="64.333333333333314"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SXb-ap-BjO">
+                                    <imageView userInteractionEnabled="NO" tag="4" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SXb-ap-BjO">
                                         <rect key="frame" x="19" y="276.66666666666669" width="337.66666666666669" height="64.666666666666686"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-vv-Esf">
+                                    <imageView userInteractionEnabled="NO" tag="5" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-vv-Esf">
                                         <rect key="frame" x="20" y="360.66666666666669" width="337" height="65.333333333333314"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Background:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYe-5c-8pj">
@@ -1114,6 +1133,11 @@
                         <viewLayoutGuide key="safeArea" id="p7V-lx-juA"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
+                    <connections>
+                        <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
+                        <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLf-ez-SKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3280,8 +3304,8 @@
     <inferredMetricsTieBreakers>
         <segue reference="OOd-9u-YyK"/>
         <segue reference="bm7-WQ-ArU"/>
-        <segue reference="yPT-9L-x6d"/>
+        <segue reference="JVK-OU-Nn4"/>
         <segue reference="2fd-cb-KRq"/>
-        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="OXB-qQ-rBy"/>
     </inferredMetricsTieBreakers>
 </document>
