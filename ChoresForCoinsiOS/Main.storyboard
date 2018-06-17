@@ -3396,7 +3396,6 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-
         <segue reference="OOd-9u-YyK"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="hWK-av-BXc"/>
