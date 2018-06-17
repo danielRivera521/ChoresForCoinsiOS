@@ -29,15 +29,22 @@ class SettingsViewController: ViewController {
 
     @IBAction func toggleBonusDay(_ sender: UISwitch) {
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func selectBackground(_ sender: UIButton) {
+        // switch to determine which button was selected via tag
+        switch sender.tag {
+        case 1:
+            print() // can delete this. it's just a placeholder
+        case 2:
+            print() // can delete this. it's just a placeholder
+        case 3:
+            print() // can delete this. it's just a placeholder
+        case 4:
+            print() // can delete this. it's just a placeholder
+        case 5:
+            print() // can delete this. it's just a placeholder
+        default:
+            break
+        }
     }
-    */
-
 }

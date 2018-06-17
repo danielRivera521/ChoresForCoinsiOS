@@ -20,6 +20,9 @@ class ProfilePictureSelectViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func doGoBack(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func selectProfilePic(_ sender: UIButton) {
         // send selected pic back to previous page

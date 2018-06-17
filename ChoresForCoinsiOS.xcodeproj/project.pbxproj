@@ -23,6 +23,7 @@
 		B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */; };
 		B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */; };
 		B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8020D5E687008C7376 /* SettingsViewController.swift */; };
+		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
 		B0CC652520D4FAD600E86D41 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
@@ -56,6 +57,7 @@
 		B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
 		B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreListViewController.swift; sourceTree = "<group>"; };
 		B0004B8020D5E687008C7376 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
 		B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */,
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
 				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
+				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */,
 				B0CC652520D4FAD600E86D41 /* ForgotPasswordViewController.swift in Sources */,
 				B0CC653520D50D4B00E86D41 /* OverviewViewController.swift in Sources */,
+				B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */,
 				B0CC653120D5038700E86D41 /* ProfilePictureSelectViewController.swift in Sources */,
 				65EF0C5E20D3533600DD9A3F /* AppDelegate.swift in Sources */,
 				65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */,
