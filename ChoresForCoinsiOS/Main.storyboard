@@ -331,7 +331,7 @@
         <!--Overview-->
         <scene sceneID="IPR-fw-6YR">
             <objects>
-                <viewController id="Y1B-Nd-lxC" customClass="OverviewViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="overviewVC" id="Y1B-Nd-lxC" customClass="OverviewViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8sQ-Md-49K">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1186,7 +1186,7 @@
                                             <action selector="googleLoginBtn:" destination="cdO-Eu-gj5" eventType="touchUpInside" id="dh4-wy-Iia"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGK-YH-XWN">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGK-YH-XWN" customClass="FBSDKLoginButton">
                                         <rect key="frame" x="84.666666666666671" y="115.66666666666669" width="206.33333333333331" height="54"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <state key="normal" title=" " image="btnFacebook_L">
@@ -1285,7 +1285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j2o-0w-M2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-855.20000000000005" y="-1222.0389805097452"/>
+            <point key="canvasLocation" x="-855.20000000000005" y="-1222.1674876847292"/>
         </scene>
         <!--Email Login View Controller-->
         <scene sceneID="UZM-SH-LE1">
@@ -3396,6 +3396,7 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
+
         <segue reference="OOd-9u-YyK"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="hWK-av-BXc"/>
