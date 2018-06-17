@@ -23,7 +23,16 @@ class SignUpParentChildViewController: UIViewController {
     }
     
     @IBAction func doGoToCreateAccount(_ sender: UIButton) {
-        performSegue(withIdentifier: "createAccountSegue", sender: sender)
+        switch sender.tag {
+        case 1:
+            // Code for handling parent
+            performSegue(withIdentifier: "createAccountSegue", sender: sender)
+        case 2:
+            // Code for handling child
+            performSegue(withIdentifier: "createAccountSegue", sender: sender)
+        default:
+            break
+        }
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {

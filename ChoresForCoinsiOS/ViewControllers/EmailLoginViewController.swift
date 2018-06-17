@@ -43,7 +43,7 @@ class EmailLoginViewController: UIViewController {
         keyChain.set(id, forKey: "uid")
 
     
-=======
+//=======
     }
     
     //Code signin Button
@@ -79,37 +79,6 @@ class EmailLoginViewController: UIViewController {
     
     func alertBuilder(message: String) {
 
-        //create the alert controller
-        let alertController = UIAlertController(title: "Login Error", message: message, preferredStyle: .alert)
-        
-        //create the alert action
-        let okAlert = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
-            
-            NSLog("OK Pressed")
-            
-        }
-        //add the action
-        alertController.addAction(okAlert)
-        
-        //show the alert
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    //go to homescreen
-    func gotoRootViewController(){
-        
-        if self.presentingViewController != nil {
-            self.dismiss(animated: false) {
-                self.navigationController?.popToRootViewController(animated: true)
-                
-            }
-        } else {
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        
-    }
-
-    func alertBuilder(message: String) {
         //create the alert controller
         let alertController = UIAlertController(title: "Login Error", message: message, preferredStyle: .alert)
         

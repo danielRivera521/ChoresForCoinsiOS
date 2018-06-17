@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cdO-Eu-gj5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vEf-KN-FAV">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,7 +15,7 @@
         <!--Chore List-->
         <scene sceneID="Z47-gj-Ftc">
             <objects>
-                <viewController id="0aj-d2-s3B" sceneMemberID="viewController">
+                <viewController id="0aj-d2-s3B" customClass="ChoreListViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MmR-Ow-AS6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -124,10 +124,10 @@
             </objects>
             <point key="canvasLocation" x="-1273" y="975"/>
         </scene>
-        <!--View Controller-->
+        <!--Profile Edit View Controller-->
         <scene sceneID="hAc-kx-8hd">
             <objects>
-                <viewController id="QRy-ch-Cyl" sceneMemberID="viewController">
+                <viewController id="QRy-ch-Cyl" customClass="ProfileEditViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jGO-P4-ICA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -135,6 +135,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAr-jW-aLg">
                                 <rect key="frame" x="8" y="44" width="48" height="30"/>
                                 <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <action selector="toGoBack:" destination="QRy-ch-Cyl" eventType="touchUpInside" id="bam-7x-pNi"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsM-2G-TSf" userLabel="UpdateProfilePicView">
                                 <rect key="frame" x="0.0" y="74" width="375" height="308.66666666666669"/>
@@ -145,6 +148,9 @@
                                             <constraint firstAttribute="width" secondItem="XP8-Hg-WXt" secondAttribute="height" multiplier="1:1" id="SXo-8s-K6m"/>
                                         </constraints>
                                         <state key="normal" image="profilePic5"/>
+                                        <connections>
+                                            <segue destination="ABl-CU-dru" kind="presentation" id="bm7-WQ-ArU"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -225,6 +231,9 @@
                                         <state key="normal" title=" SAVE" backgroundImage="btnOrange_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="save:" destination="QRy-ch-Cyl" eventType="touchUpInside" id="Jd3-yg-7tN"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -243,6 +252,9 @@
                                         <state key="normal" title="LOGOUT">
                                             <color key="titleColor" red="0.26051741839999998" green="0.2605243921" blue="0.260520637" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="cdO-Eu-gj5" kind="presentation" id="1X4-2l-WcZ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -306,6 +318,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ns7-I5-yH5"/>
                     </view>
+                    <connections>
+                        <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="bhf-bt-Cez"/>
+                        <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
+                        <outlet property="usernameTextField" destination="GxR-fO-VoJ" id="ato-8r-wSn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1xw-xL-33h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -418,6 +435,9 @@
                     <tabBarItem key="tabBarItem" title="Overview" image="iconOverview_S" id="Fc2-xT-rJ3">
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
+                    <connections>
+                        <segue destination="cdO-Eu-gj5" kind="presentation" identifier="toAuthSegue" id="2fd-cb-KRq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iir-ad-pzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -458,6 +478,9 @@
                                 <state key="normal" title="Tap to add image">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeChorePicture:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="i0r-4s-Xwh"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftx-ku-Nrh" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="312" width="375" height="48.666666666666686"/>
@@ -534,6 +557,9 @@
                                         <state key="normal" title="SAVE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="saveChore:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="txF-2e-t88"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -778,6 +804,16 @@
                         <viewLayoutGuide key="safeArea" id="zIt-le-Adg"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_S" id="0ie-jw-VkK"/>
+                    <connections>
+                        <outlet property="choreDescriptionTextView" destination="5P0-uy-DTh" id="D48-gA-jxv"/>
+                        <outlet property="choreImageUIButton" destination="E3X-nZ-8sP" id="yMP-zc-736"/>
+                        <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
+                        <outlet property="choreNoteTextView" destination="Atq-bz-GnK" id="KRg-mA-zM4"/>
+                        <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
+                        <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
+                        <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
+                        <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfG-Hm-pjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -786,7 +822,7 @@
         <!--Settings-->
         <scene sceneID="Kna-n0-0xf">
             <objects>
-                <viewController id="mZr-ny-ubW" sceneMemberID="viewController">
+                <viewController id="mZr-ny-ubW" customClass="SettingsViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jc6-mS-8Ng">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -849,6 +885,9 @@
                                 <subviews>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Wr-Ni-72u">
                                         <rect key="frame" x="302" y="17.666666666666686" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="toggleBonusDay:" destination="mZr-ny-ubW" eventType="valueChanged" id="aSb-a8-beP"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bonus Day:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vww-Fn-Ya1">
                                         <rect key="frame" x="15" y="22.333333333333343" width="86.666666666666671" height="20.333333333333329"/>
@@ -936,21 +975,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QX8-QA-bRk">
                                 <rect key="frame" x="0.0" y="295.66666666666674" width="375" height="433.33333333333326"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NpG-mw-sSy">
-                                        <rect key="frame" x="19" y="28.666666666666629" width="337.66666666666669" height="64.666666666666671"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Exs-Z0-xhM">
-                                        <rect key="frame" x="19" y="112.66666666666663" width="337.66666666666669" height="65"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GwJ-fg-NQe">
-                                        <rect key="frame" x="19" y="195.66666666666663" width="337" height="64.333333333333314"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SXb-ap-BjO">
-                                        <rect key="frame" x="19" y="276.66666666666669" width="337.66666666666669" height="64.666666666666686"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AVw-vv-Esf">
-                                        <rect key="frame" x="20" y="360.66666666666669" width="337" height="65.333333333333314"/>
-                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Background:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYe-5c-8pj">
                                         <rect key="frame" x="15" y="0.0" width="96.666666666666671" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -960,33 +984,56 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         </variation>
                                     </label>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uFd-uJ-5wa">
+                                        <rect key="frame" x="19" y="195" width="337.33333333333331" height="43.333333333333343"/>
+                                        <state key="normal" backgroundImage="logo_L"/>
+                                    </button>
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Swc-cu-kWe">
+                                        <rect key="frame" x="18.333333333333343" y="273.99999999999994" width="337.33333333333326" height="43.333333333333314"/>
+                                        <state key="normal" backgroundImage="logo_L"/>
+                                    </button>
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRZ-tG-oLd">
+                                        <rect key="frame" x="26.333333333333343" y="364.99999999999994" width="337.33333333333326" height="43.333333333333314"/>
+                                        <state key="normal" backgroundImage="logo_L"/>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Op-zc-pkM">
+                                        <rect key="frame" x="19" y="111.99999999999999" width="337.33333333333331" height="43.333333333333329"/>
+                                        <state key="normal" backgroundImage="logo_L"/>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGY-Mv-jcJ">
+                                        <rect key="frame" x="19" y="31.333333333333318" width="337.33333333333331" height="43.333333333333343"/>
+                                        <state key="normal" backgroundImage="logo_L"/>
+                                        <connections>
+                                            <action selector="selectBackground:" destination="mZr-ny-ubW" eventType="touchUpInside" id="Yhj-NY-fbb"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="Exs-Z0-xhM" firstAttribute="height" secondItem="GwJ-fg-NQe" secondAttribute="height" id="1m8-iy-iAS"/>
-                                    <constraint firstItem="SXb-ap-BjO" firstAttribute="top" secondItem="GwJ-fg-NQe" secondAttribute="bottom" multiplier="1.065" id="3f1-Ct-d3z"/>
-                                    <constraint firstItem="AVw-vv-Esf" firstAttribute="centerX" secondItem="SXb-ap-BjO" secondAttribute="centerX" id="4Wg-kx-QRX"/>
-                                    <constraint firstItem="GwJ-fg-NQe" firstAttribute="width" secondItem="QX8-QA-bRk" secondAttribute="width" multiplier="0.9" id="8K1-Ls-89F"/>
+                                    <constraint firstItem="oGY-Mv-jcJ" firstAttribute="height" secondItem="8Op-zc-pkM" secondAttribute="height" id="2sh-S3-nma"/>
+                                    <constraint firstItem="YRZ-tG-oLd" firstAttribute="top" secondItem="Swc-cu-kWe" secondAttribute="bottom" multiplier="1.15" id="4fa-pM-p4H"/>
+                                    <constraint firstItem="8Op-zc-pkM" firstAttribute="centerX" secondItem="uFd-uJ-5wa" secondAttribute="centerX" id="5wF-2V-xRM"/>
+                                    <constraint firstItem="uFd-uJ-5wa" firstAttribute="centerX" secondItem="QX8-QA-bRk" secondAttribute="centerX" id="7WQ-TG-u5L"/>
                                     <constraint firstItem="kYe-5c-8pj" firstAttribute="top" secondItem="QX8-QA-bRk" secondAttribute="top" id="9DE-6v-FWw"/>
-                                    <constraint firstItem="AVw-vv-Esf" firstAttribute="width" secondItem="SXb-ap-BjO" secondAttribute="width" id="DdX-Ds-dgS"/>
-                                    <constraint firstItem="AVw-vv-Esf" firstAttribute="height" secondItem="SXb-ap-BjO" secondAttribute="height" id="Gmr-yM-QqZ"/>
-                                    <constraint firstItem="SXb-ap-BjO" firstAttribute="height" secondItem="GwJ-fg-NQe" secondAttribute="height" id="Il6-HO-8R2"/>
+                                    <constraint firstItem="Swc-cu-kWe" firstAttribute="top" secondItem="uFd-uJ-5wa" secondAttribute="bottom" multiplier="1.15" id="9Ox-Zb-1j8"/>
+                                    <constraint firstItem="Swc-cu-kWe" firstAttribute="centerX" secondItem="uFd-uJ-5wa" secondAttribute="centerX" id="9s9-eq-fLY"/>
+                                    <constraint firstItem="8Op-zc-pkM" firstAttribute="top" secondItem="oGY-Mv-jcJ" secondAttribute="bottom" multiplier="1.5" id="Ccd-FT-ZO3"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kYe-5c-8pj" secondAttribute="trailing" constant="20" symbolic="YES" id="Ivq-6v-Kdc"/>
                                     <constraint firstItem="kYe-5c-8pj" firstAttribute="leading" secondItem="QX8-QA-bRk" secondAttribute="leading" constant="15" id="La3-ob-3GB"/>
-                                    <constraint firstItem="NpG-mw-sSy" firstAttribute="width" secondItem="Exs-Z0-xhM" secondAttribute="width" id="NVC-8x-RwK"/>
-                                    <constraint firstItem="GwJ-fg-NQe" firstAttribute="centerY" secondItem="QX8-QA-bRk" secondAttribute="centerY" multiplier="1.05" id="Sxz-PJ-UgT"/>
-                                    <constraint firstItem="SXb-ap-BjO" firstAttribute="centerX" secondItem="GwJ-fg-NQe" secondAttribute="centerX" id="Tk1-9j-Nwo"/>
-                                    <constraint firstItem="GwJ-fg-NQe" firstAttribute="top" secondItem="Exs-Z0-xhM" secondAttribute="bottom" multiplier="1.1" id="Vl5-6d-XKT"/>
-                                    <constraint firstItem="GwJ-fg-NQe" firstAttribute="height" secondItem="QX8-QA-bRk" secondAttribute="height" multiplier="0.15" id="Zze-dL-V6K"/>
-                                    <constraint firstItem="Exs-Z0-xhM" firstAttribute="top" secondItem="NpG-mw-sSy" secondAttribute="bottom" multiplier="1.2" id="axs-v8-Rfs"/>
-                                    <constraint firstItem="Exs-Z0-xhM" firstAttribute="centerX" secondItem="GwJ-fg-NQe" secondAttribute="centerX" id="hQo-rT-tH8"/>
+                                    <constraint firstItem="YRZ-tG-oLd" firstAttribute="width" secondItem="Swc-cu-kWe" secondAttribute="width" id="Mvm-s0-C3Y"/>
+                                    <constraint firstItem="YRZ-tG-oLd" firstAttribute="height" secondItem="Swc-cu-kWe" secondAttribute="height" id="OgU-hz-pqR"/>
+                                    <constraint firstItem="oGY-Mv-jcJ" firstAttribute="width" secondItem="8Op-zc-pkM" secondAttribute="width" id="S9H-C0-4FH"/>
+                                    <constraint firstItem="YRZ-tG-oLd" firstAttribute="centerX" secondItem="Swc-cu-kWe" secondAttribute="centerX" constant="8" id="SdY-P4-ZWI"/>
+                                    <constraint firstItem="uFd-uJ-5wa" firstAttribute="width" secondItem="QX8-QA-bRk" secondAttribute="width" multiplier="0.9" id="VYY-Mk-LXX"/>
+                                    <constraint firstItem="Swc-cu-kWe" firstAttribute="height" secondItem="uFd-uJ-5wa" secondAttribute="height" id="XON-Rg-fIH"/>
+                                    <constraint firstItem="uFd-uJ-5wa" firstAttribute="height" secondItem="QX8-QA-bRk" secondAttribute="height" multiplier="0.1" id="fHh-3N-F65"/>
+                                    <constraint firstItem="uFd-uJ-5wa" firstAttribute="top" secondItem="8Op-zc-pkM" secondAttribute="bottom" multiplier="1.25" id="fir-MM-y1c"/>
+                                    <constraint firstItem="oGY-Mv-jcJ" firstAttribute="centerX" secondItem="8Op-zc-pkM" secondAttribute="centerX" id="gAZ-Tn-Sdi"/>
                                     <constraint firstItem="kYe-5c-8pj" firstAttribute="leading" secondItem="QX8-QA-bRk" secondAttribute="leading" constant="30" id="iDo-aE-2iN"/>
-                                    <constraint firstItem="GwJ-fg-NQe" firstAttribute="centerX" secondItem="QX8-QA-bRk" secondAttribute="centerX" id="jg8-Ss-AiT"/>
-                                    <constraint firstItem="NpG-mw-sSy" firstAttribute="centerX" secondItem="Exs-Z0-xhM" secondAttribute="centerX" id="pXU-tl-cOl"/>
-                                    <constraint firstItem="NpG-mw-sSy" firstAttribute="height" secondItem="Exs-Z0-xhM" secondAttribute="height" id="pZJ-b3-SAA"/>
-                                    <constraint firstItem="Exs-Z0-xhM" firstAttribute="width" secondItem="GwJ-fg-NQe" secondAttribute="width" id="tI9-gs-dXK"/>
-                                    <constraint firstItem="AVw-vv-Esf" firstAttribute="top" secondItem="SXb-ap-BjO" secondAttribute="bottom" multiplier="1.055" id="uyR-Md-ggI"/>
-                                    <constraint firstItem="SXb-ap-BjO" firstAttribute="width" secondItem="GwJ-fg-NQe" secondAttribute="width" id="wwK-cV-nuo"/>
+                                    <constraint firstItem="uFd-uJ-5wa" firstAttribute="centerY" secondItem="QX8-QA-bRk" secondAttribute="centerY" id="iSH-D0-IQU"/>
+                                    <constraint firstItem="Swc-cu-kWe" firstAttribute="width" secondItem="uFd-uJ-5wa" secondAttribute="width" id="nT6-oY-6yv"/>
+                                    <constraint firstItem="8Op-zc-pkM" firstAttribute="height" secondItem="uFd-uJ-5wa" secondAttribute="height" id="qY9-Ca-mqz"/>
+                                    <constraint firstItem="8Op-zc-pkM" firstAttribute="width" secondItem="uFd-uJ-5wa" secondAttribute="width" id="vTN-Iz-8zq"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1094,10 +1141,15 @@
                         <viewLayoutGuide key="safeArea" id="p7V-lx-juA"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
+                    <connections>
+                        <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
+                        <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLf-ez-SKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="334" y="975"/>
+            <point key="canvasLocation" x="333.60000000000002" y="974.6305418719212"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Ijg-hC-lO9">
@@ -1192,6 +1244,7 @@
                                         <rect key="frame" x="307.66666666666669" y="0.0" width="33" height="43.666666666666664"/>
                                         <state key="normal" title="SKIP"/>
                                         <connections>
+                                            <action selector="toTabBarController:" destination="cdO-Eu-gj5" eventType="touchUpInside" id="ahY-zy-MiP"/>
                                             <segue destination="vEf-KN-FAV" kind="show" id="A1z-JA-GPm"/>
                                         </connections>
                                     </button>
@@ -1328,7 +1381,6 @@
                                         </state>
                                         <connections>
                                             <action selector="signInBtn:" destination="Ull-LK-yR2" eventType="touchUpInside" id="3GK-59-N6W"/>
-                                            <segue destination="vEf-KN-FAV" kind="presentation" id="2Gk-b2-F02"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1496,6 +1548,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ge4-pN-a7L"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="C5i-Tq-IIu" id="jBV-5Z-9sC"/>
+                        <outlet property="usernameTextField" destination="tgy-fS-nfd" id="fzI-UB-7yg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ktL-MI-jAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1576,6 +1632,7 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
+                                            <action selector="toOverview:" destination="S8C-kv-QrZ" eventType="touchUpInside" id="kft-AA-e9Z"/>
                                             <segue destination="vEf-KN-FAV" kind="presentation" id="Gdh-Gf-jTN"/>
                                         </connections>
                                     </button>
@@ -1609,15 +1666,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hdZ-3U-dMR"/>
                     </view>
+                    <connections>
+                        <outlet property="codeTextField" destination="nSn-eh-QUP" id="1y8-Cb-cSy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Evk-yk-YdY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1220" y="-1222.0389805097452"/>
         </scene>
-        <!--View Controller-->
+        <!--Add Remove Coins View Controller-->
         <scene sceneID="OWG-0K-wnY">
             <objects>
-                <viewController id="QtQ-q5-P19" sceneMemberID="viewController">
+                <viewController id="QtQ-q5-P19" customClass="AddRemoveCoinsViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Yd-Og-B5I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1690,6 +1750,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sId-TV-pES">
                                         <rect key="frame" x="15" y="52.666666666666671" width="58" height="58"/>
                                         <state key="normal" backgroundImage="btnRemoveCoin"/>
+                                        <connections>
+                                            <action selector="removeOneCoin:" destination="QtQ-q5-P19" eventType="touchUpInside" id="fks-4k-hFK"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="500" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tpv-GN-H9H">
                                         <rect key="frame" x="133.33333333333334" y="46.000000000000007" width="108.66666666666666" height="71.666666666666686"/>
@@ -1703,6 +1766,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BB1-53-g0D">
                                         <rect key="frame" x="302" y="52.666666666666671" width="58" height="58"/>
                                         <state key="normal" backgroundImage="btnAddCoin"/>
+                                        <connections>
+                                            <action selector="addOneCoin:" destination="QtQ-q5-P19" eventType="touchUpInside" id="M2H-qu-s9R"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1737,56 +1803,92 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phd-D1-P7n" userLabel="CalcButtonsView">
                                 <rect key="frame" x="0.0" y="262.66666666666663" width="375" height="393.66666666666663"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VQY-s4-MCe" userLabel="7">
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VQY-s4-MCe" userLabel="7">
                                         <rect key="frame" x="56.333333333333343" y="24.333333333333314" width="67" height="66.333333333333329"/>
                                         <state key="normal" backgroundImage="btn7"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="XYY-kT-uYY"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZG-hP-VJc" userLabel="8">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZG-hP-VJc" userLabel="8">
                                         <rect key="frame" x="154.33333333333334" y="24.333333333333314" width="67.333333333333343" height="66.333333333333329"/>
                                         <state key="normal" backgroundImage="btn8"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="EAL-Tq-HOD"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ey-ed-13c" userLabel="9">
+                                    <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8ey-ed-13c" userLabel="9">
                                         <rect key="frame" x="254.66666666666663" y="24.333333333333314" width="68" height="66.333333333333329"/>
                                         <state key="normal" backgroundImage="btn9"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="LLl-O0-sU9"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtG-AW-a1B" userLabel="4">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wtG-AW-a1B" userLabel="4">
                                         <rect key="frame" x="56.333333333333343" y="114.33333333333331" width="67" height="67.666666666666686"/>
                                         <state key="normal" backgroundImage="btn4"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="UF3-1a-1NG"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzL-tn-OYW" userLabel="5">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AzL-tn-OYW" userLabel="5">
                                         <rect key="frame" x="154.33333333333334" y="114" width="67.333333333333343" height="67"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="AzL-tn-OYW" secondAttribute="height" multiplier="1:1" id="SZp-wi-PAo"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="btn5"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="yVe-Yp-ZlA"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ius-KE-f2O" userLabel="6">
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ius-KE-f2O" userLabel="6">
                                         <rect key="frame" x="254.66666666666663" y="114" width="68" height="67"/>
                                         <state key="normal" backgroundImage="btn6"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="Aod-hZ-nr9"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BxL-2I-SN1" userLabel="1">
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BxL-2I-SN1" userLabel="1">
                                         <rect key="frame" x="55.333333333333343" y="205" width="68" height="67"/>
                                         <state key="normal" backgroundImage="btn1"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="18V-01-Mqs"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7u-92-0Jp" userLabel="2">
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7u-92-0Jp" userLabel="2">
                                         <rect key="frame" x="154.33333333333334" y="204.66666666666663" width="68" height="67"/>
                                         <state key="normal" backgroundImage="btn2"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="f7i-RM-PmG"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS5-jh-pm8" userLabel="3">
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS5-jh-pm8" userLabel="3">
                                         <rect key="frame" x="255.33333333333337" y="204.66666666666663" width="68" height="67"/>
                                         <state key="normal" backgroundImage="btn3"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="5jG-0y-2zy"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJ1-9M-FfA" userLabel="minus">
+                                    <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJ1-9M-FfA" userLabel="minus">
                                         <rect key="frame" x="56.333333333333343" y="293.33333333333331" width="67" height="67"/>
                                         <state key="normal" backgroundImage="btnMinus"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="XGL-r3-tJE"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkM-xR-7EE" userLabel="0">
                                         <rect key="frame" x="154.33333333333334" y="293.33333333333331" width="67.333333333333343" height="67"/>
                                         <state key="normal" backgroundImage="btn"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="fVQ-iq-utu"/>
+                                        </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE4-4v-Zdo" userLabel="plus">
+                                    <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BE4-4v-Zdo" userLabel="plus">
                                         <rect key="frame" x="254.66666666666663" y="293.33333333333331" width="68" height="67"/>
                                         <state key="normal" backgroundImage="btnAdd"/>
+                                        <connections>
+                                            <action selector="calcButtons:" destination="QtQ-q5-P19" eventType="touchUpInside" id="S86-TY-moK"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1861,6 +1963,9 @@
                                         <state key="normal" title="REDEEM" backgroundImage="btnOrange_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="redeemCoins:" destination="QtQ-q5-P19" eventType="touchUpInside" id="0XZ-Dh-gog"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mKB-OV-8bi">
                                         <rect key="frame" x="176.33333333333334" y="0.0" width="22.333333333333343" height="122.33333333333333"/>
@@ -1872,6 +1977,9 @@
                                         <state key="normal" title="DONE" backgroundImage="btnOrange_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="done:" destination="QtQ-q5-P19" eventType="touchUpInside" id="hgh-nm-FEZ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1919,6 +2027,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="coinTotalLabel" destination="tpv-GN-H9H" id="S0D-Yn-WQs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4B2-Qh-rMT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2124,6 +2235,7 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
+                                            <action selector="createAccount:" destination="zGP-ut-peX" eventType="touchUpInside" id="daf-dG-rmF"/>
                                             <segue destination="vEf-KN-FAV" kind="presentation" id="OOd-9u-YyK"/>
                                         </connections>
                                     </button>
@@ -2157,10 +2269,15 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9yw-8x-uQq"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="jqV-Vu-bKP" id="5dB-Zs-8tx"/>
+                        <outlet property="passwordTextField" destination="cR1-hV-gCj" id="zo1-vC-7SY"/>
+                        <outlet property="usernameTextField" destination="pHx-5I-TLJ" id="WsZ-jW-vOb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tKr-pb-huU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="512.79999999999995" y="-522.18890554722645"/>
+            <point key="canvasLocation" x="512.79999999999995" y="-522.41379310344826"/>
         </scene>
         <!--Profile Picture Select View Controller-->
         <scene sceneID="Vdu-DM-Pnc">
@@ -2173,6 +2290,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GwG-GB-J2U">
                                 <rect key="frame" x="8" y="44" width="48" height="30"/>
                                 <state key="normal" title="&lt; Back"/>
+                                <connections>
+                                    <action selector="doGoBack:" destination="ABl-CU-dru" eventType="touchUpInside" id="lnS-bI-dFV"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHOOSE A PROFILE PICTURE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W1T-mY-3ae">
                                 <rect key="frame" x="0.0" y="74" width="375" height="30"/>
@@ -2186,23 +2306,29 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PxT-4M-s71" userLabel="Button1_2View">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="194.66666666666666"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XA-bb-e6z">
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XA-bb-e6z">
                                                 <rect key="frame" x="-6" y="10.000000000000014" width="175.66666666666666" height="175.33333333333337"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4XA-bb-e6z" secondAttribute="height" id="fw2-Di-Bla"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic1"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="1pM-gI-pDP"/>
+                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wat-T0-XIs" userLabel="Spacer">
                                                 <rect key="frame" x="169.66666666666666" y="0.0" width="18" height="194.66666666666666"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdZ-aJ-6gx">
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdZ-aJ-6gx">
                                                 <rect key="frame" x="187.66666666666663" y="9.6666666666666714" width="175.33333333333337" height="175"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="YdZ-aJ-6gx" secondAttribute="height" id="cTH-QD-WoZ"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic2"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="ZKy-kZ-Jyn"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2222,23 +2348,29 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0E2-HG-l4w" userLabel="Button3_4View">
                                         <rect key="frame" x="0.0" y="194.66666666666669" width="359" height="194.66666666666669"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW3-dW-wPO">
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW3-dW-wPO">
                                                 <rect key="frame" x="-6" y="10" width="175.66666666666666" height="175.33333333333334"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="nW3-dW-wPO" secondAttribute="height" id="PJe-eA-3S7"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic3"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="EFt-te-5cM"/>
+                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8J-X3-cP0" userLabel="Spacer">
                                                 <rect key="frame" x="169.66666666666666" y="0.0" width="18" height="194.66666666666666"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ro-X4-hdc">
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ro-X4-hdc">
                                                 <rect key="frame" x="187.66666666666663" y="9.6666666666666856" width="175.33333333333337" height="175"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4Ro-X4-hdc" secondAttribute="height" id="82h-8P-Q3p"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic4"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="ZDj-rp-dmF"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2258,23 +2390,29 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUk-yO-6Cn" userLabel="Button5_6View">
                                         <rect key="frame" x="0.0" y="389.33333333333337" width="359" height="195.33333333333337"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-a7-ROT">
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-a7-ROT">
                                                 <rect key="frame" x="-5.3333333333333286" y="9.9999999999999432" width="175" height="175.33333333333334"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="KIk-a7-ROT" secondAttribute="height" id="7vh-q3-Tk2"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic5"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="Vw4-QZ-Roh"/>
+                                                </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpv-lR-ZBx" userLabel="Spacer">
                                                 <rect key="frame" x="169.66666666666666" y="0.0" width="18" height="195.33333333333334"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ha-R6-uJI">
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ha-R6-uJI">
                                                 <rect key="frame" x="187.66666666666663" y="9.9999999999999432" width="175.33333333333337" height="174.66666666666666"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="1ha-R6-uJI" secondAttribute="height" id="018-oD-pbD"/>
                                                 </constraints>
                                                 <state key="normal" image="profilePic6"/>
+                                                <connections>
+                                                    <action selector="selectProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="GcU-sJ-5zy"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2542,6 +2680,9 @@
                                         <state key="normal" title="MARK AS COMPLETE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="markComplete:" destination="6dG-q3-qFR" eventType="touchUpInside" id="BrT-tO-sPh"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2679,6 +2820,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="egl-NY-Sae"/>
                     </view>
+                    <connections>
+                        <outlet property="choreDescriptionTextView" destination="CS1-zd-ylj" id="2kd-RN-Zt3"/>
+                        <outlet property="choreImageImageView" destination="Q44-lQ-i2t" id="14O-uo-SOw"/>
+                        <outlet property="choreNameLabel" destination="kG9-JB-EhE" id="9Z1-tT-2iP"/>
+                        <outlet property="choreNoteTextView" destination="VmY-QH-8F3" id="vSD-5e-H1d"/>
+                        <outlet property="choreValueLabel" destination="srM-gj-pbB" id="Xeu-HC-U0Q"/>
+                        <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
+                        <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
+                        <outlet property="usernameLabel" destination="8rK-SS-e9D" id="764-F7-mX8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1eU-Dy-PB4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2911,7 +3062,7 @@
                                 <rect key="frame" x="8" y="101.33333333333333" width="48" height="29.999999999999986"/>
                                 <state key="normal" title="&lt; Back"/>
                                 <connections>
-                                    <action selector="doGoBack:" destination="l7o-YR-ylh" eventType="touchUpInside" id="JXS-Ay-BbA"/>
+                                    <action selector="doGoBack:" destination="l7o-YR-ylh" eventType="touchUpInside" id="jUM-FA-mcM"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygz-WW-UmH" userLabel="DescriptionView">
@@ -2939,6 +3090,9 @@
                                 <state key="normal" title="Tap to add image">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="changeChorePicture:" destination="l7o-YR-ylh" eventType="touchUpInside" id="CVj-Qx-Rm0"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubp-0f-Fbk" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="375" width="375" height="48.666666666666686"/>
@@ -3101,6 +3255,9 @@
                                         <state key="normal" title="DELETE" backgroundImage="btnRed_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteChore:" destination="l7o-YR-ylh" eventType="touchUpInside" id="yjE-XF-mSY"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pi2-j2-N7x">
                                         <rect key="frame" x="176.33333333333334" y="36.666666666666742" width="22.333333333333343" height="7.6666666666666643"/>
@@ -3112,6 +3269,9 @@
                                         <state key="normal" title="SAVE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="saveChore:" destination="l7o-YR-ylh" eventType="touchUpInside" id="vfj-IL-5eS"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3180,6 +3340,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fL4-fh-c3O"/>
                     </view>
+                    <connections>
+                        <outlet property="choreDescriptionTextView" destination="csA-wP-sc1" id="aM9-jX-Dgx"/>
+                        <outlet property="choreImageUIButton" destination="UVS-cT-pfm" id="ASq-eV-OWx"/>
+                        <outlet property="choreNameTextField" destination="FdJ-1J-Csf" id="7u7-lT-423"/>
+                        <outlet property="choreNoteTextView" destination="zg2-SZ-F4w" id="0AR-fc-0y6"/>
+                        <outlet property="choreValueTextField" destination="OBi-Ax-d5A" id="Ck3-2m-NpS"/>
+                        <outlet property="dueDateTextField" destination="LaJ-Vj-bhm" id="N2b-9h-zEE"/>
+                        <outlet property="startDateTextField" destination="dCP-6f-1HZ" id="czu-To-YgD"/>
+                        <outlet property="usernameTextField" destination="Ef5-EW-iQY" id="1IE-yB-o5F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6V-gE-j4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3226,8 +3396,10 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="A1z-JA-GPm"/>
-        <segue reference="7lE-kw-Qut"/>
-        <segue reference="3RF-ku-Rgp"/>
+        <segue reference="OOd-9u-YyK"/>
+        <segue reference="bm7-WQ-ArU"/>
+        <segue reference="hWK-av-BXc"/>
+        <segue reference="2fd-cb-KRq"/>
+        <segue reference="HOK-Pp-4Xx"/>
     </inferredMetricsTieBreakers>
 </document>
