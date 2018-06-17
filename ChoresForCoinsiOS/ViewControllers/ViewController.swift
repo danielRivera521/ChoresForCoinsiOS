@@ -16,9 +16,10 @@ import FBSDKLoginKit
 import KeychainSwift
 
 
-class ViewController: UIViewController, GIDSignInUIDelegate { //, FBSDKLoginButtonDelegate
+class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDelegate {
     
     var databaseRef: DatabaseReference!
+    var dbHandle: DatabaseHandle?
     @IBOutlet weak var facebookLogin: FBSDKLoginButton!
     
     var currentUser: String?
@@ -33,23 +34,37 @@ class ViewController: UIViewController, GIDSignInUIDelegate { //, FBSDKLoginButt
         facebookLogin.delegate = self
         facebookLogin.readPermissions = ["email"]
 
+      
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut()
         
         //sets the database reference to the 'user' child segment
         databaseRef = Database.database().reference().child("user")
+        
     }
     override func viewDidAppear(_ animated: Bool) {
+       
+        if (FBSDKAccessToken.current() == nil){
+            print("user is not logged in")
+        
+        } else {
+            print("user is logged in")
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+        }
+        
         //if the user already signed into application then the uid is used to access the app and bypasses the signin page.
         
-        let keyChain = DataService().keyChain
-        keyChain.set("nil", forKey: "uid")
-        if keyChain.get("uid") != nil {
-            
-            print(keyChain.get("uid")!)
-            let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
-            let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
-            let appDelegate = UIApplication.shared.delegate
-            appDelegate?.window??.rootViewController = protectedPage
-        }
+//        let keyChain = DataService().keyChain
+//        keyChain.set("nil", forKey: "uid")
+//        if keyChain.get("uid") != nil {
+//
+//            print(keyChain.get("uid")!)
+//            let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
+//            let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
+//            let appDelegate = UIApplication.shared.delegate
+//            appDelegate?.window??.rootViewController = protectedPage
+//        }
     }
     
     func CompleteSignIn(id: String){
@@ -71,7 +86,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate { //, FBSDKLoginButt
         
         GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
         GIDSignIn.sharedInstance().signIn()
-        CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
+        checkDatabase()
+    //    CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -123,79 +139,32 @@ class ViewController: UIViewController, GIDSignInUIDelegate { //, FBSDKLoginButt
         }
     }
     
-    func createParentID() -> String{
-        
-        var generatedID = ""
-        
-        if let email = Auth.auth().currentUser?.email{
-            
-            if let name = email.components(separatedBy: CharacterSet(charactersIn: ("@0123456789"))).first {
-                
-                if let uid = Auth.auth().currentUser?.uid{
-                    let last5 = uid.suffix(5)
-                    generatedID = name + last5
-                }
-            }
-        }
-        
-        return generatedID
-    }
     
     func checkDatabase() {
-        var isParent: Bool
+        
         let keyChain = DataService().keyChain
         
         if let uid = keyChain.get("uid") {
             
-            databaseRef.observe(DataEventType.value) { (snapshot) in
-                
+            dbHandle = databaseRef.child("user_id").observe(.value, with: { (snapshot) in
+            
+                //loops though users in the database
                 for users in snapshot.children.allObjects as! [DataSnapshot]{
                     let userObject = users.value as? [String : AnyObject]
-                    let userID = userObject?["user_id"] as! String
-                    let name = Auth.auth().currentUser?.displayName
+                    let userID = userObject?["user_id"] as? String
                     
                     if userID == uid {
                         // user is in database
-                        return
-                    } else {
-                        // register user
-                        
-//                        let isParentAlert = UIAlertController(title: "Are you a Parent?", message: "Select yes if you are a parent and no if you are a child.", preferredStyle: .alert)
-//
-//                        let actionYes = UIAlertAction(title: "YES", style: .default, handler: { (actionYes) in
-//                            isParent = true
-//                        })
-//                        let actionNo = UIAlertAction(title: "NO", style: .default, handler: { (actionNo) in
-//                            isParent = false
-//                        })
-//
-//                        isParentAlert.addAction(actionYes)
-//                        isParentAlert.addAction(actionNo)
-//
-//                        self.present(isParentAlert, animated: true, completion: nil)
-//
-//
-//                        //checks the value of isParent and creates account in database
-//                        if isParent{
-//                            let newUser = ["user_id":userID,
-//                                           "generated_id": self.createParentID(),
-//                                           "user_name": name ?? "No User Name",
-//                                           "user_parent":true] as [String : Any]
-//
-//
-//                            self.databaseRef.child(userID).setValue(newUser)
-//
-//                        } else {
-//                            let newUser = ["user_id":userID,
-//                                           "generated_id": self.createParentID(),
-//                                           "user_name": name,
-//                                           "user_parent":false] as [String : Any]
-//
-//                            self.databaseRef.child(userID).setValue(newUser)
-//                        }
+                        self.performSegue(withIdentifier: "goToProfileSegue", sender: nil)
                     }
+                    
                 }
-            }
+                
+            })
+            
+            
+            //user not in the database. Registration segue is called
+            self.performSegue(withIdentifier: "registrationSegue", sender: nil)
         }
         
     }
