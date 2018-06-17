@@ -29,7 +29,7 @@ extension AppDelegate: GIDSignInDelegate {
                 print("Google Authentification Success")
                 
                 let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
-                let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "ProtectedViewController") as! ProtectedViewController
+                let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
                 let appDelegate = UIApplication.shared.delegate
                 appDelegate?.window??.rootViewController = protectedPage
             }

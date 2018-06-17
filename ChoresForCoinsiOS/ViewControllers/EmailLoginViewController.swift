@@ -42,8 +42,6 @@ class EmailLoginViewController: UIViewController {
         let keyChain = DataService().keyChain
         keyChain.set(id, forKey: "uid")
 
-    
-=======
     }
     
     //Code signin Button
@@ -57,7 +55,7 @@ class EmailLoginViewController: UIViewController {
                     print(error)
                     //checks for an error and displays an alert message that will then take the user to the root login page
                     
-                    self.alertBuilder(message: "User account not present. Please select sign up or use another")
+                    self.alertBuilder(message: "User account not present. Please select sign up or use another login")
                     self.gotoRootViewController()
                     return
             
@@ -109,34 +107,4 @@ class EmailLoginViewController: UIViewController {
         
     }
 
-    func alertBuilder(message: String) {
-        //create the alert controller
-        let alertController = UIAlertController(title: "Login Error", message: message, preferredStyle: .alert)
-        
-        //create the alert action
-        let okAlert = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
-            
-            NSLog("OK Pressed")
-            
-        }
-        //add the action
-        alertController.addAction(okAlert)
-        
-        //show the alert
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    //go to homescreen
-    func gotoRootViewController(){
-        
-        if self.presentingViewController != nil {
-            self.dismiss(animated: false) {
-                self.navigationController?.popToRootViewController(animated: true)
-                
-            }
-        } else {
-            self.navigationController?.popToRootViewController(animated: true)
-        }
-        
-    }
 }

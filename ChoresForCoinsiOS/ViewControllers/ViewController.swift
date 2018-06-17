@@ -28,17 +28,24 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         // Do any additional setup after loading the view, typically from a nib.
         
         //sets facebook button delegate
-         facebookLogin.delegate = self
-         facebookLogin.readPermissions = ["email"]
+        facebookLogin.delegate = self
+        facebookLogin.readPermissions = ["email"]
         
         //sets the database reference to the 'user' child segment
         databaseRef = Database.database().reference().child("user")
     }
     override func viewDidAppear(_ animated: Bool) {
         //if the user already signed into application then the uid is used to access the app and bypasses the signin page.
+        
         let keyChain = DataService().keyChain
+        keyChain.set("nil", forKey: "uid")
         if keyChain.get("uid") != nil {
-            performSegue(withIdentifier: "overviewVC", sender: nil)
+            
+            print(keyChain.get("uid")!)
+            let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
+            let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
+            let appDelegate = UIApplication.shared.delegate
+            appDelegate?.window??.rootViewController = protectedPage
         }
     }
     
@@ -48,17 +55,17 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         keyChain.set(id, forKey: "uid")
     }
     
-      //creating the Google sign in button
-        fileprivate func configureGoogleSignInButton() {
-            let googleSignInButton = GIDSignInButton()
-            googleSignInButton.frame = CGRect(x: 120, y: 200, width: view.frame.width - 240, height: 50)
-            view.addSubview(googleSignInButton)
-            GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
-        }
+    //creating the Google sign in button
+    fileprivate func configureGoogleSignInButton() {
+        let googleSignInButton = GIDSignInButton()
+        googleSignInButton.frame = CGRect(x: 120, y: 200, width: view.frame.width - 240, height: 50)
+        view.addSubview(googleSignInButton)
+        GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
+    }
     
     //google login button
     @IBAction func googleLoginBtn(_ sender: UIButton) {
-      
+        
         GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
         GIDSignIn.sharedInstance().signIn()
         CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
@@ -66,7 +73,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
     
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
-
+        
         if error == nil {
             print("User just logged in via Facebook")
             let credential = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
@@ -74,11 +81,11 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
                 if (error != nil) {
                     print("Facebook authentication failed")
                     print("\(error?.localizedDescription ?? "Facebook Error")")
-
+                    
                     //log out of facebook due to error
                     let loginManager = FBSDKLoginManager()
                     loginManager.logOut()
-
+                    
                 } else {
                     print("Facebook authentication succeed")
                     self.fetchProfile()
@@ -94,32 +101,32 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         
         print ("User logged out")
     }
-
+    
     func fetchProfile(){
         print ("fetch profile")
-
+        
         let parameters = ["fields": "email, first_name, last_name, picture.type(small)"]
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) -> Void in
             if let error = error{
                 print (error)
                 return
             }
-
+            
             let dict = result as! [String : AnyObject]
-
+            
             if let picture = dict["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
                 print(url)
             }
-
+            
         }
     }
     
     func createParentID() -> String{
-    
+        
         var generatedID = ""
         
         if let email = Auth.auth().currentUser?.email{
-        
+            
             if let name = email.components(separatedBy: CharacterSet(charactersIn: ("@0123456789"))).first {
                 
                 if let uid = Auth.auth().currentUser?.uid{
@@ -133,25 +140,61 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
     }
     
     func checkDatabase() {
-        if let uid = Auth.auth().currentUser?.uid {
+        var isParent: Bool
+        let keyChain = DataService().keyChain
+        
+        if let uid = keyChain.get("uid") {
             
             databaseRef.observe(DataEventType.value) { (snapshot) in
                 
                 for users in snapshot.children.allObjects as! [DataSnapshot]{
                     let userObject = users.value as? [String : AnyObject]
                     let userID = userObject?["user_id"] as! String
+                    let name = Auth.auth().currentUser?.displayName
                     
                     if userID == uid {
                         // user is in database
+                        return
                     } else {
                         // register user
+                        
+//                        let isParentAlert = UIAlertController(title: "Are you a Parent?", message: "Select yes if you are a parent and no if you are a child.", preferredStyle: .alert)
+//
+//                        let actionYes = UIAlertAction(title: "YES", style: .default, handler: { (actionYes) in
+//                            isParent = true
+//                        })
+//                        let actionNo = UIAlertAction(title: "NO", style: .default, handler: { (actionNo) in
+//                            isParent = false
+//                        })
+//
+//                        isParentAlert.addAction(actionYes)
+//                        isParentAlert.addAction(actionNo)
+//
+//                        self.present(isParentAlert, animated: true, completion: nil)
+//
+//
+//                        //checks the value of isParent and creates account in database
+//                        if isParent{
+//                            let newUser = ["user_id":userID,
+//                                           "generated_id": self.createParentID(),
+//                                           "user_name": name ?? "No User Name",
+//                                           "user_parent":true] as [String : Any]
+//
+//
+//                            self.databaseRef.child(userID).setValue(newUser)
+//
+//                        } else {
+//                            let newUser = ["user_id":userID,
+//                                           "generated_id": self.createParentID(),
+//                                           "user_name": name,
+//                                           "user_parent":false] as [String : Any]
+//
+//                            self.databaseRef.child(userID).setValue(newUser)
+//                        }
                     }
                 }
-                
-                
             }
         }
         
     }
-    
 }
