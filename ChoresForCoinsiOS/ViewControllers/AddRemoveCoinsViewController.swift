@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddRemoveCoinsViewController: ViewController {
+class AddRemoveCoinsViewController: UIViewController {
     
     @IBOutlet weak var coinTotalLabel: UILabel!
     

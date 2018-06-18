@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseUI
 
-class SignUpParentChildViewController: UIViewController {
+class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
 
-    //create a bool to see if the user is a parent or not. To be used in a segue to create account view controller
-    var isParent: Bool = false
+    var authUI: FUIAuth?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,39 +20,50 @@ class SignUpParentChildViewController: UIViewController {
         // Do any additional setup after loading the view.
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // sets up firebase pre-made auth UI
+        authUI = FUIAuth.defaultAuthUI()
+        authUI?.delegate = self
+        let providers: [FUIAuthProvider] = [
+            FUIGoogleAuth(),
+            FUIFacebookAuth()
+        ]
+        self.authUI?.providers = providers
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func parentRegistrationBtn(_ sender: UIButton) {
-        
-        isParent = true
-    }
-    
-    @IBAction func childRegistrationBtn(_ sender: UIButton) {
-        isParent = false
-    }
-    
-    @IBAction func doGoBack(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+    // this is called after a sign in attempt is made
+    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+        if let userStatus = authDataResult?.additionalUserInfo?.isNewUser {
+            if error == nil && userStatus {
+                // go to parent child page
+                performSegue(withIdentifier: "goToParentChild", sender: self)
+            } else if error == nil {
+                // go to overview page
+                performSegue(withIdentifier: "goToOverview", sender: self)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "createParentSegue" {
-            isParent = true
-        }
-        if segue.identifier == "createChildSegue" {
-            isParent = false
-        }
-        
-        if let createAccountVC = segue.destination as? CreateAccountViewController{
-            
-            createAccountVC.isParent = isParent
-            
-        }
         
     }
     
+    @IBAction func signInOrRegister(_ sender: UIButton) {
+        // present pre-made Auth UI
+        if let authVC = authUI?.authViewController() {
+            present(authVC, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func skipRegistration(_ sender: UIButton) {
+        Auth.auth().signInAnonymously { (authResult, error) in
+            self.performSegue(withIdentifier: "goToOverview", sender: self)
+        }
+    }
 }

@@ -12,24 +12,20 @@
 		65EF0C6820D3533700DD9A3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EF0C6620D3533700DD9A3F /* LaunchScreen.storyboard */; };
 		65EF0C7020D353EA00DD9A3F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65EF0C6F20D353EA00DD9A3F /* GoogleService-Info.plist */; };
 		65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C7B20D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift */; };
-		65EF0C8520D408AD00DD9A3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8420D408AD00DD9A3F /* ViewController.swift */; };
 		65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */; };
 		65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */; };
 		65EF0C8B20D40C2500DD9A3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65EF0C8A20D40C2500DD9A3F /* Main.storyboard */; };
-		65EF0C8D20D422E500DD9A3F /* EmailLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */; };
 		65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9020D438A500DD9A3F /* DataService.swift */; };
 		65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9220D4D49100DD9A3F /* UserModel.swift */; };
-
 		65EF0C9520D5D05E00DD9A3F /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9420D5D05E00DD9A3F /* AlertController.swift */; };
 		A008FE1F511A9F6E625200E2 /* Pods_ChoresForCoinsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580522261D2D4D5A2E444C0B /* Pods_ChoresForCoinsiOS.framework */; };
 		B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */; };
 		B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */; };
 		B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8020D5E687008C7376 /* SettingsViewController.swift */; };
 		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
-		B0CC652520D4FAD600E86D41 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */; };
+		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
-		B0CC652D20D502D700E86D41 /* ForgotPasswordEnterCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652C20D502D700E86D41 /* ForgotPasswordEnterCodeViewController.swift */; };
 		B0CC653120D5038700E86D41 /* ProfilePictureSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */; };
 		B0CC653520D50D4B00E86D41 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */; };
 		B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC653620D5249000E86D41 /* AddChoreViewController.swift */; };
@@ -48,11 +44,9 @@
 		65EF0C6920D3533700DD9A3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65EF0C6F20D353EA00DD9A3F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		65EF0C7B20D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+GoogleSignIncopy.swift"; sourceTree = "<group>"; };
-		65EF0C8420D408AD00DD9A3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectedViewController.swift; sourceTree = "<group>"; };
 		65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFirebaseClass.swift; sourceTree = "<group>"; };
 		65EF0C8A20D40C2500DD9A3F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginViewController.swift; sourceTree = "<group>"; };
 		65EF0C9020D438A500DD9A3F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		65EF0C9220D4D49100DD9A3F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		65EF0C9420D5D05E00DD9A3F /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
@@ -61,10 +55,9 @@
 		B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreListViewController.swift; sourceTree = "<group>"; };
 		B0004B8020D5E687008C7376 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
-		B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
-		B0CC652C20D502D700E86D41 /* ForgotPasswordEnterCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordEnterCodeViewController.swift; sourceTree = "<group>"; };
 		B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSelectViewController.swift; sourceTree = "<group>"; };
 		B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		B0CC653620D5249000E86D41 /* AddChoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddChoreViewController.swift; sourceTree = "<group>"; };
@@ -132,12 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */,
-				65EF0C8420D408AD00DD9A3F /* ViewController.swift */,
-				65EF0C8C20D422E500DD9A3F /* EmailLoginViewController.swift */,
-				B0CC652420D4FAD600E86D41 /* ForgotPasswordViewController.swift */,
 				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
 				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
-				B0CC652C20D502D700E86D41 /* ForgotPasswordEnterCodeViewController.swift */,
 				B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */,
 				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
 				B0CC653620D5249000E86D41 /* AddChoreViewController.swift */,
@@ -148,6 +137,7 @@
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
 				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
 				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
+				B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -311,10 +301,16 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseFacebookAuthUI.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseUI/FirebaseGoogleAuthUI.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseFacebookAuthUI.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FirebaseGoogleAuthUI.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,16 +328,13 @@
 				65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */,
 				B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */,
 				B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */,
+				B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
-				65EF0C8D20D422E500DD9A3F /* EmailLoginViewController.swift in Sources */,
 				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
-
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
 				B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */,
 				65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */,
-				65EF0C8520D408AD00DD9A3F /* ViewController.swift in Sources */,
 				B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */,
-				B0CC652520D4FAD600E86D41 /* ForgotPasswordViewController.swift in Sources */,
 				65EF0C9520D5D05E00DD9A3F /* AlertController.swift in Sources */,
 				B0CC653520D50D4B00E86D41 /* OverviewViewController.swift in Sources */,
 				B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */,
@@ -349,7 +342,6 @@
 				65EF0C5E20D3533600DD9A3F /* AppDelegate.swift in Sources */,
 				65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */,
 				65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */,
-				B0CC652D20D502D700E86D41 /* ForgotPasswordEnterCodeViewController.swift in Sources */,
 				B0CC653D20D525EA00E86D41 /* TakePictureViewController.swift in Sources */,
 				B0CC653B20D525AF00E86D41 /* ChoreEditViewController.swift in Sources */,
 				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
@@ -492,6 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 97YC5Y3SEZ;
 				INFOPLIST_FILE = ChoresForCoinsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -511,6 +504,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 97YC5Y3SEZ;
 				INFOPLIST_FILE = ChoresForCoinsiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseUI
 
-class ProfileEditViewController: ViewController {
+class ProfileEditViewController: UIViewController, FUIAuthDelegate {
+    
+    var authUI: FUIAuth?
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -29,7 +33,16 @@ class ProfileEditViewController: ViewController {
         dismiss(animated: true, completion: nil)
     }
     @IBAction func save(_ sender: UIButton) {
-        // dismiss back to tab bar controller
-        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    @IBAction func logout(_ sender: UIButton) {
+        do {
+            // sign out
+            try authUI?.signOut()
+            //self.performSegue(withIdentifier: "goToAuth", sender: self)
+            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        } catch {
+            // handle error
+        }
     }
 }
