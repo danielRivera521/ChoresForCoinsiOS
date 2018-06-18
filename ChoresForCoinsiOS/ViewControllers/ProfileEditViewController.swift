@@ -45,4 +45,5 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
             // handle error
         }
     }
+    
 }

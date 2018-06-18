@@ -81,7 +81,6 @@ class CreateAccountViewController: UIViewController {
             
             databaseRef.child(userID!).setValue(newUser)
         }
-
     }
     
     //code to generate a parent id using the name portion of email and last 5 characters from UID

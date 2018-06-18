@@ -66,5 +66,5 @@ class AddRemoveCoinsViewController: UIViewController {
     
     @IBAction func done(_ sender: UIButton) {
     }
-    
+
 }
