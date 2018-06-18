@@ -35,9 +35,8 @@ class CreateAccountViewController: UIViewController {
         name = Auth.auth().currentUser?.displayName
         email = Auth.auth().currentUser?.email
         
-        usernameTextField.text = name
-        emailTextField.text = email
-        passwordTextField.text = createParentID()
+        usernameTextField.text = name ?? ""
+        emailTextField.text = email ?? ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,8 +46,9 @@ class CreateAccountViewController: UIViewController {
     
     @IBAction func createAccount(_ sender: UIButton) {
         //creates account in database
-        
-        createAccount()
+        if validateText(){
+            createAccount()
+        }
         // dismiss back to tab bar controller
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
     }
@@ -58,30 +58,60 @@ class CreateAccountViewController: UIViewController {
     }
     
     func createAccount(){
+    
+        if let id = Auth.auth().currentUser?.uid {
+    
+            let userID = id
+            let name = Auth.auth().currentUser?.displayName
+            
+            addToDatabase(userID: userID, name: name!)
+            
+        } else {
+            if isValidEmail(){
+
+            let email = emailTextField.text
+            let password = passwordTextField.text
+                Auth.auth().createUser(withEmail: email!, password: password!) { (user, error) in
+                    if let error = error {
+                        print(error)
+                        return
+                    } else {
+                        let id = user?.user.uid
+                        let name = self.usernameTextField.text
+                        self.addToDatabase(userID: id!, name: name!)
+                        
+                    }
+                }
+            
+            
+            }
+        }
         
-        let userID = Auth.auth().currentUser?.uid
-        let name = Auth.auth().currentUser?.displayName
+
+    }
+    
+    func addToDatabase(userID: String,name: String){
+        
         let databaseRef = Database.database().reference().child("user")
         
         //checks the value of isParent and creates account in database
         if isParent{
-            let newUser = ["user_id":userID!,
+            let newUser = ["user_id":userID,
                            "parent_id": self.createParentID(),
-                           "user_name": name!,
+                           "user_name": name,
                            "user_parent":true] as [String : Any]
             
             
-            databaseRef.child(userID!).setValue(newUser)
+            databaseRef.child(userID).setValue(newUser)
             
         } else {
-            let newUser = ["user_id":userID!,
+            let newUser = ["user_id":userID,
                            "parent_id": self.createParentID(),
-                           "user_name": name!,
+                           "user_name": name,
                            "user_parent":false] as [String : Any]
             
-            databaseRef.child(userID!).setValue(newUser)
+            databaseRef.child(userID).setValue(newUser)
         }
-
     }
     
     //code to generate a parent id using the name portion of email and last 5 characters from UID
@@ -101,6 +131,21 @@ class CreateAccountViewController: UIViewController {
         }
         
         return generatedID
+    }
+    
+    //test if email field is in an email format
+    func isValidEmail() -> Bool {
+        let testStr = emailTextField.text
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
+    }
+    
+    func validateText() -> Bool{
+        
+        return (emailTextField.text?.isEmpty)! && (passwordTextField.text?.isEmpty)! && (usernameTextField.text?.isEmpty)!
+    
     }
     
 }

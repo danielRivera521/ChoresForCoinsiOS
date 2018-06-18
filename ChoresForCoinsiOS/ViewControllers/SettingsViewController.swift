@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsViewController: ViewController {
 
@@ -15,10 +16,19 @@ class SettingsViewController: ViewController {
     @IBOutlet weak var multiplierValueTextField: UITextField!
     
     
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var coinAmtLabel: UILabel!
+    
+    var coinValue = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        if let username = Auth.auth().currentUser?.displayName{
+            usernameLabel.text = username
+            coinAmtLabel.text = "\(coinValue)"
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

@@ -30,11 +30,11 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         // Do any additional setup after loading the view, typically from a nib.
         
         //sets facebook button delegate
-
-        facebookLogin.delegate = self
-        facebookLogin.readPermissions = ["email"]
-
-      
+    
+//        facebookLogin.delegate = self
+//        facebookLogin.readPermissions = ["email"]
+        
+        
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         
@@ -43,28 +43,20 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         
     }
     override func viewDidAppear(_ animated: Bool) {
-       
-        if (FBSDKAccessToken.current() == nil){
-            print("user is not logged in")
-        
-        } else {
-            print("user is logged in")
-            let loginManager = FBSDKLoginManager()
-            loginManager.logOut()
-        }
+    
         
         //if the user already signed into application then the uid is used to access the app and bypasses the signin page.
         
-//        let keyChain = DataService().keyChain
-//        keyChain.set("nil", forKey: "uid")
-//        if keyChain.get("uid") != nil {
-//
-//            print(keyChain.get("uid")!)
-//            let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
-//            let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
-//            let appDelegate = UIApplication.shared.delegate
-//            appDelegate?.window??.rootViewController = protectedPage
-//        }
+        //        let keyChain = DataService().keyChain
+        //        keyChain.set("nil", forKey: "uid")
+        //        if keyChain.get("uid") != nil {
+        //
+        //            print(keyChain.get("uid")!)
+        //            let mainStoryBoard: UIStoryboard = UIStoryboard(name:"Main", bundle:nil)
+        //            let protectedPage = mainStoryBoard.instantiateViewController(withIdentifier: "overviewVC") as! OverviewViewController
+        //            let appDelegate = UIApplication.shared.delegate
+        //            appDelegate?.window??.rootViewController = protectedPage
+        //        }
     }
     
     func CompleteSignIn(id: String){
@@ -87,7 +79,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
         GIDSignIn.sharedInstance().signIn()
         checkDatabase()
-    //    CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
+        //    CompleteSignIn(id: (Auth.auth().currentUser?.uid)!)
     }
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
@@ -142,25 +134,28 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
     
     func checkDatabase() {
         
-        let keyChain = DataService().keyChain
+        //  let keyChain = DataService().keyChain
         
-        if let uid = keyChain.get("uid") {
+        if let uid = Auth.auth().currentUser?.uid {
             
-            dbHandle = databaseRef.child("user_id").observe(.value, with: { (snapshot) in
-            
-                //loops though users in the database
-                for users in snapshot.children.allObjects as! [DataSnapshot]{
-                    let userObject = users.value as? [String : AnyObject]
-                    let userID = userObject?["user_id"] as? String
-                    
-                    if userID == uid {
-                        // user is in database
-                        self.performSegue(withIdentifier: "goToProfileSegue", sender: nil)
-                    }
-                    
-                }
+            databaseRef.observe(.value) { (snapshot) in
                 
-            })
+                if snapshot.exists(){
+                    if let userIdDictionary = snapshot.value as? NSDictionary{
+                        for id in userIdDictionary.keyEnumerator(){
+                            if let userID = id as? String{
+                                if userID == uid {
+                                    // user is in database
+                                    self.performSegue(withIdentifier: "goToProfileSegue", sender: nil)
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+            
+            
             
             
             //user not in the database. Registration segue is called
@@ -168,7 +163,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate, FBSDKLoginButtonDel
         }
         
     }
-
+    
     @IBAction func toTabBarController(_ sender: UIButton) {
         // dismiss back to tab bar controller
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)

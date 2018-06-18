@@ -119,6 +119,10 @@
                     <tabBarItem key="tabBarItem" title="Chore List" image="iconChoreList_S" id="d3l-og-cKF">
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="LG5-tJ-MKn"/>
+                        <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="Q9Q-ea-FOb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Byj-iA-iGy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -337,7 +341,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A4P-RC-wnk">
-                                <rect key="frame" x="0.0" y="101" width="375" height="628"/>
+                                <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xsD-Wg-BZP">
@@ -436,6 +440,8 @@
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="coinAmtLabel" destination="dCw-3C-Dbx" id="bfU-ax-cNp"/>
+                        <outlet property="usernameLabel" destination="smS-2V-AfQ" id="UVo-pt-uhb"/>
                         <segue destination="cdO-Eu-gj5" kind="presentation" identifier="toAuthSegue" id="2fd-cb-KRq"/>
                     </connections>
                 </viewController>
@@ -810,8 +816,10 @@
                         <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
                         <outlet property="choreNoteTextView" destination="Atq-bz-GnK" id="KRg-mA-zM4"/>
                         <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
+                        <outlet property="coinAmtLabel" destination="G6P-CT-eX6" id="daa-NE-ZET"/>
                         <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
                         <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
+                        <outlet property="usernameLabel" destination="L9L-lR-LBL" id="mwq-tX-ok2"/>
                         <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
                     </connections>
                 </viewController>
@@ -1143,8 +1151,10 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
                         <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="xrA-wm-CMv"/>
                         <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
                         <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                        <outlet property="usernameLabel" destination="7Lo-So-qYU" id="STh-mB-w75"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLf-ez-SKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1329,7 +1339,7 @@
                                         <rect key="frame" x="37.333333333333343" y="123.33333333333331" width="299.33333333333326" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" textContentType="password"/>
                                     </textField>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l7q-Pu-61K">
                                         <rect key="frame" x="37.333333333333343" y="161.33333333333331" width="299.33333333333326" height="30"/>
@@ -2235,7 +2245,7 @@
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="zGP-ut-peX" eventType="touchUpInside" id="daf-dG-rmF"/>
-                                            <segue destination="vEf-KN-FAV" kind="presentation" id="OOd-9u-YyK"/>
+                                            <segue destination="Y1B-Nd-lxC" kind="presentation" id="Dud-Gp-3oW"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3395,11 +3405,12 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OOd-9u-YyK"/>
-        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="A1z-JA-GPm"/>
+        <segue reference="bm7-WQ-ArU"/>
         <segue reference="g4J-hT-t2y"/>
-        <segue reference="hWK-av-BXc"/>
-        <segue reference="2fd-cb-KRq"/>
-        <segue reference="HOK-Pp-4Xx"/>
+        <segue reference="JVK-OU-Nn4"/>
+        <segue reference="1X4-2l-WcZ"/>
+        <segue reference="Dud-Gp-3oW"/>
+        <segue reference="OXB-qQ-rBy"/>
     </inferredMetricsTieBreakers>
 </document>
