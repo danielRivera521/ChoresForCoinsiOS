@@ -1602,6 +1602,9 @@
                                         <state key="normal" title="CREATE CHILD ACCOUNT" backgroundImage="btnRed_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="createParentOrChild:" destination="H6A-gN-jhU" eventType="touchUpInside" id="NIy-8C-3bQ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfl-d4-rhV">
                                         <rect key="frame" x="37.666666666666657" y="78.333333333333314" width="299.33333333333337" height="61"/>
@@ -2929,9 +2932,9 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gxm-IN-KRx"/>
+        <segue reference="0ls-Pt-Ljb"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="7lE-kw-Qut"/>
-        <segue reference="3RF-ku-Rgp"/>
+        <segue reference="IdO-99-Zmk"/>
     </inferredMetricsTieBreakers>
 </document>
