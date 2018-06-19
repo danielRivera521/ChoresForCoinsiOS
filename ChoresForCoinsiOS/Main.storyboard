@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="loI-KR-X34">
-                                <rect key="frame" x="0.0" y="101" width="375" height="628"/>
+                                <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xkm-wP-pnB">
@@ -119,6 +119,10 @@
                     <tabBarItem key="tabBarItem" title="Chore List" image="iconChoreList_S" id="d3l-og-cKF">
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
+                        <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Byj-iA-iGy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -807,8 +811,10 @@
                         <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
                         <outlet property="choreNoteTextView" destination="Atq-bz-GnK" id="KRg-mA-zM4"/>
                         <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
+                        <outlet property="coinAmtLabel" destination="G6P-CT-eX6" id="LgU-HH-1QZ"/>
                         <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
                         <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
+                        <outlet property="usernameLabel" destination="L9L-lR-LBL" id="Vm0-PB-jX4"/>
                         <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
                     </connections>
                 </viewController>
@@ -1140,8 +1146,10 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
                         <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="leh-E8-Fc6"/>
                         <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
                         <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                        <outlet property="usernameLabel" destination="7Lo-So-qYU" id="so5-3m-dFg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLf-ez-SKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1588,7 +1596,7 @@
         <!--Parent Child View Controller-->
         <scene sceneID="J7o-y1-r7B">
             <objects>
-                <viewController id="H6A-gN-jhU" customClass="ParentChildViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="parentChildVC" id="H6A-gN-jhU" customClass="ParentChildViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fpa-gM-mgg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1603,7 +1611,8 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="createParentOrChild:" destination="H6A-gN-jhU" eventType="touchUpInside" id="NIy-8C-3bQ"/>
+                                            <action selector="childRegistrationBtn:" destination="H6A-gN-jhU" eventType="touchUpInside" id="kkF-nh-pk8"/>
+                                            <segue destination="zGP-ut-peX" kind="presentation" identifier="childSegue" id="q0e-xW-FaS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfl-d4-rhV">
@@ -1613,7 +1622,8 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="createParentOrChild:" destination="H6A-gN-jhU" eventType="touchUpInside" id="YHD-QF-vLf"/>
+                                            <action selector="parentRegistrationBtn:" destination="H6A-gN-jhU" eventType="touchUpInside" id="t0V-zb-nhy"/>
+                                            <segue destination="zGP-ut-peX" kind="presentation" identifier="parentSegue" id="AfW-KN-5Md"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1719,6 +1729,7 @@
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cR1-hV-gCj">
                                         <rect key="frame" x="37.333333333333343" y="197.99999999999994" width="299.33333333333326" height="30"/>
+                                        <accessibility key="accessibilityConfiguration" hint="parent ID"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -1735,7 +1746,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyP-RK-nFi">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyP-RK-nFi">
                                         <rect key="frame" x="37.333333333333343" y="172.99999999999994" width="299.33333333333326" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
@@ -1775,7 +1786,7 @@
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="zGP-ut-peX" eventType="touchUpInside" id="daf-dG-rmF"/>
-                                            <segue destination="vEf-KN-FAV" kind="presentation" id="OOd-9u-YyK"/>
+                                            <segue destination="0aj-d2-s3B" kind="presentation" identifier="goToChoreList" id="IDO-mz-EiF"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1810,7 +1821,7 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="jqV-Vu-bKP" id="5dB-Zs-8tx"/>
-                        <outlet property="passwordTextField" destination="cR1-hV-gCj" id="zo1-vC-7SY"/>
+                        <outlet property="parentIDTextField" destination="cR1-hV-gCj" id="skg-VM-egQ"/>
                         <outlet property="usernameTextField" destination="pHx-5I-TLJ" id="WsZ-jW-vOb"/>
                     </connections>
                 </viewController>
@@ -2933,8 +2944,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0ls-Pt-Ljb"/>
-        <segue reference="bm7-WQ-ArU"/>
-        <segue reference="7lE-kw-Qut"/>
-        <segue reference="IdO-99-Zmk"/>
+        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="q0e-xW-FaS"/>
+        <segue reference="yPT-9L-x6d"/>
+        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
