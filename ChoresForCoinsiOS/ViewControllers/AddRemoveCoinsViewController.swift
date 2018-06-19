@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddRemoveCoinsViewController: ViewController {
+class AddRemoveCoinsViewController: UIViewController {
     
     @IBOutlet weak var coinTotalLabel: UILabel!
     
@@ -66,5 +66,5 @@ class AddRemoveCoinsViewController: ViewController {
     
     @IBAction func done(_ sender: UIButton) {
     }
-    
+
 }
