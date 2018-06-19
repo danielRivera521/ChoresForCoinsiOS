@@ -32,7 +32,7 @@ class AddChoreViewController: UIViewController {
         // Do any additional setup after loading the view.
         if let username = Auth.auth().currentUser?.displayName{
             usernameLabel.text = username
-            coinAmtLabel.text = "\(coinValue)"
+            getRunningTotal()
         }
     }
 
@@ -46,6 +46,21 @@ class AddChoreViewController: UIViewController {
 
     @IBAction func saveChore(_ sender: UIButton) {
     }
+    
+    func getRunningTotal(){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
+            }
+        }
+    }
+
     
 
 }

@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class ChoreListViewController: UIViewController {
-
+    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     var isFirstLoad = true
@@ -24,7 +24,7 @@ class ChoreListViewController: UIViewController {
         // Do any additional setup after loading the view.
         checkDatabase()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -48,10 +48,10 @@ class ChoreListViewController: UIViewController {
                                     if let username = Auth.auth().currentUser?.displayName{
                                         self.getRunningTotal()
                                         self.usernameLabel.text = username
-                                        self.coinAmtLabel.text = "\(self.coinValue)"
+//                                        self.coinAmtLabel.text = "\(self.coinValue)"
                                         return
                                     }
-
+                                    
                                 }
                             }
                         }
@@ -59,30 +59,30 @@ class ChoreListViewController: UIViewController {
                 }
                 
             }
-        
+            
         }
         if !idFound {
             
             //user not in the database. Registration segue is called
             let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "parentChildVC") as? ParentChildViewController
             self.navigationController?.pushViewController(vc!, animated: true)
-
+            
         }
         
     }
     
     func getRunningTotal(){
         
-        let databaseRef = Database.database().reference().child("running_total")
+        let databaseRef = Database.database().reference()
         
         if let uid = Auth.auth().currentUser?.uid {
-        
-            let _ = databaseRef.child(uid).child("coin_total").observe(.value) { (snapshot) in
-                if let value = snapshot.value as? Int{
-                    self.coinValue = value
-                }
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
     }
-    
+
 }

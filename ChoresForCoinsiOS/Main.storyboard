@@ -31,6 +31,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="6dG-q3-qFR" kind="presentation" identifier="goToChoreDetail" id="WQf-bK-Ssc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -2376,6 +2379,7 @@
                         <outlet property="choreNoteTextView" destination="VmY-QH-8F3" id="vSD-5e-H1d"/>
                         <outlet property="choreValueLabel" destination="srM-gj-pbB" id="Xeu-HC-U0Q"/>
                         <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
+                        <outlet property="headerUserNameLabel" destination="ENd-rF-5Y9" id="Kxe-lY-swL"/>
                         <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
                         <outlet property="usernameLabel" destination="8rK-SS-e9D" id="764-F7-mX8"/>
                     </connections>
@@ -2902,7 +2906,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6V-gE-j4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-473" y="2330"/>
+            <point key="canvasLocation" x="-978" y="2388"/>
         </scene>
     </scenes>
     <resources>
@@ -2946,8 +2950,8 @@
         <segue reference="0ls-Pt-Ljb"/>
         <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="yPT-9L-x6d"/>
-        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="aWD-BH-qTa"/>
+        <segue reference="3V0-eC-vGf"/>
         <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
