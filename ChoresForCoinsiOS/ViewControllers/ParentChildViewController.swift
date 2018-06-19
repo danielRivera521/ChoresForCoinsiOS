@@ -36,7 +36,7 @@ class ParentChildViewController: UIViewController, FUIAuthDelegate {
             if let user = user {
                 let uid = user.uid
                 
-                ref?.child("user").child(uid).setValue(["user_parent":"true"])
+                ref?.child("user").child(uid).setValue(["user_parent":true])
             }
         case 2:
             // Handle Child
@@ -45,7 +45,7 @@ class ParentChildViewController: UIViewController, FUIAuthDelegate {
             if let user = user {
                 let uid = user.uid
                 
-                ref?.child("user").child(uid).setValue(["user_parent":"false"])
+                ref?.child("user").child(uid).setValue(["user_parent":false])
             }
         default:
             break
