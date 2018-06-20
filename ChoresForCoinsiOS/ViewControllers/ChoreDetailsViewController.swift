@@ -22,13 +22,13 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var choreNoteTextView: UITextView!
     
     
-
+    
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
-
-    var coinValue = 0
     
-    var choreId: String = ""
+    var coinValue: Int?
+    
+    var choreId: String?
     
     
     
@@ -38,6 +38,7 @@ class ChoreDetailsViewController: UIViewController {
         if let username = Auth.auth().currentUser?.displayName{
             headerUserNameLabel.text = username
             getRunningTotal()
+            getChoreData()
         }
     }
     
@@ -45,12 +46,29 @@ class ChoreDetailsViewController: UIViewController {
         
         let databaseRef = Database.database().reference()
         
+        
         if let uid = Auth.auth().currentUser?.uid {
             
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
-                print(snapshot)
-                self.coinValue = snapshot.value as? Int ?? 0
-                self.coinAmtLabel.text = "\(self.coinValue)"
+            
+            databaseRef.child("running_total").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                if snapshot.exists(){
+                    
+                    let value = snapshot.value as? NSDictionary
+                    let childID = value?["child_id"] as? String
+                    if let actualID = childID {
+                        if uid == actualID {
+                            let coinValueAmt = value?["coin_total"] as? Int
+                            if let actualCoinVal = coinValueAmt{
+                                self.coinAmtLabel.text = "\(actualCoinVal)"
+                            } else {
+                                self.coinAmtLabel.text = "0"
+                            }
+                        } else {
+                            self.coinAmtLabel.text = "0"
+                        }
+                    }
+                }
             }
         }
     }
@@ -60,46 +78,60 @@ class ChoreDetailsViewController: UIViewController {
         
         let ref = Database.database().reference()
         
-        ref.child("chores").child(choreId).observeSingleEvent(of: .value) { (snapshot) in
-         
-            let choreName: String? = snapshot.value(forKey: "chore_name") as? String
-            let choreDescript: String? = snapshot.value(forKey: "chore_description") as? String
-            let startChore: String? = snapshot.value(forKey: "date_start") as? String
-            let choreDue: String? = snapshot.value(forKey: "date_due") as? String
-            let choreValue: Int? = snapshot.value(forKey: "number_coins") as? Int
-            let note: String? = snapshot.value(forKey: "chore_note") as? String
-            let imageLocation: String? = snapshot.value(forKey: "chore_picture") as? String
+        ref.child("chores").child(choreId!).observeSingleEvent(of: .value) { (snapshot) in
             
-            if choreName != nil  {
-                self.choreNameLabel.text = choreName!
-
+            let value = snapshot.value as? NSDictionary
+            
+            let chorName = value?["chore_name"] as? String
+            let chorDescript = value?["chore_description"] as? String
+            let startChor = value?["start_date"] as? String
+            let chorDue = value?["due_date"] as? String
+            let chorValue = value?["number_coins"] as? String
+            let choreNote = value?["chore_note"] as? String
+            let imageLocale = value?["chore_picture"] as? String
+            
+            if let choreName = chorName{
+                self.choreNameLabel.text = choreName
             }
-            if choreDescript != nil {
-                self.choreDescriptionTextView.text = choreDescript!
+            if let choreDescript = chorDescript{
+                self.choreDescriptionTextView.text = "Chore Description: " + choreDescript
             }
-            if  startChore != nil {
-                self.startDateLabel.text = startChore!
+           
+            if let startChore = startChor {
+                self.startDateLabel.text = startChore
             }
-            if choreDue != nil {
-                self.dueDateLabel.text = choreDue!
+            if let choreDue = chorDue {
+                self.dueDateLabel.text = choreDue
             }
-            if note != nil {
-                self.choreNoteTextView.text = note!
+            if let note = choreNote {
+                
+                self.choreNoteTextView.text = "Chore Note: " + note
                 
             }
             
-            if choreValue != nil{
-                self.choreValueLabel.text = "\(choreValue!)"
+            if let choreValue = chorValue{
+                self.choreValueLabel.text = choreValue
             }
-        
+            
+            self.usernameLabel.text = ""
+            
+            
         }
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func markComplete(_ sender: UIButton) {
+        
+        let ref = Database.database().reference().child("chores")
+        
+        ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
+        dismiss(animated: true, completion: nil)
+        
+        
     }
+
     
 }

@@ -14,15 +14,15 @@ class Chore{
     var name: String
     var completed: Bool?
     
-    init(dictionary: [String : AnyObject], key: String){
+    init(key: String, name: String, completed: Bool?){
         self.key = key
-        self.name = dictionary["chore_name"] as! String
+        self.name = name
        
         
-        if dictionary["chore_completed"] == nil{
+        if completed == nil{
             self.completed =  false
         } else {
-            self.completed = Bool(dictionary["chore_completed"] as! String)
+            self.completed = completed
         }
     }
 }

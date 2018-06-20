@@ -32,12 +32,14 @@ class AddChoreViewController: UIViewController {
     // array to hold all users with same generatedId
     var family = [UserModel] ()
     var currentUID: String?
+    var parentID: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         if let username = Auth.auth().currentUser?.displayName{
             usernameLabel.text = username
+            getParentId()
             getRunningTotal()
             ref = Database.database().reference()
             
@@ -121,6 +123,7 @@ class AddChoreViewController: UIViewController {
     }
     
     @IBAction func saveChore(_ sender: UIButton) {
+        
         let newChoreRef = ref?.child("chores").childByAutoId()
         let currentChoreId = newChoreRef?.key
         if let currentChoreId = currentChoreId {
@@ -131,6 +134,8 @@ class AddChoreViewController: UIViewController {
             ref?.child("chores/\(currentChoreId)/due_date").setValue(dueDateTextField.text)
             ref?.child("chores/\(currentChoreId)/chore_note").setValue(choreNoteTextView.text)
             ref?.child("chores/\(currentChoreId)/number_coins").setValue(choreValueTextField.text)
+            ref?.child("chores/\(currentChoreId)/parent_id").setValue(parentID)
+            ref?.child("chores/\(currentChoreId)/chore_completed").setValue(false)
             
             createAssignmentID(choreID: currentChoreId)
         }
@@ -152,8 +157,23 @@ class AddChoreViewController: UIViewController {
         let newAssignRef = ref?.child("chore_assignment").childByAutoId()
         let assignID = newAssignRef?.key
         if let assignID = assignID {
-            ref?.child("chores/\(assignID)/chore_id").setValue(choreID)
-            ref?.child("chores/\(assignID)/chore_completed").setValue(false)
+            ref?.child("chore_assignment/\(assignID)/chore_id").setValue(choreID)
+            ref?.child("chore_assignment/\(assignID)/chore_completed").setValue(false)
+        }
+        
+    }
+    //gets the parent generated id from the user's node in the database
+    func getParentId(){
+        
+        let uid = Auth.auth().currentUser?.uid
+        _ = Database.database().reference().child("user").child(uid!).observeSingleEvent(of: .value) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let id = value?["parent_id"] as? String
+            
+            if let actualID = id{
+                self.parentID = actualID
+            }
         }
         
     }
