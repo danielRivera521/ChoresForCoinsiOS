@@ -24,18 +24,31 @@
                                 <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xkm-wP-pnB">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ojY-Or-eWE" style="IBUITableViewCellStyleDefault" id="xkm-wP-pnB">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xkm-wP-pnB" id="SB3-CT-7dp">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ojY-Or-eWE">
+                                                    <rect key="frame" x="15" y="0.0" width="321" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="6dG-q3-qFR" kind="presentation" identifier="goToChoreDetail" id="WQf-bK-Ssc"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="0aj-d2-s3B" id="l2N-rQ-0wo"/>
+                                    <outlet property="delegate" destination="0aj-d2-s3B" id="a6c-cr-ZlO"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cf5-cM-o3q" userLabel="choreListTopBarView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="57"/>
@@ -123,6 +136,7 @@
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="choreListTable" destination="loI-KR-X34" id="Ys1-aN-Dn8"/>
                         <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
                         <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
                     </connections>
@@ -326,7 +340,11 @@
                         <viewLayoutGuide key="safeArea" id="Ns7-I5-yH5"/>
                     </view>
                     <connections>
-                        <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="bhf-bt-Cez"/>
+                        <outlet property="emailTextField" destination="fvp-4L-aBR" id="Eje-nJ-n5g"/>
+                        <outlet property="parentKeyLabel" destination="HZT-Xp-a36" id="dlt-xl-uRi"/>
+                        <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="vxq-jd-3gY"/>
+                        <outlet property="parentKeyTextField" destination="fum-xN-ubL" id="ivC-AB-Dfc"/>
+                        <outlet property="passwordLabel" destination="CW2-h5-acf" id="NNC-Rr-GiB"/>
                         <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
                         <outlet property="usernameTextField" destination="GxR-fO-VoJ" id="ato-8r-wSn"/>
                     </connections>
@@ -347,12 +365,21 @@
                                 <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xsD-Wg-BZP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="fT5-BI-9d9" style="IBUITableViewCellStyleDefault" id="xsD-Wg-BZP">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xsD-Wg-BZP" id="UHB-SM-5Eh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fT5-BI-9d9">
+                                                    <rect key="frame" x="15" y="0.0" width="321" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -2950,8 +2977,8 @@
         <segue reference="0ls-Pt-Ljb"/>
         <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="aWD-BH-qTa"/>
-        <segue reference="3V0-eC-vGf"/>
+        <segue reference="yPT-9L-x6d"/>
+        <segue reference="7DE-Oe-Cje"/>
         <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
