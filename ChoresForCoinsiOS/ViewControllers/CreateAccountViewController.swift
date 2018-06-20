@@ -16,30 +16,31 @@ import FBSDKLoginKit
 
 
 class CreateAccountViewController: UIViewController {
-
+    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var parentIDTextField: UITextField!
     
     var isParent = false
     var name: String?
     var email: String?
-    var password: String?
     var parentKey: String?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         name = Auth.auth().currentUser?.displayName
         email = Auth.auth().currentUser?.email
         
         usernameTextField.text = name
         emailTextField.text = email
-        passwordTextField.text = createParentID()
+        if isParent{
+            parentIDTextField.text = createParentID()
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,7 +51,8 @@ class CreateAccountViewController: UIViewController {
         
         createAccount()
         // dismiss back to tab bar controller
-        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
+       
+        self.performSegue(withIdentifier: "goToChoreList", sender: nil)
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
@@ -74,12 +76,18 @@ class CreateAccountViewController: UIViewController {
             databaseRef.child(userID!).setValue(newUser)
             
         } else {
-            let newUser = ["user_id":userID!,
-                           "parent_id": self.createParentID(),
-                           "user_name": name!,
-                           "user_parent":false] as [String : Any]
-            
-            databaseRef.child(userID!).setValue(newUser)
+            if let key = parentIDTextField.text{
+                let newUser = ["user_id":userID!,
+                               "parent_id": key,
+                               "user_name": name!,
+                               "user_parent":false] as [String : Any]
+                let newRunningTotal = ["child_id":userID!,"coin_total":0] as [String : Any]
+                databaseRef.child(userID!).setValue(newUser)
+                Database.database().reference().child("running_total").child(userID!).setValue(newRunningTotal)
+                
+            } else {
+                AlertController.showAlert(self, title: "Missing Info", message: "Please ensure all fields are filled out")
+            }
         }
     }
     

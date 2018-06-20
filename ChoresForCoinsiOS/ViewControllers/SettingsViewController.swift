@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SettingsViewController: UIViewController {
 
@@ -15,10 +16,20 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var multiplierValueTextField: UITextField!
     
     
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var coinAmtLabel: UILabel!
+    var isFirstLoad = true
+    var coinValue = 0
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        if let username = Auth.auth().currentUser?.displayName{
+            usernameLabel.text = username
+            getRunningTotal()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,5 +58,18 @@ class SettingsViewController: UIViewController {
             break
         }
     }
-    
+    func getRunningTotal(){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
+            }
+        }
+    }
+
 }

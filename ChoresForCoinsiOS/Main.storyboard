@@ -21,18 +21,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="loI-KR-X34">
-                                <rect key="frame" x="0.0" y="101" width="375" height="628"/>
+                                <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xkm-wP-pnB">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ojY-Or-eWE" style="IBUITableViewCellStyleDefault" id="xkm-wP-pnB">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xkm-wP-pnB" id="SB3-CT-7dp">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ojY-Or-eWE">
+                                                    <rect key="frame" x="15" y="0.0" width="321" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="6dG-q3-qFR" kind="presentation" identifier="goToChoreDetail" id="WQf-bK-Ssc"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="0aj-d2-s3B" id="l2N-rQ-0wo"/>
+                                    <outlet property="delegate" destination="0aj-d2-s3B" id="a6c-cr-ZlO"/>
+                                </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cf5-cM-o3q" userLabel="choreListTopBarView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="57"/>
@@ -119,6 +135,11 @@
                     <tabBarItem key="tabBarItem" title="Chore List" image="iconChoreList_S" id="d3l-og-cKF">
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="choreListTable" destination="loI-KR-X34" id="Ys1-aN-Dn8"/>
+                        <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
+                        <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Byj-iA-iGy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -319,7 +340,11 @@
                         <viewLayoutGuide key="safeArea" id="Ns7-I5-yH5"/>
                     </view>
                     <connections>
-                        <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="bhf-bt-Cez"/>
+                        <outlet property="emailTextField" destination="fvp-4L-aBR" id="Eje-nJ-n5g"/>
+                        <outlet property="parentKeyLabel" destination="HZT-Xp-a36" id="dlt-xl-uRi"/>
+                        <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="vxq-jd-3gY"/>
+                        <outlet property="parentKeyTextField" destination="fum-xN-ubL" id="ivC-AB-Dfc"/>
+                        <outlet property="passwordLabel" destination="CW2-h5-acf" id="NNC-Rr-GiB"/>
                         <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
                         <outlet property="usernameTextField" destination="GxR-fO-VoJ" id="ato-8r-wSn"/>
                     </connections>
@@ -340,12 +365,21 @@
                                 <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="xsD-Wg-BZP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="fT5-BI-9d9" style="IBUITableViewCellStyleDefault" id="xsD-Wg-BZP">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xsD-Wg-BZP" id="UHB-SM-5Eh">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="336" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fT5-BI-9d9">
+                                                    <rect key="frame" x="15" y="0.0" width="321" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -807,8 +841,10 @@
                         <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
                         <outlet property="choreNoteTextView" destination="Atq-bz-GnK" id="KRg-mA-zM4"/>
                         <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
+                        <outlet property="coinAmtLabel" destination="G6P-CT-eX6" id="LgU-HH-1QZ"/>
                         <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
                         <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
+                        <outlet property="usernameLabel" destination="L9L-lR-LBL" id="Vm0-PB-jX4"/>
                         <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
                     </connections>
                 </viewController>
@@ -1140,8 +1176,10 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
                         <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="leh-E8-Fc6"/>
                         <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
                         <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                        <outlet property="usernameLabel" destination="7Lo-So-qYU" id="so5-3m-dFg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TLf-ez-SKF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1588,7 +1626,7 @@
         <!--Parent Child View Controller-->
         <scene sceneID="J7o-y1-r7B">
             <objects>
-                <viewController id="H6A-gN-jhU" customClass="ParentChildViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="parentChildVC" id="H6A-gN-jhU" customClass="ParentChildViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fpa-gM-mgg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1603,7 +1641,8 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="createParentOrChild:" destination="H6A-gN-jhU" eventType="touchUpInside" id="NIy-8C-3bQ"/>
+                                            <action selector="childRegistrationBtn:" destination="H6A-gN-jhU" eventType="touchUpInside" id="kkF-nh-pk8"/>
+                                            <segue destination="zGP-ut-peX" kind="presentation" identifier="childSegue" id="q0e-xW-FaS"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfl-d4-rhV">
@@ -1613,7 +1652,8 @@
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="createParentOrChild:" destination="H6A-gN-jhU" eventType="touchUpInside" id="YHD-QF-vLf"/>
+                                            <action selector="parentRegistrationBtn:" destination="H6A-gN-jhU" eventType="touchUpInside" id="t0V-zb-nhy"/>
+                                            <segue destination="zGP-ut-peX" kind="presentation" identifier="parentSegue" id="AfW-KN-5Md"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1719,6 +1759,7 @@
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cR1-hV-gCj">
                                         <rect key="frame" x="37.333333333333343" y="197.99999999999994" width="299.33333333333326" height="30"/>
+                                        <accessibility key="accessibilityConfiguration" hint="parent ID"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -1735,7 +1776,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyP-RK-nFi">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parent ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QyP-RK-nFi">
                                         <rect key="frame" x="37.333333333333343" y="172.99999999999994" width="299.33333333333326" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
@@ -1775,7 +1816,7 @@
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="zGP-ut-peX" eventType="touchUpInside" id="daf-dG-rmF"/>
-                                            <segue destination="vEf-KN-FAV" kind="presentation" id="OOd-9u-YyK"/>
+                                            <segue destination="0aj-d2-s3B" kind="presentation" identifier="goToChoreList" id="IDO-mz-EiF"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1810,7 +1851,7 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="jqV-Vu-bKP" id="5dB-Zs-8tx"/>
-                        <outlet property="passwordTextField" destination="cR1-hV-gCj" id="zo1-vC-7SY"/>
+                        <outlet property="parentIDTextField" destination="cR1-hV-gCj" id="skg-VM-egQ"/>
                         <outlet property="usernameTextField" destination="pHx-5I-TLJ" id="WsZ-jW-vOb"/>
                     </connections>
                 </viewController>
@@ -2365,6 +2406,7 @@
                         <outlet property="choreNoteTextView" destination="VmY-QH-8F3" id="vSD-5e-H1d"/>
                         <outlet property="choreValueLabel" destination="srM-gj-pbB" id="Xeu-HC-U0Q"/>
                         <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
+                        <outlet property="headerUserNameLabel" destination="ENd-rF-5Y9" id="Kxe-lY-swL"/>
                         <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
                         <outlet property="usernameLabel" destination="8rK-SS-e9D" id="764-F7-mX8"/>
                     </connections>
@@ -2891,7 +2933,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6V-gE-j4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-473" y="2330"/>
+            <point key="canvasLocation" x="-978" y="2388"/>
         </scene>
     </scenes>
     <resources>
@@ -2933,8 +2975,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0ls-Pt-Ljb"/>
-        <segue reference="bm7-WQ-ArU"/>
-        <segue reference="7lE-kw-Qut"/>
-        <segue reference="IdO-99-Zmk"/>
+        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="q0e-xW-FaS"/>
+        <segue reference="yPT-9L-x6d"/>
+        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
