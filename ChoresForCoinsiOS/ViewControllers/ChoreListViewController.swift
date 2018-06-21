@@ -56,6 +56,12 @@ class ChoreListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         createChores()
         choreListTable.reloadData()
+        if !isUserParent(){
+            if  let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+                tabBarItem.isEnabled = false
+            }
+            
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -203,6 +209,29 @@ class ChoreListViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         }
+        
+    }
+    
+    func isUserParent () -> Bool{
+        
+        let ref = Database.database().reference()
+        let id = Auth.auth().currentUser?.uid
+        var boolValue: Bool = false
+        
+        ref.child("user").child(id!).observeSingleEvent(of: .value) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let parentCheck = value?["user_parent"] as? String
+            if let actualParentCheck = parentCheck {
+                if actualParentCheck.lowercased() == "true"{
+                    boolValue = true
+                } else {
+                    boolValue = false
+                }
+            }
+        
+        }
+        return boolValue
         
     }
     
