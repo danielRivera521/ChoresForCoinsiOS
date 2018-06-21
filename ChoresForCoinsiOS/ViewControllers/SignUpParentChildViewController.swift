@@ -17,7 +17,12 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // check is user is already signed in
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user != nil {
+                self.performSegue(withIdentifier: "goToOverview", sender: self)
+            }
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,10 +52,6 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
                 performSegue(withIdentifier: "goToOverview", sender: self)
             }
         }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
     }
     
     @IBAction func signInOrRegister(_ sender: UIButton) {
