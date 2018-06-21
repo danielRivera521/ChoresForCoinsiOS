@@ -9,27 +9,21 @@
 import UIKit
 import Firebase
 
-class ChoreListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
+class ChoreListViewController: UIViewController, UITableViewDataSource {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
-    var isFirstLoad = true
+    @IBOutlet weak var choreListTV: UITableView!
+    
+    var chores: [Chore] = [Chore]()
     var coinValue = 11
     var idFound = false
-    var chores: [Chore] = [Chore]()
-    
-    @IBOutlet weak var choreListTable: UITableView!
+    var ref: DatabaseReference?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        checkDatabase()
         
-        chores = [Chore]()
-        choreListTable.delegate = self
-        choreListTable.dataSource = self
+        ref = Database.database().reference()
         
         createChores()
         
@@ -40,13 +34,31 @@ class ChoreListViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func checkDatabase() {
+    override func viewWillDisappear(_ animated: Bool) {
+        ref?.child("user").removeAllObservers()
+        ref?.removeAllObservers()
+    }
+    
+    func createChores(){
         
-        let databaseRef = Database.database().reference().child("user")
+        ref?.observe(.value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
+            let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
+            for key in Array(dictChores.keys){
+                self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
+                
+            }
+            self.choreListTV.reloadData()
+            print (dictChores)
+        }
+        
+    }
+    
+    func checkDatabase() {
         
         if let uid = Auth.auth().currentUser?.uid {
             
-            databaseRef.observe(.value) { (snapshot) in
+            ref?.child("user").observe(.value) { (snapshot) in
                 
                 if snapshot.exists(){
                     if let userIdDictionary = snapshot.value as? NSDictionary{
@@ -82,25 +94,23 @@ class ChoreListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func getRunningTotal(){
         
-        let databaseRef = Database.database().reference()
-        
         if let uid = Auth.auth().currentUser?.uid {
             
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+            ref?.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
                 print(snapshot)
                 self.coinValue = snapshot.value as? Int ?? 0
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
     }
+    
     //MARK: TableView set up
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
         return chores.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let choreItem = chores[indexPath.row]
         
@@ -114,26 +124,5 @@ class ChoreListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
-    }
-    
-    func createChores(){
-        
-        let ref = Database.database().reference()
-        
-        ref.observe(.value) { (snapshot) in
-            let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
-            let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
-            for key in Array(dictChores.keys){
-                self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
-                
-            }
-            self.choreListTable.reloadData()
-            print (dictChores)
-        }
-        
     }
 }

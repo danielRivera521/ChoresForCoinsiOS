@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="101" width="375" height="677"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="ojY-Or-eWE" style="IBUITableViewCellStyleDefault" id="xkm-wP-pnB">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="ojY-Or-eWE" style="IBUITableViewCellStyleDefault" id="xkm-wP-pnB">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xkm-wP-pnB" id="SB3-CT-7dp">
@@ -46,8 +46,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="0aj-d2-s3B" id="l2N-rQ-0wo"/>
-                                    <outlet property="delegate" destination="0aj-d2-s3B" id="a6c-cr-ZlO"/>
+                                    <outlet property="dataSource" destination="0aj-d2-s3B" id="2pc-BT-d5K"/>
+                                    <outlet property="delegate" destination="0aj-d2-s3B" id="osK-Bn-QXo"/>
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cf5-cM-o3q" userLabel="choreListTopBarView">
@@ -136,7 +136,7 @@
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="choreListTable" destination="loI-KR-X34" id="Ys1-aN-Dn8"/>
+                        <outlet property="choreListTV" destination="loI-KR-X34" id="hAF-om-VI7"/>
                         <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
                         <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
                     </connections>
@@ -2974,8 +2974,8 @@
         <image name="topBar_L" width="766" height="55"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0ls-Pt-Ljb"/>
-        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="Gxm-IN-KRx"/>
+        <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="yPT-9L-x6d"/>
         <segue reference="7DE-Oe-Cje"/>
