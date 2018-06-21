@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class ChoreListViewController: UIViewController, UITableViewDataSource {
+class ChoreListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
@@ -110,19 +110,27 @@ class ChoreListViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChoreCellTableViewCell
         
         let choreItem = chores[indexPath.row]
         
-        cell.textLabel?.text = choreItem.name
-        if !(choreItem.completed!)
-        {
-            cell.accessoryType = .none
-            
-        } else {
-            cell.accessoryType = .checkmark
+        cell.choreNameCellLabel.text = choreItem.name
+        
+        if let completed = choreItem.completed {
+            if completed {
+                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
+            } else {
+                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
+            }
         }
         
+        cell.usernameCellLabel.text = choreItem.choreUsername
+        cell.dueDateCellLabel.text = choreItem.dueDate
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
     }
 }

@@ -10,14 +10,13 @@ import UIKit
 import Firebase
 
 class SettingsViewController: UIViewController {
-
+    
     @IBOutlet weak var coinValueTextField: UITextField!
     @IBOutlet weak var bonusDaySwitch: UISwitch!
     @IBOutlet weak var multiplierValueTextField: UITextField!
-    
-    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    
     var isFirstLoad = true
     var coinValue = 0
     
@@ -30,30 +29,32 @@ class SettingsViewController: UIViewController {
             usernameLabel.text = username
             getRunningTotal()
         }
+        
+        self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "whiteBG"))
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     @IBAction func toggleBonusDay(_ sender: UISwitch) {
     }
-
+    
     @IBAction func selectBackground(_ sender: UIButton) {
         // switch to determine which button was selected via tag
         switch sender.tag {
         case 1:
-            print() // can delete this. it's just a placeholder
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "whiteBG.png")!)
         case 2:
-            print() // can delete this. it's just a placeholder
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "orangeBG.png")!)
         case 3:
-            print() // can delete this. it's just a placeholder
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "greenBG.png")!)
         case 4:
-            print() // can delete this. it's just a placeholder
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "redBG.png")!)
         case 5:
-            print() // can delete this. it's just a placeholder
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "purpleBG.png")!)
         default:
             break
         }
@@ -71,5 +72,5 @@ class SettingsViewController: UIViewController {
             }
         }
     }
-
+    
 }

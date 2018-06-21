@@ -12,6 +12,8 @@ class Chore{
     
     var key: String
     var name: String?
+    var choreUsername: String?
+    var dueDate: String?
     var completed: Bool?
     
     init(dictionary: [String : AnyObject], key: String){
@@ -19,7 +21,14 @@ class Chore{
         if let choreName = dictionary["chore_name"] as? String {
             self.name = choreName
         }
-       
+        
+        if let choreUsername = dictionary["chore_username"] as? String {
+            self.choreUsername = choreUsername
+        }
+        
+        if let dueDate = dictionary["due_date"] as? String {
+            self.dueDate = dueDate
+        }
         
         if dictionary["chore_completed"] == nil{
             self.completed =  false
