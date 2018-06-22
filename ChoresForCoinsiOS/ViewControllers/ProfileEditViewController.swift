@@ -24,60 +24,60 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        // get a reference of the database from Firebase
-//        ref = Database.database().reference()
-//
-//        // get current user
-//        let user = Auth.auth().currentUser
-//        if let user = user {
-//            uid = user.uid
-//            email = user.email
-//
-//            // get user data from database
-//            ref?.child("user").child(uid!).observe(.value, with: { (snapshot) in
-//                if let val = snapshot.value as? [String:Any] {
-//                    if let usernameUnwrapped = val["user_name"] as? String {
-//                        self.username = usernameUnwrapped
-//                        self.usernameTextField.text = usernameUnwrapped
-//                    }
-//
-//                    // get parent key
-//                    if let parentKeyUnwrapped = val["parent_key"] as? String {
-//                        self.parentKey = parentKeyUnwrapped
-//
-//                        // get isParent
-//                        if let isParentUnwrapped = val["user_parent"] as? Bool {
-//                            self.isParent = isParentUnwrapped
-//
-//                            // check if user is parent. Turn on/off text fields accordingly
-//                            if isParentUnwrapped {
-//                                // for parent
-//                                self.parentKeyLabel.isHidden = false
-//                                self.parentKeyTextField.isHidden = true
-//
-//                                // set parentkey in label
-//                                if let parentKeyUnwrapped = self.parentKey {
-//                                    self.parentKeyLabel.text = parentKeyUnwrapped
-//                                }
-//                            } else {
-//                                // for child
-//                                self.parentKeyLabel.isHidden = true
-//                                self.parentKeyTextField.isHidden = false
-//
-//                                // set parentkey in text field
+        // get a reference of the database from Firebase
+        ref = Database.database().reference()
+
+        // get current user
+        let user = Auth.auth().currentUser
+        if let user = user {
+            uid = user.uid
+            email = user.email
+
+            // get user data from database
+            ref?.child("user").child(uid!).observe(.value, with: { (snapshot) in
+                if let val = snapshot.value as? [String:Any] {
+                    if let usernameUnwrapped = val["user_name"] as? String {
+                        self.username = usernameUnwrapped
+                        self.usernameTextField.text = usernameUnwrapped
+                    }
+
+                    // get parent key
+                    if let parentKeyUnwrapped = val["parent_id"] as? String {
+                        self.parentKey = parentKeyUnwrapped
+
+                        // get isParent
+                        if let isParentUnwrapped = val["user_parent"] as? Bool {
+                            self.isParent = isParentUnwrapped
+
+                            // check if user is parent. Turn on/off text fields accordingly
+                            if isParentUnwrapped {
+                                // for parent
+                                self.parentKeyLabel.isHidden = false
+                             //   self.parentKeyTextField.isHidden = true
+
+                                // set parentkey in label
+                                if let parentKeyUnwrapped = self.parentKey {
+                                    self.parentKeyLabel.text = parentKeyUnwrapped
+                                }
+                            } else {
+                                // for child
+                                self.parentKeyLabel.isHidden = true
+                           //     self.parentKeyTextField.isHidden = false
+
+                                // set parentkey in text field
 //                                if let parentKeyUnwrapped = self.parentKey {
 //                                    self.parentKeyTextField.text = parentKeyUnwrapped
 //                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            })
-//        }
-//
-//        if let emailUnwrapped = email {
-//            emailTextField.text = emailUnwrapped
-//        }
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        if let emailUnwrapped = email {
+            emailTextField.text = emailUnwrapped
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

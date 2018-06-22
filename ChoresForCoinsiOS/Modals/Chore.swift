@@ -15,6 +15,7 @@ class Chore{
     var choreUsername: String?
     var dueDate: String?
     var completed: Bool?
+    var parentID: String?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -30,6 +31,10 @@ class Chore{
             self.dueDate = dueDate
         }
         
+        if let parentid = dictionary["parent_id"] as? String{
+            self.parentID = parentid
+        }
+        
         if dictionary["chore_completed"] == nil{
             self.completed =  false
         } else {
@@ -37,5 +42,7 @@ class Chore{
                 self.completed = choreCompleted
             }
         }
+        
+        
     }
 }
