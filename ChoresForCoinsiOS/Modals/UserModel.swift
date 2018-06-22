@@ -15,12 +15,13 @@ class UserModel{
     var generatedID: String?
     var userName: String?
     var isParent: String?
+    var coinTotal: Int?
     
-    init(mID: String?, mGeneratedID: String?, mUserName: String?, mIsParent: String?){
+    init(mID: String?, mGeneratedID: String?, mUserName: String?, mIsParent: String?, mCoinTotal: Int?){
         id = mID
         generatedID = mGeneratedID
         userName = mUserName
         isParent = mIsParent
-        
+        coinTotal = mCoinTotal
     }
 }
