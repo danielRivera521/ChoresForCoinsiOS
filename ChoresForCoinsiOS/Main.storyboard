@@ -434,8 +434,8 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="fvp-4L-aBR" id="Eje-nJ-n5g"/>
-                        <outlet property="parentKeyLabel" destination="HZT-Xp-a36" id="dlt-xl-uRi"/>
-                        <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="vxq-jd-3gY"/>
+                        <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="lWG-jr-sBZ"/>
+                        <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="4Rh-6U-GVQ"/>
                         <outlet property="parentKeyTextField" destination="fum-xN-ubL" id="ivC-AB-Dfc"/>
                         <outlet property="passwordLabel" destination="CW2-h5-acf" id="NNC-Rr-GiB"/>
                         <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
@@ -2543,6 +2543,8 @@
                         <outlet property="choreNameLabel" destination="kG9-JB-EhE" id="9Z1-tT-2iP"/>
                         <outlet property="choreNoteTextView" destination="VmY-QH-8F3" id="vSD-5e-H1d"/>
                         <outlet property="choreValueLabel" destination="srM-gj-pbB" id="Xeu-HC-U0Q"/>
+                        <outlet property="coinAmtLabel" destination="m1O-03-rf6" id="7J0-Sa-UYD"/>
+                        <outlet property="completedBtn" destination="mS5-Qp-9J1" id="eAi-OK-zcH"/>
                         <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
                         <outlet property="headerUserNameLabel" destination="ENd-rF-5Y9" id="Kxe-lY-swL"/>
                         <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
