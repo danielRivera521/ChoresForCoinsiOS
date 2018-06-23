@@ -334,12 +334,14 @@ class AddRemoveCoinsViewController: UIViewController {
     }
     
     @IBAction func deleteNumbers(_ sender: UIButton) {
-        // remove last character
-        if numString.count > 1 {
-            numString.remove(at: numString.endIndex)
-        } else {
-            numString = "0"
-        }
+//        // remove last character
+//        if numString.count > 1 {
+//            numString.remove(at: numString.endIndex)
+//        } else {
+//            numString = "0"
+//        }
+        
+        numString = "0"
         
         // update string in view
         coinTotalLabel.text = numString

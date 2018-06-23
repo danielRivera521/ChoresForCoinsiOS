@@ -108,9 +108,22 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             var count = 0
             for key in Array(dictRunningTotal.keys) {
                 self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
+
                 count += 1
             }
+            
+            let coinTotalsCopy = self.coinTotals
+            var newCoinTotals = [RunningTotal] ()
+            
+            for total in coinTotalsCopy {
+                for child in self.children {
+                    if total.userid == child.userid {
+                        newCoinTotals.append(total)
+                    }
+                }
+            }
+            
+            self.coinTotals = newCoinTotals
             
             self.childrenTableView.reloadData()
         }

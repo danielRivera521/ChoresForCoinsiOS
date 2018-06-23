@@ -17,15 +17,16 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // check is user is already signed in
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if user != nil {
-                self.performSegue(withIdentifier: "goToOverview", sender: self)
-            }
-        }
+//        // check is user is already signed in
+//        Auth.auth().addStateDidChangeListener { (auth, user) in
+//            if user != nil {
+//                self.performSegue(withIdentifier: "goToOverview", sender: self)
+//            }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
         // sets up firebase pre-made auth UI
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self

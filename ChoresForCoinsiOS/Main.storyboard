@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="loI-KR-X34">
-                                <rect key="frame" x="0.0" y="101" width="375" height="677"/>
+                                <rect key="frame" x="0.0" y="101" width="375" height="628"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="87" id="xkm-wP-pnB" customClass="ChoreCellTableViewCell" customModule="ChoresForCoinsiOS" customModuleProvider="target">
@@ -2176,7 +2176,7 @@
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="zGP-ut-peX" eventType="touchUpInside" id="daf-dG-rmF"/>
-                                            <segue destination="0aj-d2-s3B" kind="presentation" identifier="goToChoreList" id="IDO-mz-EiF"/>
+                                            <segue destination="vEf-KN-FAV" kind="presentation" identifier="goToChoreList" id="6S7-b7-Z4r"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -3369,11 +3369,10 @@
         <image name="whiteBG" width="768" height="1023"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Gxm-IN-KRx"/>
-        <segue reference="bm7-WQ-ArU"/>
+        <segue reference="6S7-b7-Z4r"/>
+        <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="Yia-uk-i10"/>
         <segue reference="7DE-Oe-Cje"/>
-        <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
