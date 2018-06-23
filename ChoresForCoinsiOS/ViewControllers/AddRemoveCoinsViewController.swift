@@ -233,7 +233,7 @@ class AddRemoveCoinsViewController: UIViewController {
     
     @IBAction func done(_ sender: UIButton) {
         // update database with new coin total
-        
+        updateTotalCoins()
         // update coin total in header
         self.coinAmtLabel.text = "\(self.coinValue!)"
         
@@ -254,7 +254,7 @@ class AddRemoveCoinsViewController: UIViewController {
             coinTotalLabel.text = "\(self.coinValue!)"
             
             // update new coin value on database
-            
+            updateTotalCoins()
             // dismiss view
         }
     }
@@ -283,5 +283,16 @@ class AddRemoveCoinsViewController: UIViewController {
             
             calculateNewTotal()
         }
+    }
+    
+    func updateTotalCoins (){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid{
+            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+        }
+        
+        
     }
 }

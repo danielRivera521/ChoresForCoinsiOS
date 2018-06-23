@@ -67,6 +67,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(_ animated: Bool) {
         if !firstView{
             createChores()
+            getRunningTotal()
         }
         
     }
@@ -179,54 +180,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             self.choreListTV.reloadData()
             print(self.chores.count)
         }
-//        self.ref?.child("chores").observeSingleEvent(of: .value, with: { (snapshot) in
-//            //if there are children in the database
-//            print ("this is the count of children in the snapshot: \(snapshot.childrenCount)")
-//            if snapshot.childrenCount > 1{
-//
-//                if let value = snapshot.value as? NSDictionary{
-//                    for id in value.keyEnumerator(){
-//
-//                        //check for chore ID
-//                        if let choreID = id as? String {
-//                            //run another iteration of the database for each individual child in chores to get the parent ID and populate the chore array with the chore name, key and completed attributes.
-//
-//                            self.ref?.child("chores").child(choreID).observeSingleEvent(of: .value, with: { (newSnapshot) in
-//                                //gets the parent id
-//                                let value = newSnapshot.value as? NSDictionary
-//
-//                                let id = value?["parent_id"] as? String
-//                                if let actualParentID = id{
-//
-//                                    if actualParentID == self.parentID {
-//
-//                                        self.ref?.observe(.value) { (snapshot) in
-//                                            let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
-//                                            let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
-//                                            var count = 0
-//                                            for key in Array(dictChores.keys){
-//
-//                                                self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
-//
-//                                                self.chores = self.chores.filter({$0.parentID == actualParentID })
-//
-//
-//                                                count += 1
-//
-//                                                print("count = \(count)")
-//                                            }
-//                                            self.choreListTV.reloadData()
-//                                            print(self.chores.count)
-//                                        }
-//
-//                                    }
-//                                }
-//                            })
-//                        }
-//                    }
-//                }
-//            }
-//        })
+        
     }
     
     //gets the parent generated id from the user's node in the database
