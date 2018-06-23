@@ -34,22 +34,26 @@ class AddRemoveCoinsViewController: UIViewController {
     var isAdd = false
     var numString: String = ""
     var idFound = false
-    var coinTotal: Int?
     var childId: String?
+    var userID: String?
+    var parentID: String?
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
+    var runningTotal = 0
+    var isParent = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(String(coinTotal!))
         
         // get username and set it to label in header
         checkDatabase()
         
         // get coinvalue from db and set it to label
-        getRunningTotal()
+        //getRunningTotal()
         
-        if let coinTotal = coinTotal {
-            coinTotalLabel.text = String(coinTotal)
+        if let coinvalue = coinValue {
+            coinTotalLabel.text = String(coinvalue)
+            coinValue = coinvalue
         }
         
         // disable all buttons except for gray plus and minus
@@ -60,11 +64,91 @@ class AddRemoveCoinsViewController: UIViewController {
                 button.isEnabled = false
             }
         }
+        
+        //edit header information
+        let name = Auth.auth().currentUser?.displayName
+        if let username = name {
+            usernameLabel.text = username
+            //getRunningTotal()
+            
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getRunningTotalParent()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func getRunningTotalParent(){
+        
+        getChildren()
+        getCoinTotals()
+    }
+    
+    //gets the parent generated id from the user's node in the database
+    func getParentId(){
+        if let actualUID = userID{
+            _ = Database.database().reference().child("user").child(actualUID).observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let id = value?["parent_id"] as? String
+                if let actualID = id{
+                    self.parentID = actualID
+                }
+            }
+        }
+        
+    }
+    
+    // gets all children with same parent id as user
+    func getChildren() {
+        children.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
+            var count = 0
+            for key in Array(dictUsers.keys) {
+                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                self.children = self.children.filter({$0.parentid == self.parentID})
+                self.children = self.children.filter({$0.userparent! == false})
+                
+                count += 1
+            }
+        }
+        
+    }
+    
+    func getCoinTotals() {
+        coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            var count = 0
+            for key in Array(dictRunningTotal.keys) {
+                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                
+                count += 1
+            }
+            
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.userid == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
+        }
     }
     
     @IBAction func removeOneCoin(_ sender: UIButton) {
@@ -80,8 +164,8 @@ class AddRemoveCoinsViewController: UIViewController {
     }
     
     @IBAction func addOneCoin(_ sender: UIButton) {
-        if let coinValue = coinValue {
-            var newCoinValue = coinValue
+        if let coinvalue = coinValue {
+            var newCoinValue = coinvalue
             // add 1 to coin value
             newCoinValue += 1
             self.coinValue = newCoinValue
@@ -166,7 +250,7 @@ class AddRemoveCoinsViewController: UIViewController {
                                     // user is in database
                                     self.idFound = true
                                     if let username = Auth.auth().currentUser?.displayName{
-                                        self.getRunningTotal()
+                                        //self.getRunningTotal()
                                         self.usernameLabel.text = username
                                         return
                                     }
@@ -188,21 +272,6 @@ class AddRemoveCoinsViewController: UIViewController {
             
         }
         
-    }
-    
-    func getRunningTotal(){
-        
-        let databaseRef = Database.database().reference()
-        
-        if let uid = Auth.auth().currentUser?.uid {
-            
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
-                print(snapshot)
-                self.coinValue = snapshot.value as? Int ?? 0
-                //self.coinTotalLabel.text = "\(self.coinValue!)"
-                self.coinAmtLabel.text = "\(self.coinValue!)"
-            }
-        }
     }
     
     func calculateNewTotal () {

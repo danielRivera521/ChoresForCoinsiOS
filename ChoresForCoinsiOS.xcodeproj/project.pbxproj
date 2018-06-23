@@ -26,6 +26,8 @@
 		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
 		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
+		B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111D20DE49D7000453C3 /* ChildUser.swift */; };
+		B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111F20DE4A0F000453C3 /* RunningTotal.swift */; };
 		B077B56B20DB777200F42BB2 /* ChoreCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
@@ -61,6 +63,8 @@
 		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
 		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
+		B044111D20DE49D7000453C3 /* ChildUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildUser.swift; sourceTree = "<group>"; };
+		B044111F20DE4A0F000453C3 /* RunningTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTotal.swift; sourceTree = "<group>"; };
 		B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreCellTableViewCell.swift; sourceTree = "<group>"; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -130,22 +134,22 @@
 		65EF0C7120D405C800DD9A3F /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */,
-				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
-				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
-				B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */,
-				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
 				B0CC653620D5249000E86D41 /* AddChoreViewController.swift */,
+				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
+				B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */,
 				B0CC653820D5259800E86D41 /* ChoreDetailsViewController.swift */,
 				B0CC653A20D525AF00E86D41 /* ChoreEditViewController.swift */,
-				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
-				B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */,
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
-				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
-				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
+				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
+				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
 				B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */,
-				B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */,
 				B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */,
+				B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */,
+				B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */,
+				65EF0C8620D409E800DD9A3F /* ProtectedViewController.swift */,
+				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
+				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
+				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -158,6 +162,8 @@
 				65EF0C9020D438A500DD9A3F /* DataService.swift */,
 				65EF0C9420D5D05E00DD9A3F /* AlertController.swift */,
 				6576490F20DA09BA002DE1AC /* Chore.swift */,
+				B044111D20DE49D7000453C3 /* ChildUser.swift */,
+				B044111F20DE4A0F000453C3 /* RunningTotal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -339,7 +345,9 @@
 				B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */,
 				B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
+				B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */,
 				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
+				B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */,
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
 				B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */,
 				65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */,

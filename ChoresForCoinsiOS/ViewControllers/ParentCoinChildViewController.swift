@@ -12,6 +12,8 @@ import Firebase
 class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var childrenTableView: UITableView!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var coinAmtLabel: UILabel!
     
     var ref: DatabaseReference?
     var coinValue = 11
@@ -22,6 +24,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     var selectedCellIndex: Int?
+    var isParent = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,17 +32,36 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
+        //edit header information
+        let name = Auth.auth().currentUser?.displayName
+        if let username = name {
+            usernameLabel.text = username
+            //getRunningTotal()
+            
+        }
+        
         getParentId()
         
         // gets all children with same parent id as user
         getChildren()
         
+        // gets coin totals for all children
         getCoinTotals()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getRunningTotalParent()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func getRunningTotalParent(){
+        
+        getChildren()
+        getCoinTotals()
     }
     
     func getParentId(){
@@ -54,21 +76,6 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
-    }
-    
-    func getCoinTotals() {
-        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
-            for key in Array(dictRunningTotal.keys) {
-                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
-                count += 1
-            }
-            
-            self.childrenTableView.reloadData()
-        }
     }
     
     // gets all children with same parent id as user
@@ -92,11 +99,28 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
     }
     
+    func getCoinTotals() {
+        //coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            var count = 0
+            for key in Array(dictRunningTotal.keys) {
+                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                
+                count += 1
+            }
+            
+            self.childrenTableView.reloadData()
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? AddRemoveCoinsViewController {
             if let selectedCellIndex = selectedCellIndex {
                 if let cointotal = coinTotals[selectedCellIndex].cointotal {
-                    destination.coinTotal = cointotal
+                    destination.coinValue = cointotal
                     destination.childId = coinTotals[selectedCellIndex].userid
                 }
             }
@@ -130,50 +154,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     @IBAction func unwindToChildList(segue: UIStoryboardSegue) {
         dismiss(animated: true, completion: nil)
     }
-    
-    
-    // MARK: Custom Classes
-    class ChildUser {
-        var key: String
-        var userid: String?
-        var username: String?
-        var userparent: Bool?
-        var parentid: String?
-        
-        init(dictionary: [String:AnyObject], key: String) {
-            self.key = key
-            if let userid = dictionary["user_id"] as? String {
-                self.userid = userid
-            }
-            if let username = dictionary["user_name"] as? String {
-                self.username = username
-            }
-            if let userparent = dictionary["user_parent"] as? Bool {
-                self.userparent = userparent
-            }
-            if let parentid = dictionary["parent_id"] as? String {
-                self.parentid = parentid
-            }
-        }
-    }
-    
-    class RunningTotal {
-        var key: String
-        var userid: String?
-        var cointotal: Int?
-        
-        init(dictionary: [String:AnyObject], key: String) {
-            self.key = key
-            if let userid = dictionary["child_id"] as? String {
-                self.userid = userid
-            }
-            if let cointotal = dictionary["coin_total"] as? Int {
-                self.cointotal = cointotal
-            }
-        }
-    }
 }
-
 
 
 

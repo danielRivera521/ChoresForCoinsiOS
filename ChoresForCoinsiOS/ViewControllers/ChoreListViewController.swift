@@ -14,6 +14,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var choreListTV: UITableView!
+    @IBOutlet weak var childRedeemView: UIView!
     
     var chores: [Chore] = [Chore]()
     var coinValue = 11
@@ -23,11 +24,18 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var parentID: String?
     var choreIDNum: String?
     var firstView = true
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
+    var runningTotal = 0
+    var isParent = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         firstView = true
         ref = Database.database().reference()
+        
+        childRedeemView.isHidden = true
+        
         //checks if the user has an account in the database
         checkDatabase()
         //gets the firebase generated id
@@ -47,11 +55,12 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         let name = Auth.auth().currentUser?.displayName
         if let username = name {
             usernameLabel.text = username
-            getRunningTotal()
+            
         }
         
         
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,11 +71,18 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         ref?.child("user").removeAllObservers()
         ref?.removeAllObservers()
          firstView = false
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         if !firstView{
             createChores()
+        }
+        
+        if isParent {
+            getRunningTotalParent()
+        } else {
             getRunningTotal()
         }
         
@@ -88,7 +104,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                                     // user is in database
                                     self.idFound = true
                                     if let username = Auth.auth().currentUser?.displayName{
-                                        self.getRunningTotal()
                                         self.usernameLabel.text = username
                                         return
                                     }
@@ -112,18 +127,35 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    func checkIfParent() {
+        // check if parent
+        if let actualID = userID {
+            _ = Database.database().reference().child("user").child(actualID).child("user_parent").observeSingleEvent(of: .value) { (snapshot) in
+                if let isparent = snapshot.value as? Bool {
+                    self.isParent = isparent
+                }
+            }
+        }
+    }
+    
     func getRunningTotal(){
-        
+
         let databaseRef = Database.database().reference()
-        
+
         if let uid = Auth.auth().currentUser?.uid {
-            
+
             databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
                 print(snapshot)
                 self.coinValue = snapshot.value as? Int ?? 0
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
+    }
+    
+    func getRunningTotalParent(){
+        
+        getChildren()
+        getCoinTotals()
     }
     
     //MARK: TableView set up
@@ -197,6 +229,54 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    // gets all children with same parent id as user
+    func getChildren() {
+        children.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
+            var count = 0
+            for key in Array(dictUsers.keys) {
+                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                self.children = self.children.filter({$0.parentid == self.parentID})
+                self.children = self.children.filter({$0.userparent! == false})
+                
+                count += 1
+            }
+        }
+        
+    }
+    
+    func getCoinTotals() {
+        coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            var count = 0
+            for key in Array(dictRunningTotal.keys) {
+                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                
+                count += 1
+            }
+            
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.userid == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToChoreDetail"{
             
@@ -217,10 +297,17 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             if let isParent = snapshot.value as? Bool {
                 if isParent {
                     self.performSegue(withIdentifier: "toCoinFromChoresList", sender: nil)
+                } else {
+                    self.childRedeemView.isHidden = false
                 }
             }
         })
+    }
+    
+    @IBAction func childRedeem(_ sender: UIButton) {
+        // zero out coin total and update db
         
-        // TODO: Implement Redeem View
+        childRedeemView.isHidden = true
     }
 }
+

@@ -208,6 +208,27 @@
                                     <constraint firstItem="xgm-C1-b2L" firstAttribute="width" secondItem="cf5-cM-o3q" secondAttribute="width" id="xOS-X0-rzA"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hu1-17-zjp" userLabel="RedeemChildView">
+                                <rect key="frame" x="187.66666666666663" y="93" width="187.33333333333337" height="81.333333333333314"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dg4-dM-SJT">
+                                        <rect key="frame" x="0.0" y="16.666666666666671" width="187.33333333333334" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="REDEEM">
+                                            <color key="titleColor" red="0.13273318527918787" green="0.13273318527918787" blue="0.13273318527918787" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="vGS-fl-P9t"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594178082196" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="dg4-dM-SJT" firstAttribute="centerY" secondItem="hu1-17-zjp" secondAttribute="centerY" id="5dp-us-d1U"/>
+                                    <constraint firstItem="dg4-dM-SJT" firstAttribute="centerX" secondItem="hu1-17-zjp" secondAttribute="centerX" id="ZLJ-6B-fpN"/>
+                                    <constraint firstItem="dg4-dM-SJT" firstAttribute="width" secondItem="hu1-17-zjp" secondAttribute="width" id="fng-K1-ZpW"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -219,9 +240,13 @@
                             <constraint firstItem="loI-KR-X34" firstAttribute="leading" secondItem="xOL-dX-BLh" secondAttribute="leading" id="IZ2-4w-c5M"/>
                             <constraint firstItem="cf5-cM-o3q" firstAttribute="trailing" secondItem="xOL-dX-BLh" secondAttribute="trailing" id="PhM-SH-6i3"/>
                             <constraint firstItem="cf5-cM-o3q" firstAttribute="leading" secondItem="xOL-dX-BLh" secondAttribute="leading" id="RWW-qc-kf9"/>
+                            <constraint firstItem="hu1-17-zjp" firstAttribute="width" secondItem="MmR-Ow-AS6" secondAttribute="width" multiplier="0.5" id="VlD-3J-SNU"/>
+                            <constraint firstItem="hu1-17-zjp" firstAttribute="trailing" secondItem="xOL-dX-BLh" secondAttribute="trailing" id="i2z-8Z-H6P"/>
                             <constraint firstItem="cf5-cM-o3q" firstAttribute="height" secondItem="MmR-Ow-AS6" secondAttribute="height" multiplier="0.07" id="ifA-mG-4TT"/>
                             <constraint firstItem="loI-KR-X34" firstAttribute="leading" secondItem="xOL-dX-BLh" secondAttribute="leading" id="lh5-GE-EDs"/>
+                            <constraint firstItem="hu1-17-zjp" firstAttribute="top" secondItem="cf5-cM-o3q" secondAttribute="bottom" constant="-8" id="mtD-5E-mss"/>
                             <constraint firstItem="xOL-dX-BLh" firstAttribute="bottom" secondItem="loI-KR-X34" secondAttribute="bottom" id="q2Z-Pw-MHC"/>
+                            <constraint firstItem="hu1-17-zjp" firstAttribute="height" secondItem="MmR-Ow-AS6" secondAttribute="height" multiplier="0.1" id="tnn-uU-ml1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xOL-dX-BLh"/>
                     </view>
@@ -229,6 +254,7 @@
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="childRedeemView" destination="hu1-17-zjp" id="xVZ-iO-uER"/>
                         <outlet property="choreListTV" destination="loI-KR-X34" id="hAF-om-VI7"/>
                         <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
                         <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
@@ -857,6 +883,9 @@
                                             <constraint firstAttribute="width" secondItem="7JA-pm-tBE" secondAttribute="height" id="ozb-N9-BDI"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="coin"/>
+                                        <connections>
+                                            <action selector="toCoinView:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="NAK-dV-Lqu"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -879,6 +908,28 @@
                                     <constraint firstItem="ITP-Cg-ahr" firstAttribute="centerY" secondItem="oAR-Uz-Bxr" secondAttribute="centerY" id="zI3-4d-WZh"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9M-tZ-0ow" userLabel="RedeemChildView">
+                                <rect key="frame" x="187.66666666666663" y="93" width="187.33333333333337" height="81.333333333333314"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-o4-KzL">
+                                        <rect key="frame" x="0.0" y="16.666666666666671" width="187.33333333333334" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="REDEEM">
+                                            <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="LXN-51-erk"/>
+                                            <action selector="childRedeem:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="dYX-wv-n4O"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594179999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="width" secondItem="Z9M-tZ-0ow" secondAttribute="width" id="Ig1-63-jMS"/>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerX" secondItem="Z9M-tZ-0ow" secondAttribute="centerX" id="iVr-qe-wNm"/>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerY" secondItem="Z9M-tZ-0ow" secondAttribute="centerY" id="tmF-gx-48M"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -891,6 +942,7 @@
                             <constraint firstItem="GpQ-N3-WGT" firstAttribute="height" secondItem="dNn-bG-5ps" secondAttribute="height" multiplier="0.08" id="5ss-2C-F6d"/>
                             <constraint firstItem="GpQ-N3-WGT" firstAttribute="top" secondItem="cdf-R2-2nF" secondAttribute="bottom" id="6Vh-oA-H8O"/>
                             <constraint firstItem="cdf-R2-2nF" firstAttribute="top" secondItem="80r-pS-eBE" secondAttribute="bottom" id="BUb-tf-qgs"/>
+                            <constraint firstItem="Z9M-tZ-0ow" firstAttribute="width" secondItem="dNn-bG-5ps" secondAttribute="width" multiplier="0.5" id="BqR-3H-6DC"/>
                             <constraint firstItem="80r-pS-eBE" firstAttribute="top" secondItem="OXt-Dh-6lA" secondAttribute="bottom" id="DGY-cx-Fdp"/>
                             <constraint firstItem="oAR-Uz-Bxr" firstAttribute="trailing" secondItem="zIt-le-Adg" secondAttribute="trailing" id="H8k-2q-lyT"/>
                             <constraint firstItem="ftx-ku-Nrh" firstAttribute="top" secondItem="E3X-nZ-8sP" secondAttribute="bottom" id="JCx-1Q-UYp"/>
@@ -902,6 +954,7 @@
                             <constraint firstItem="OYy-DR-0ue" firstAttribute="trailing" secondItem="zIt-le-Adg" secondAttribute="trailing" id="Vij-1r-RE2"/>
                             <constraint firstItem="80r-pS-eBE" firstAttribute="trailing" secondItem="zIt-le-Adg" secondAttribute="trailing" id="Vvg-Vq-M5o"/>
                             <constraint firstItem="80r-pS-eBE" firstAttribute="top" secondItem="OXt-Dh-6lA" secondAttribute="bottom" id="XOq-Zw-ncY"/>
+                            <constraint firstItem="Z9M-tZ-0ow" firstAttribute="top" secondItem="oAR-Uz-Bxr" secondAttribute="bottom" constant="-8" id="XZl-Pu-PG4"/>
                             <constraint firstItem="OXt-Dh-6lA" firstAttribute="top" secondItem="ftx-ku-Nrh" secondAttribute="bottom" id="ZH0-iu-TR2"/>
                             <constraint firstItem="zIt-le-Adg" firstAttribute="bottom" secondItem="GpQ-N3-WGT" secondAttribute="bottom" id="ZLP-ur-TJx"/>
                             <constraint firstItem="E3X-nZ-8sP" firstAttribute="leading" secondItem="zIt-le-Adg" secondAttribute="leading" id="aJ6-7O-Sgs"/>
@@ -921,12 +974,15 @@
                             <constraint firstItem="cdf-R2-2nF" firstAttribute="trailing" secondItem="zIt-le-Adg" secondAttribute="trailing" id="rzy-EB-wcW"/>
                             <constraint firstItem="OXt-Dh-6lA" firstAttribute="leading" secondItem="zIt-le-Adg" secondAttribute="leading" id="tfe-F9-7XS"/>
                             <constraint firstItem="E3X-nZ-8sP" firstAttribute="height" secondItem="dNn-bG-5ps" secondAttribute="height" multiplier="0.18" id="tsg-9h-7QY"/>
+                            <constraint firstItem="zIt-le-Adg" firstAttribute="trailing" secondItem="Z9M-tZ-0ow" secondAttribute="trailing" id="ujG-xb-sdL"/>
                             <constraint firstItem="cdf-R2-2nF" firstAttribute="leading" secondItem="zIt-le-Adg" secondAttribute="leading" id="w2J-kD-Cd3"/>
+                            <constraint firstItem="Z9M-tZ-0ow" firstAttribute="height" secondItem="dNn-bG-5ps" secondAttribute="height" multiplier="0.1" id="yij-D7-AyK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zIt-le-Adg"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_S" id="0ie-jw-VkK"/>
                     <connections>
+                        <outlet property="childRedeemView" destination="Z9M-tZ-0ow" id="8qM-cH-Wz2"/>
                         <outlet property="choreDescriptionTextView" destination="5P0-uy-DTh" id="D48-gA-jxv"/>
                         <outlet property="choreImageUIButton" destination="E3X-nZ-8sP" id="yMP-zc-736"/>
                         <outlet property="choreNameTextField" destination="dWX-Jq-LEa" id="zGi-tG-ceR"/>
@@ -1212,6 +1268,9 @@
                                             <constraint firstAttribute="width" secondItem="vCf-mM-Gx1" secondAttribute="height" id="IBG-Ar-BmW"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="coin"/>
+                                        <connections>
+                                            <action selector="toCoinView:" destination="mZr-ny-ubW" eventType="touchUpInside" id="AcD-Jd-p3m"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1234,10 +1293,33 @@
                                     <constraint firstItem="JhJ-k8-sPy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cyh-IY-4J2" secondAttribute="leading" constant="20" symbolic="YES" id="nvO-GT-ksN"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZoU-8u-V6T" userLabel="RedeemChildView">
+                                <rect key="frame" x="187" y="93" width="187.33333333333337" height="81.333333333333314"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jBy-LU-GrE">
+                                        <rect key="frame" x="0.0" y="16.666666666666671" width="187.33333333333334" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="REDEEM">
+                                            <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="childRedeem:" destination="mZr-ny-ubW" eventType="touchUpInside" id="KRo-fE-Zrr"/>
+                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="qsN-bv-4Mb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594179999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="jBy-LU-GrE" firstAttribute="centerY" secondItem="ZoU-8u-V6T" secondAttribute="centerY" id="LnW-rY-62U"/>
+                                    <constraint firstItem="jBy-LU-GrE" firstAttribute="width" secondItem="ZoU-8u-V6T" secondAttribute="width" id="qkA-HY-3cq"/>
+                                    <constraint firstItem="jBy-LU-GrE" firstAttribute="centerX" secondItem="ZoU-8u-V6T" secondAttribute="centerX" id="vcp-Uk-4Aj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Qrz-cb-a9A" firstAttribute="leading" secondItem="p7V-lx-juA" secondAttribute="leading" id="1JA-vU-Bpt"/>
+                            <constraint firstItem="ZoU-8u-V6T" firstAttribute="height" secondItem="Jc6-mS-8Ng" secondAttribute="height" multiplier="0.1" id="1xv-K1-3xN"/>
                             <constraint firstItem="p7V-lx-juA" firstAttribute="trailing" secondItem="QX8-QA-bRk" secondAttribute="trailing" id="3B4-Fo-Eqi"/>
                             <constraint firstItem="S1r-fj-3AW" firstAttribute="leading" secondItem="p7V-lx-juA" secondAttribute="leading" id="3Uk-7y-5o0"/>
                             <constraint firstItem="QX8-QA-bRk" firstAttribute="leading" secondItem="p7V-lx-juA" secondAttribute="leading" id="AtM-Qg-vQ9"/>
@@ -1246,6 +1328,7 @@
                             <constraint firstItem="S1r-fj-3AW" firstAttribute="top" secondItem="Qrz-cb-a9A" secondAttribute="bottom" id="EIw-z6-PRy"/>
                             <constraint firstItem="Qrz-cb-a9A" firstAttribute="height" secondItem="Jc6-mS-8Ng" secondAttribute="height" multiplier="0.08" id="FPs-Dh-qvb"/>
                             <constraint firstItem="QX8-QA-bRk" firstAttribute="top" secondItem="S1r-fj-3AW" secondAttribute="bottom" id="FSb-Hb-Jys"/>
+                            <constraint firstItem="ZoU-8u-V6T" firstAttribute="top" secondItem="cyh-IY-4J2" secondAttribute="bottom" constant="-8" id="Jld-KE-6ah"/>
                             <constraint firstItem="p7V-lx-juA" firstAttribute="trailing" secondItem="Qrz-cb-a9A" secondAttribute="trailing" id="N7W-KE-DJa"/>
                             <constraint firstItem="p7V-lx-juA" firstAttribute="bottom" secondItem="QX8-QA-bRk" secondAttribute="bottom" id="SwM-Cd-3is"/>
                             <constraint firstItem="WHX-r7-eV4" firstAttribute="trailing" secondItem="p7V-lx-juA" secondAttribute="trailing" id="TtW-T5-I3j"/>
@@ -1255,6 +1338,8 @@
                             <constraint firstItem="cyh-IY-4J2" firstAttribute="top" secondItem="p7V-lx-juA" secondAttribute="top" id="i9b-nV-TYz"/>
                             <constraint firstItem="cyh-IY-4J2" firstAttribute="trailing" secondItem="p7V-lx-juA" secondAttribute="trailing" id="nwP-b5-i6M"/>
                             <constraint firstItem="p7V-lx-juA" firstAttribute="trailing" secondItem="S1r-fj-3AW" secondAttribute="trailing" id="qX2-4X-kxE"/>
+                            <constraint firstItem="ZoU-8u-V6T" firstAttribute="width" secondItem="Jc6-mS-8Ng" secondAttribute="width" multiplier="0.5" id="s5n-Ht-vjH"/>
+                            <constraint firstItem="p7V-lx-juA" firstAttribute="trailing" secondItem="ZoU-8u-V6T" secondAttribute="trailing" id="sZt-Ti-v5e"/>
                             <constraint firstItem="WHX-r7-eV4" firstAttribute="height" secondItem="Jc6-mS-8Ng" secondAttribute="height" multiplier="0.08" id="sbv-4r-vLD"/>
                             <constraint firstItem="WHX-r7-eV4" firstAttribute="leading" secondItem="p7V-lx-juA" secondAttribute="leading" id="uoa-Pt-3y3"/>
                             <constraint firstItem="S1r-fj-3AW" firstAttribute="height" secondItem="Jc6-mS-8Ng" secondAttribute="height" multiplier="0.08" id="xMO-Vh-5Gy"/>
@@ -1265,6 +1350,7 @@
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
                         <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
+                        <outlet property="childRedeemView" destination="ZoU-8u-V6T" id="35w-le-gqE"/>
                         <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="leh-E8-Fc6"/>
                         <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
                         <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
@@ -1405,6 +1491,8 @@
                     </view>
                     <connections>
                         <outlet property="childrenTableView" destination="lh4-Wd-uEi" id="Ng8-AP-U6A"/>
+                        <outlet property="coinAmtLabel" destination="ZVM-2r-Tl5" id="E5P-mm-hNr"/>
+                        <outlet property="usernameLabel" destination="w2p-xC-m4m" id="8ea-zu-F6M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UYe-IQ-qVL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2350,9 +2438,6 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSq-U0-DY5">
                                 <rect key="frame" x="337" y="101" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
-                                <connections>
-                                    <segue destination="l7o-YR-ylh" kind="presentation" id="FGQ-pt-53S"/>
-                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q44-lQ-i2t">
                                 <rect key="frame" x="0.0" y="196.33333333333337" width="375" height="178.66666666666663"/>
@@ -2584,6 +2669,9 @@
                                             <constraint firstAttribute="width" secondItem="6Xu-EU-nYV" secondAttribute="height" id="qxP-EL-S5p"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="coin"/>
+                                        <connections>
+                                            <action selector="toCoinView:" destination="6dG-q3-qFR" eventType="touchUpInside" id="aos-BZ-B7L"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2606,6 +2694,28 @@
                                     <constraint firstItem="Pcd-nJ-hUZ" firstAttribute="centerY" secondItem="Ml9-ew-U3R" secondAttribute="centerY" id="xEU-9E-fdc"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t1y-5I-zRn" userLabel="RedeemChildView">
+                                <rect key="frame" x="187.66666666666663" y="93" width="187.33333333333337" height="81.333333333333314"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vvl-9o-AAI">
+                                        <rect key="frame" x="0.0" y="16.666666666666671" width="187.33333333333334" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="REDEEM">
+                                            <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="0qX-CT-Bo1"/>
+                                            <action selector="childRedeem:" destination="6dG-q3-qFR" eventType="touchUpInside" id="2wk-Cy-jNX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594179999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Vvl-9o-AAI" firstAttribute="centerX" secondItem="t1y-5I-zRn" secondAttribute="centerX" id="4K2-ME-gUe"/>
+                                    <constraint firstItem="Vvl-9o-AAI" firstAttribute="width" secondItem="t1y-5I-zRn" secondAttribute="width" id="UxQ-Bx-d8P"/>
+                                    <constraint firstItem="Vvl-9o-AAI" firstAttribute="centerY" secondItem="t1y-5I-zRn" secondAttribute="centerY" id="q1N-8W-hiu"/>
+                                </constraints>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xJ5-9p-txG">
                                 <rect key="frame" x="8" y="101" width="48" height="30"/>
                                 <state key="normal" title="&lt; Back"/>
@@ -2620,8 +2730,10 @@
                             <constraint firstItem="egl-NY-Sae" firstAttribute="trailing" secondItem="bSq-U0-DY5" secondAttribute="trailing" constant="8" id="26a-df-mJA"/>
                             <constraint firstItem="PLA-Fp-Car" firstAttribute="leading" secondItem="egl-NY-Sae" secondAttribute="leading" id="3Kb-1t-qFn"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xJ5-9p-txG" secondAttribute="trailing" constant="20" symbolic="YES" id="3az-tQ-wG4"/>
+                            <constraint firstItem="egl-NY-Sae" firstAttribute="trailing" secondItem="t1y-5I-zRn" secondAttribute="trailing" id="4cV-3L-1hX"/>
                             <constraint firstItem="hYV-4I-qf2" firstAttribute="leading" secondItem="egl-NY-Sae" secondAttribute="leading" id="4eV-sr-zaG"/>
                             <constraint firstItem="11T-zB-so7" firstAttribute="top" secondItem="2v7-P8-Pls" secondAttribute="bottom" id="6Et-UA-nry"/>
+                            <constraint firstItem="t1y-5I-zRn" firstAttribute="top" secondItem="Ml9-ew-U3R" secondAttribute="bottom" constant="-8" id="6dK-oB-0hg"/>
                             <constraint firstItem="egl-NY-Sae" firstAttribute="trailing" secondItem="2v7-P8-Pls" secondAttribute="trailing" id="7xY-Gp-KbA"/>
                             <constraint firstItem="xJ5-9p-txG" firstAttribute="top" secondItem="Ml9-ew-U3R" secondAttribute="bottom" id="8ak-3O-jZW"/>
                             <constraint firstItem="2v7-P8-Pls" firstAttribute="top" secondItem="3bZ-rQ-oqY" secondAttribute="bottom" id="9eB-F7-7Cx"/>
@@ -2632,6 +2744,7 @@
                             <constraint firstItem="3kX-7h-Lvb" firstAttribute="height" secondItem="OZG-HX-J5A" secondAttribute="height" multiplier="0.06" id="Ehc-5z-ElW"/>
                             <constraint firstItem="2v7-P8-Pls" firstAttribute="height" secondItem="OZG-HX-J5A" secondAttribute="height" multiplier="0.13" id="I81-8Q-epE"/>
                             <constraint firstItem="egl-NY-Sae" firstAttribute="trailing" secondItem="11T-zB-so7" secondAttribute="trailing" id="KSq-gA-l6v"/>
+                            <constraint firstItem="t1y-5I-zRn" firstAttribute="width" secondItem="OZG-HX-J5A" secondAttribute="width" multiplier="0.5" id="LAZ-cy-f13"/>
                             <constraint firstItem="Ml9-ew-U3R" firstAttribute="top" secondItem="egl-NY-Sae" secondAttribute="top" id="LMb-Zg-3M5"/>
                             <constraint firstItem="bSq-U0-DY5" firstAttribute="top" secondItem="Ml9-ew-U3R" secondAttribute="bottom" id="M5f-bC-svB"/>
                             <constraint firstItem="xJ5-9p-txG" firstAttribute="leading" secondItem="egl-NY-Sae" secondAttribute="leading" constant="8" id="Mkp-Ua-cPb"/>
@@ -2663,12 +2776,14 @@
                             <constraint firstItem="Ml9-ew-U3R" firstAttribute="height" secondItem="OZG-HX-J5A" secondAttribute="height" multiplier="0.07" id="w93-XO-DsP"/>
                             <constraint firstItem="egl-NY-Sae" firstAttribute="trailing" secondItem="bSq-U0-DY5" secondAttribute="trailing" constant="8" id="wR4-HC-IQD"/>
                             <constraint firstItem="egl-NY-Sae" firstAttribute="bottom" secondItem="11T-zB-so7" secondAttribute="bottom" id="wSF-k9-VfJ"/>
+                            <constraint firstItem="t1y-5I-zRn" firstAttribute="height" secondItem="OZG-HX-J5A" secondAttribute="height" multiplier="0.1" id="ylX-uo-6pc"/>
                             <constraint firstItem="hYV-4I-qf2" firstAttribute="top" secondItem="bSq-U0-DY5" secondAttribute="bottom" id="zBX-gd-oUx"/>
                             <constraint firstItem="3kX-7h-Lvb" firstAttribute="leading" secondItem="egl-NY-Sae" secondAttribute="leading" id="zCI-cd-Dck"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="egl-NY-Sae"/>
                     </view>
                     <connections>
+                        <outlet property="childRedeemView" destination="t1y-5I-zRn" id="RLa-I1-XK1"/>
                         <outlet property="choreDescriptionTextView" destination="CS1-zd-ylj" id="2kd-RN-Zt3"/>
                         <outlet property="choreImageImageView" destination="Q44-lQ-i2t" id="14O-uo-SOw"/>
                         <outlet property="choreNameLabel" destination="kG9-JB-EhE" id="9Z1-tT-2iP"/>
@@ -2677,6 +2792,7 @@
                         <outlet property="coinAmtLabel" destination="m1O-03-rf6" id="7J0-Sa-UYD"/>
                         <outlet property="completedBtn" destination="mS5-Qp-9J1" id="eAi-OK-zcH"/>
                         <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
+                        <outlet property="editUIButton" destination="bSq-U0-DY5" id="MLZ-HJ-4Nf"/>
                         <outlet property="headerUserNameLabel" destination="ENd-rF-5Y9" id="Kxe-lY-swL"/>
                         <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
                         <outlet property="usernameLabel" destination="8rK-SS-e9D" id="764-F7-mX8"/>
@@ -3195,8 +3311,10 @@
                         <outlet property="choreNameTextField" destination="FdJ-1J-Csf" id="7u7-lT-423"/>
                         <outlet property="choreNoteTextView" destination="zg2-SZ-F4w" id="0AR-fc-0y6"/>
                         <outlet property="choreValueTextField" destination="OBi-Ax-d5A" id="Ck3-2m-NpS"/>
+                        <outlet property="coinAmtLabel" destination="RgL-wo-Z5L" id="Wfx-nW-Zx0"/>
                         <outlet property="dueDateTextField" destination="LaJ-Vj-bhm" id="N2b-9h-zEE"/>
                         <outlet property="startDateTextField" destination="dCP-6f-1HZ" id="czu-To-YgD"/>
+                        <outlet property="usernameLabel" destination="R1k-U5-QNc" id="rBA-vn-eFA"/>
                         <outlet property="usernameTextField" destination="Ef5-EW-iQY" id="1IE-yB-o5F"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromChoreEdit" id="0dr-E4-ccy"/>
                     </connections>
@@ -3255,7 +3373,7 @@
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="Yia-uk-i10"/>
-        <segue reference="IdO-99-Zmk"/>
+        <segue reference="7DE-Oe-Cje"/>
         <segue reference="IDO-mz-EiF"/>
     </inferredMetricsTieBreakers>
 </document>
