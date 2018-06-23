@@ -26,8 +26,9 @@ class ChoreDetailsViewController: UIViewController {
     
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
-
-    var coinValue: Int?
+    
+    var coinValue: Int = 0
+    var choreCoinValue: Int = 0
     
     var choreId: String?
     
@@ -53,10 +54,11 @@ class ChoreDetailsViewController: UIViewController {
             
             databaseRef.child("running_total").child(uid).observeSingleEvent(of: .value) { (snapshot) in
                 print(snapshot)
-                 let value = snapshot.value as? NSDictionary
+                let value = snapshot.value as? NSDictionary
                 
                 let coin = value?["coin_total"] as? Int
                 if let unwrappedCoin = coin{
+                    self.coinValue = unwrappedCoin
                     self.coinAmtLabel.text = "\(unwrappedCoin)"
                 } else {
                     self.coinAmtLabel.text = "0"
@@ -103,6 +105,7 @@ class ChoreDetailsViewController: UIViewController {
             }
             
             if let choreValue = chorValue{
+                self.choreCoinValue = Int(choreValue)!
                 self.choreValueLabel.text = choreValue
             }
             
@@ -122,13 +125,49 @@ class ChoreDetailsViewController: UIViewController {
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func markComplete(_ sender: UIButton) {
-
+        
         let ref = Database.database().reference().child("chores")
         
         ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
+        addCoins()
         dismiss(animated: true, completion: nil)
+    }
+    
+    func addCoins (){
+    
+        let databaseRef = Database.database().reference()
+    
+        var bonusOn = false
+        var multiplier: Double = 1
+        databaseRef.child("app_settings").observeSingleEvent(of: .value) { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            
+            let isBonus = value?["bonus_toggled"] as? Bool
+            if let unwrappedIsBonus = isBonus {
+                bonusOn = unwrappedIsBonus
+            }
+            
+            let multiply = value?["multiplier_value"] as? Double
+            if let mValue = multiply {
+           
+                multiplier = mValue
+            }
+        }
+        if bonusOn {
+            var choreCoinVal: Double = Double(choreCoinValue)
+            
+            choreCoinVal *= multiplier
+            
+            choreCoinValue = Int(choreCoinVal)
+        }
+        coinValue += choreCoinValue
+        if let uid = Auth.auth().currentUser?.uid{
+            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+        }
+        
+        
     }
     
 }
