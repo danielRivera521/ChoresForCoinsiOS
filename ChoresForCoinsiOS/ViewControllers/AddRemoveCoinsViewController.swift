@@ -35,6 +35,7 @@ class AddRemoveCoinsViewController: UIViewController {
     var numString: String = ""
     var idFound = false
     var coinTotal: Int?
+    var childId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,10 @@ class AddRemoveCoinsViewController: UIViewController {
         
         // get coinvalue from db and set it to label
         getRunningTotal()
+        
+        if let coinTotal = coinTotal {
+            coinTotalLabel.text = String(coinTotal)
+        }
         
         // disable all buttons except for gray plus and minus
         // they will enable when plus or minus is tapped
@@ -194,7 +199,7 @@ class AddRemoveCoinsViewController: UIViewController {
             databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
                 print(snapshot)
                 self.coinValue = snapshot.value as? Int ?? 0
-                self.coinTotalLabel.text = "\(self.coinValue!)"
+                //self.coinTotalLabel.text = "\(self.coinValue!)"
                 self.coinAmtLabel.text = "\(self.coinValue!)"
             }
         }
@@ -239,9 +244,6 @@ class AddRemoveCoinsViewController: UIViewController {
         updateTotalCoins()
         // update coin total in header
         self.coinAmtLabel.text = "\(self.coinValue!)"
-        
-        // dismiss view
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func redeemCoins(_ sender: UIButton) {
@@ -292,10 +294,32 @@ class AddRemoveCoinsViewController: UIViewController {
         
         let databaseRef = Database.database().reference()
         
-        if let uid = Auth.auth().currentUser?.uid{
-            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+        var coinValue = 0
+        
+        if let coinvalue = self.coinValue {
+            coinValue = coinvalue
+        }
+        
+        if let uid = childId {
+            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": coinValue])
         }
         
         
+    }
+    
+    class RunningTotal {
+        var key: String
+        var userid: String?
+        var cointotal: Int?
+        
+        init(dictionary: [String:AnyObject], key: String) {
+            self.key = key
+            if let userid = dictionary["user_id"] as? String {
+                self.userid = userid
+            }
+            if let cointotal = dictionary["coin_total"] as? Int {
+                self.cointotal = cointotal
+            }
+        }
     }
 }

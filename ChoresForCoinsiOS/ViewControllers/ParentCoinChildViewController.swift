@@ -97,6 +97,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             if let selectedCellIndex = selectedCellIndex {
                 if let cointotal = coinTotals[selectedCellIndex].cointotal {
                     destination.coinTotal = cointotal
+                    destination.childId = coinTotals[selectedCellIndex].userid
                 }
             }
         }
@@ -120,6 +121,14 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         selectedCellIndex = indexPath.row
         
         return cell
+    }
+    
+    @IBAction func dismissView(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func unwindToChildList(segue: UIStoryboardSegue) {
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -155,17 +164,13 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         init(dictionary: [String:AnyObject], key: String) {
             self.key = key
-            if let userid = dictionary["user_id"] as? String {
+            if let userid = dictionary["child_id"] as? String {
                 self.userid = userid
             }
             if let cointotal = dictionary["coin_total"] as? Int {
                 self.cointotal = cointotal
             }
         }
-    }
-
-    @IBAction func dismissView(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
 }
 
