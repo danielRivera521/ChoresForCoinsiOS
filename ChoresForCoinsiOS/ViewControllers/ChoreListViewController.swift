@@ -210,4 +210,17 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
     }
+    
+    @IBAction func toCoinView(_ sender: UIButton) {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if isParent {
+                    self.performSegue(withIdentifier: "toCoinFromChoresList", sender: nil)
+                }
+            }
+        })
+        
+        // TODO: Implement Redeem View
+    }
 }

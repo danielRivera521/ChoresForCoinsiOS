@@ -34,9 +34,12 @@ class AddRemoveCoinsViewController: UIViewController {
     var isAdd = false
     var numString: String = ""
     var idFound = false
+    var coinTotal: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(String(coinTotal!))
         
         // get username and set it to label in header
         checkDatabase()
