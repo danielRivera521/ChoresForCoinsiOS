@@ -24,11 +24,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var parentID: String?
     var choreIDNum: String?
     var firstView = true
-    
-//    var children = [ChildUser] ()
-//    var coinTotals = [RunningTotal] ()
-//    var runningTotal = 0
-//    var isParent = true
+    var isActiveUserParent = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +56,16 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             usernameLabel.text = username
             getRunningTotal()
         }
+        
+//        //check if user is a parent
+//        isUserParent()
+//        
+//        // disables the add chore feature for a child.
+//        if !isActiveUserParent {
+//            if  let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+//                tabBarItem.isEnabled = false
+//            }
+//        }
     }
     
     
@@ -123,17 +130,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
-//    func checkIfParent() {
-//        // check if parent
-//        if let actualID = userID {
-//            _ = Database.database().reference().child("user").child(actualID).child("user_parent").observeSingleEvent(of: .value) { (snapshot) in
-//                if let isparent = snapshot.value as? Bool {
-//                    self.isParent = isparent
-//                }
-//            }
-//        }
-//    }
-    
     func getRunningTotal(){
         
         let databaseRef = Database.database().reference()
@@ -148,11 +144,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-//    func getRunningTotalParent(){
-//
-//        getChildren()
-//        getCoinTotals()
-//    }
     
     //MARK: TableView set up
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -176,6 +167,41 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.usernameCellLabel.text = choreItem.choreUsername
         cell.dueDateCellLabel.text = choreItem.dueDate
+        
+        //gets the image URL from the chores array
+        if let choreImageURL =  chores[indexPath.row].choreURL{
+            
+            //creates the session
+            let session = URLSession.shared
+            
+            //create URL variable from string value
+            let url: URL  = URL(string: choreImageURL)!
+            
+            //runs a task to get the image from the URL
+            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                
+                //if there is an error
+                if let error = error {
+                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
+                    return
+                } else {
+                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
+                    if (response as? HTTPURLResponse) != nil {
+                        
+                        DispatchQueue.main.async {
+                            if let imageData = data {
+                                let image = UIImage(data: imageData)
+                                cell.imageCellImageView.image = image
+                            }
+                        }
+                    }
+                }
+                
+            })
+            
+            getImageFromURL.resume()
+            
+        }
         
         return cell
     }
@@ -211,6 +237,23 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    func isUserParent(){
+        
+        Database.database().reference().child("user").child(userID!).observeSingleEvent(of: .value) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let isParent = value?["user_parent"] as? Bool
+            if let isParentValue = isParent {
+                if isParentValue == true{
+                    self.isActiveUserParent = true
+                }
+            }
+            self.isActiveUserParent = false
+        }
+    }
+    
+    
+    
     //gets the parent generated id from the user's node in the database
     func getParentId(){
         if let actualUID = userID{
@@ -224,54 +267,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
     }
-    
-//    // gets all children with same parent id as user
-//    func getChildren() {
-//        children.removeAll()
-//
-//        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-//            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-//            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-//            var count = 0
-//            for key in Array(dictUsers.keys) {
-//                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-//                self.children = self.children.filter({$0.parentid == self.parentID})
-//                self.children = self.children.filter({$0.userparent! == false})
-//
-//                count += 1
-//            }
-//        }
-//
-//    }
-//
-//    func getCoinTotals() {
-//        coinTotals.removeAll()
-//
-//        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-//            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-//            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-//            var count = 0
-//            for key in Array(dictRunningTotal.keys) {
-//                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-//
-//                count += 1
-//            }
-//
-//            var sumTotal = 0
-//
-//            for coinTotal in self.coinTotals {
-//                for child in self.children {
-//                    if coinTotal.userid == child.userid {
-//                        if let total = coinTotal.cointotal {
-//                            sumTotal += total
-//                        }
-//                    }
-//                }
-//            }
-//
-//            self.coinAmtLabel.text = String(sumTotal)
-//        }
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToChoreDetail"{
@@ -305,5 +300,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         childRedeemView.isHidden = true
     }
+    
+    
 }
 

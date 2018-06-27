@@ -9,9 +9,11 @@
 import UIKit
 import Firebase
 import FirebaseUI
+import MobileCoreServices
 
 class ChoreDetailsViewController: UIViewController {
     
+    //declaration of the labels on the view controller.
     @IBOutlet weak var choreNameLabel: UILabel!
     @IBOutlet weak var choreImageImageView: UIImageView!
     @IBOutlet weak var usernameLabel: UILabel!
@@ -23,23 +25,27 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var editUIButton: UIButton!
     @IBOutlet weak var childRedeemView: UIView!
     
-    
     @IBOutlet weak var completedBtn: UIButton!
-    
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     
+    //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
     var choreCoinValue: Int = 0
     
+    //choreID, userID and parentID variables to hold their respective variables from Firebase
     var choreId: String?
     var userID: String?
     var parentID: String?
+    
+    //children and coinTotal arrays used to hold an array of ChildUsers and RunningTotal objects
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     var runningTotal = 0
     var isParent = true
     
+    
+    private var imagePicker: UIImagePickerController!
     
     
     override func viewDidLoad() {
@@ -87,7 +93,7 @@ class ChoreDetailsViewController: UIViewController {
             let chorDue = value?["due_date"] as? String
             let chorValue = value?["number_coins"] as? String
             let choreNote = value?["chore_note"] as? String
-            let imageLocale = value?["chore_picture"] as? String
+            let imageLocale = value?["image_url"] as? String
             let chorComplete = value?["chore_completed"] as? Bool
             
             if let choreName = chorName{
@@ -121,6 +127,35 @@ class ChoreDetailsViewController: UIViewController {
                     self.completedBtn.isEnabled = false
                     self.completedBtn.setTitle("Chore Completed", for: UIControlState.normal)
                 }
+            }
+            
+            if let choreImageURL = imageLocale {
+                
+                let session = URLSession.shared
+                
+                let url: URL  = URL(string: choreImageURL)!
+                
+                let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                    
+                    if let error = error {
+                        AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
+                        return
+                    } else {
+                        if (response as? HTTPURLResponse) != nil {
+                            
+                            DispatchQueue.main.async {
+                                if let imageData = data {
+                                    let image = UIImage(data: imageData)
+                                    self.choreImageImageView.image = image
+                                }
+                            }
+                        }
+                    }
+                    
+                })
+                
+                getImageFromURL.resume()
+                
             }
             
             
@@ -195,17 +230,17 @@ class ChoreDetailsViewController: UIViewController {
     
     @IBAction func markComplete(_ sender: UIButton) {
         
-        let ref = Database.database().reference().child("chores")
         
-        ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
         addCoins()
-        dismiss(animated: true, completion: nil)
+        
+        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
+        
     }
     
     func addCoins (){
-    
+        
         let databaseRef = Database.database().reference()
-    
+        
         var bonusOn = false
         var multiplier: Double = 1
         databaseRef.child("app_settings").observeSingleEvent(of: .value) { (snapshot) in
@@ -218,7 +253,7 @@ class ChoreDetailsViewController: UIViewController {
             
             let multiply = value?["multiplier_value"] as? Double
             if let mValue = multiply {
-           
+                
                 multiplier = mValue
             }
         }
@@ -256,4 +291,11 @@ class ChoreDetailsViewController: UIViewController {
         childRedeemView.isHidden = true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "takePictureSegue" {
+            if let takePictureVC = segue.destination as? TakePictureViewController{
+                takePictureVC.choreId = choreId!
+            }
+        }
+    }
 }

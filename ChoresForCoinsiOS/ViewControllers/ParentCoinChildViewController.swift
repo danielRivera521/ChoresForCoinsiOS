@@ -18,6 +18,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     var ref: DatabaseReference?
     var coinValue = 11
     var idFound = false
+    var firstRun = true
     var userID: String?
     var parentID: String?
     var choreIDNum: String?
@@ -25,6 +26,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     var coinTotals = [RunningTotal] ()
     var selectedCellIndex: Int?
     var isParent = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,9 +52,14 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getRunningTotalParent()
+        if !firstRun {
+            getRunningTotalParent()
+        }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        firstRun = false
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -85,18 +92,19 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-            var count = 0
+
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent!})
+                self.children = self.children.filter({$0.userparent == false})
                 
-                count += 1
             }
+            
             
             self.childrenTableView.reloadData()
         }
         
+       
     }
     
     func getCoinTotals() {
@@ -105,25 +113,12 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
+        
             for key in Array(dictRunningTotal.keys) {
                 self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
 
-                count += 1
             }
             
-            let coinTotalsCopy = self.coinTotals
-            var newCoinTotals = [RunningTotal] ()
-            
-            for total in coinTotalsCopy {
-                for child in self.children {
-                    if total.userid == child.userid {
-                        newCoinTotals.append(total)
-                    }
-                }
-            }
-            
-            self.coinTotals = newCoinTotals
             
             self.childrenTableView.reloadData()
         }
@@ -134,7 +129,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             if let selectedCellIndex = selectedCellIndex {
                 if let cointotal = coinTotals[selectedCellIndex].cointotal {
                     destination.coinValue = cointotal
-                    destination.childId = coinTotals[selectedCellIndex].userid
+                    destination.childId = children[selectedCellIndex].userid
                 }
             }
         }
