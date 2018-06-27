@@ -50,7 +50,6 @@ class CreateAccountViewController: UIViewController {
         //creates account in database
         
         createAccount()
-        // dismiss back to tab bar controller
        
         self.performSegue(withIdentifier: "goToChoreList", sender: nil)
     }

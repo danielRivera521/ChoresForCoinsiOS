@@ -14,6 +14,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var choreListTV: UITableView!
+    @IBOutlet weak var childRedeemView: UIView!
     
     var chores: [Chore] = [Chore]()
     var coinValue = 11
@@ -23,11 +24,17 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var parentID: String?
     var choreIDNum: String?
     var firstView = true
+    var isActiveUserParent = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        childRedeemView.isHidden = true
+        
         firstView = true
         ref = Database.database().reference()
+        
         //checks if the user has an account in the database
         checkDatabase()
         //gets the firebase generated id
@@ -50,8 +57,17 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             getRunningTotal()
         }
         
-        
+//        //check if user is a parent
+//        isUserParent()
+//        
+//        // disables the add chore feature for a child.
+//        if !isActiveUserParent {
+//            if  let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+//                tabBarItem.isEnabled = false
+//            }
+//        }
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,9 +78,11 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         ref?.child("user").removeAllObservers()
         ref?.removeAllObservers()
          firstView = false
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         if !firstView{
             createChores()
             getRunningTotal()
@@ -126,6 +144,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    
     //MARK: TableView set up
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chores.count
@@ -149,6 +168,41 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         cell.usernameCellLabel.text = choreItem.choreUsername
         cell.dueDateCellLabel.text = choreItem.dueDate
         
+        //gets the image URL from the chores array
+        if let choreImageURL =  chores[indexPath.row].choreURL{
+            
+            //creates the session
+            let session = URLSession.shared
+            
+            //create URL variable from string value
+            let url: URL  = URL(string: choreImageURL)!
+            
+            //runs a task to get the image from the URL
+            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                
+                //if there is an error
+                if let error = error {
+                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
+                    return
+                } else {
+                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
+                    if (response as? HTTPURLResponse) != nil {
+                        
+                        DispatchQueue.main.async {
+                            if let imageData = data {
+                                let image = UIImage(data: imageData)
+                                cell.imageCellImageView.image = image
+                            }
+                        }
+                    }
+                }
+                
+            })
+            
+            getImageFromURL.resume()
+            
+        }
+        
         return cell
     }
     
@@ -159,7 +213,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     func createChores(){
         //database reference
         ref = Database.database().reference()
-
+        
         chores.removeAll()
         //
         self.ref?.observe(.value) { (snapshot) in
@@ -182,6 +236,23 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
     }
+    
+    func isUserParent(){
+        
+        Database.database().reference().child("user").child(userID!).observeSingleEvent(of: .value) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let isParent = value?["user_parent"] as? Bool
+            if let isParentValue = isParent {
+                if isParentValue == true{
+                    self.isActiveUserParent = true
+                }
+            }
+            self.isActiveUserParent = false
+        }
+    }
+    
+    
     
     //gets the parent generated id from the user's node in the database
     func getParentId(){
@@ -210,4 +281,26 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
     }
+    
+    @IBAction func toCoinView(_ sender: UIButton) {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if isParent {
+                    self.performSegue(withIdentifier: "toCoinFromChoresList", sender: nil)
+                } else {
+                    self.childRedeemView.isHidden = false
+                }
+            }
+        })
+    }
+    
+    @IBAction func childRedeem(_ sender: UIButton) {
+        // zero out coin total and update db
+        
+        childRedeemView.isHidden = true
+    }
+    
+    
 }
+
