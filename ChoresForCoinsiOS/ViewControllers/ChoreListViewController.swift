@@ -57,15 +57,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             getRunningTotal()
         }
         
-//        //check if user is a parent
-//        isUserParent()
-//        
-//        // disables the add chore feature for a child.
-//        if !isActiveUserParent {
-//            if  let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-//                tabBarItem.isEnabled = false
-//            }
-//        }
+        //check if user is a parent. if the account is a child account the add chore tab will be disabled.
+
+        isUserParent()
     }
     
     
@@ -239,20 +233,31 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func isUserParent(){
         
-        Database.database().reference().child("user").child(userID!).observeSingleEvent(of: .value) { (snapshot) in
-            
+        Database.database().reference().child("running_total").observeSingleEvent(of: .value) { (snapshot) in
+            self.isActiveUserParent = true
             let value = snapshot.value as? NSDictionary
-            let isParent = value?["user_parent"] as? Bool
-            if let isParentValue = isParent {
-                if isParentValue == true{
-                    self.isActiveUserParent = true
+          
+            for id in (value?.keyEnumerator())!{
+                if let idValue = id as? String {
+                    
+                    if self.userID! == idValue {
+                        self.isActiveUserParent = false
+                        break
+                    }
+                    
                 }
             }
-            self.isActiveUserParent = false
+            
+            self.disableAddChoreTabItem()
+            
         }
     }
     
-    
+    func disableAddChoreTabItem(){
+        if  let arrayOfTabBarItems = tabBarController?.tabBar.items as! AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+            tabBarItem.isEnabled = isActiveUserParent
+        }
+    }
     
     //gets the parent generated id from the user's node in the database
     func getParentId(){
