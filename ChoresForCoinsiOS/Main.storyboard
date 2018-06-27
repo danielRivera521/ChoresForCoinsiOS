@@ -316,18 +316,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tDT-PJ-35C">
-                                        <rect key="frame" x="37.666666666666657" y="144.66666666666669" width="300" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CW2-h5-acf">
-                                        <rect key="frame" x="37.666666666666657" y="119.66666666666663" width="300" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GxR-fO-VoJ">
                                         <rect key="frame" x="37.666666666666657" y="13" width="300" height="30"/>
                                         <nil key="textColor"/>
@@ -340,27 +328,32 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLR-3F-zU1">
+                                        <rect key="frame" x="0.0" y="107.33333333333331" width="375" height="77"/>
+                                        <state key="normal" title="Update Password"/>
+                                        <connections>
+                                            <action selector="updatePassword:" destination="QRy-ch-Cyl" eventType="touchUpInside" id="i9f-eR-KJk"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="tDT-PJ-35C" firstAttribute="top" secondItem="fvp-4L-aBR" secondAttribute="bottom" multiplier="1.35" id="1hy-Qf-JxJ"/>
+                                    <constraint firstItem="uLR-3F-zU1" firstAttribute="leading" secondItem="oBx-dk-ZAg" secondAttribute="leading" id="1qw-ej-uh9"/>
                                     <constraint firstItem="GxR-fO-VoJ" firstAttribute="width" secondItem="fvp-4L-aBR" secondAttribute="width" id="2mI-IP-ohc"/>
+                                    <constraint firstItem="uLR-3F-zU1" firstAttribute="top" secondItem="fvp-4L-aBR" secondAttribute="bottom" id="8HL-ld-a2x"/>
                                     <constraint firstItem="fvp-4L-aBR" firstAttribute="top" secondItem="GxR-fO-VoJ" secondAttribute="bottom" multiplier="1.8" id="95G-kJ-mwj"/>
                                     <constraint firstItem="fvp-4L-aBR" firstAttribute="top" secondItem="rRS-Tp-gT1" secondAttribute="bottom" constant="8" id="AF0-m3-Syd"/>
                                     <constraint firstItem="qOf-lS-q0a" firstAttribute="width" secondItem="GxR-fO-VoJ" secondAttribute="width" id="F2B-z7-h7g"/>
-                                    <constraint firstItem="CW2-h5-acf" firstAttribute="width" secondItem="tDT-PJ-35C" secondAttribute="width" id="ORa-bb-0as"/>
-                                    <constraint firstItem="CW2-h5-acf" firstAttribute="centerX" secondItem="tDT-PJ-35C" secondAttribute="centerX" id="PeE-eh-Llk"/>
                                     <constraint firstItem="rRS-Tp-gT1" firstAttribute="centerX" secondItem="fvp-4L-aBR" secondAttribute="centerX" id="T5z-X2-I89"/>
                                     <constraint firstItem="qOf-lS-q0a" firstAttribute="centerX" secondItem="GxR-fO-VoJ" secondAttribute="centerX" id="Th3-kT-gK1"/>
                                     <constraint firstItem="fvp-4L-aBR" firstAttribute="centerX" secondItem="oBx-dk-ZAg" secondAttribute="centerX" id="Yip-qL-51W"/>
                                     <constraint firstItem="GxR-fO-VoJ" firstAttribute="top" secondItem="qOf-lS-q0a" secondAttribute="bottom" constant="8" id="bJH-9M-rZ3"/>
-                                    <constraint firstItem="tDT-PJ-35C" firstAttribute="top" secondItem="CW2-h5-acf" secondAttribute="bottom" constant="8" id="eQL-33-xn5"/>
                                     <constraint firstItem="GxR-fO-VoJ" firstAttribute="centerX" secondItem="fvp-4L-aBR" secondAttribute="centerX" id="ilI-JR-KEH"/>
+                                    <constraint firstAttribute="trailing" secondItem="uLR-3F-zU1" secondAttribute="trailing" id="jN0-bO-Lcs"/>
+                                    <constraint firstAttribute="bottom" secondItem="uLR-3F-zU1" secondAttribute="bottom" id="oYu-Lq-SE4"/>
                                     <constraint firstItem="rRS-Tp-gT1" firstAttribute="width" secondItem="fvp-4L-aBR" secondAttribute="width" id="rDc-Yg-Mzd"/>
-                                    <constraint firstItem="tDT-PJ-35C" firstAttribute="width" secondItem="fvp-4L-aBR" secondAttribute="width" id="rQV-ij-zOj"/>
                                     <constraint firstItem="fvp-4L-aBR" firstAttribute="centerY" secondItem="oBx-dk-ZAg" secondAttribute="centerY" id="uSa-CX-bde"/>
                                     <constraint firstItem="fvp-4L-aBR" firstAttribute="width" secondItem="oBx-dk-ZAg" secondAttribute="width" multiplier="0.8" id="vGn-rN-CXz"/>
-                                    <constraint firstItem="tDT-PJ-35C" firstAttribute="centerX" secondItem="fvp-4L-aBR" secondAttribute="centerX" id="zYf-Nz-bdm"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Aw-hO-q0u" userLabel="UpdateSaveButtonView">
@@ -464,7 +457,6 @@
                         <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="lWG-jr-sBZ"/>
                         <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="4Rh-6U-GVQ"/>
                         <outlet property="parentKeyTextField" destination="fum-xN-ubL" id="ivC-AB-Dfc"/>
-                        <outlet property="passwordLabel" destination="CW2-h5-acf" id="NNC-Rr-GiB"/>
                         <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
                         <outlet property="usernameTextField" destination="GxR-fO-VoJ" id="ato-8r-wSn"/>
                     </connections>
@@ -3376,7 +3368,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S7-b7-Z4r"/>
-        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="0Cp-zN-Xa7"/>
         <segue reference="3RF-ku-Rgp"/>
