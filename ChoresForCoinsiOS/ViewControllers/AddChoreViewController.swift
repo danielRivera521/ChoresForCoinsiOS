@@ -46,8 +46,8 @@ class AddChoreViewController: UIViewController {
         
         childRedeemView.isHidden = true
         
-        if let username = Auth.auth().currentUser?.displayName{
-            usernameLabel.text = username
+        if (Auth.auth().currentUser?.displayName) != nil{
+            displayHeaderName()
             ref = Database.database().reference()
             
             // set up date pickers
@@ -69,6 +69,21 @@ class AddChoreViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
+        }
     }
     
     @IBAction func changeChorePicture(_ sender: UIButton) {

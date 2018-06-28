@@ -36,8 +36,8 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         //edit header information
         let name = Auth.auth().currentUser?.displayName
-        if let username = name {
-            usernameLabel.text = username
+        if name != nil {
+            displayHeaderName()
             //getRunningTotal()
             
         }
@@ -49,6 +49,21 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         // gets coin totals for all children
         getCoinTotals()
+    }
+    
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

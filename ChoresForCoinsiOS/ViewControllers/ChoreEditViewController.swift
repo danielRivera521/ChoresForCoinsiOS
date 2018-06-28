@@ -8,9 +8,10 @@
 
 import UIKit
 import Firebase
+import FirebaseUI
 
 class ChoreEditViewController: UIViewController {
-
+    
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -35,6 +36,8 @@ class ChoreEditViewController: UIViewController {
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
+        
+        checkDatabase()
         
         //gets the custom parent id created in the registration
         getParentId()
@@ -64,21 +67,19 @@ class ChoreEditViewController: UIViewController {
                                 if userID == uid {
                                     // user is in database
                                     self.idFound = true
-                                    if let username = Auth.auth().currentUser?.displayName{
-                                        self.getRunningTotal()
-                                        self.usernameLabel.text = username
-                                        return
-                                    }
-                                    
+                                    self.displayHeaderName()
+                                    return
                                 }
+                                
                             }
                         }
                     }
                 }
-                
             }
             
         }
+        
+        
         if !idFound {
             
             //user not in the database. Registration segue is called
@@ -87,6 +88,21 @@ class ChoreEditViewController: UIViewController {
             
         }
         
+    }
+    
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
+        }
     }
     
     func getRunningTotal(){
@@ -164,7 +180,7 @@ class ChoreEditViewController: UIViewController {
     
     @IBAction func changeChorePicture(_ sender: UIButton) {
     }
-
+    
     @IBAction func deleteChore(_ sender: UIButton) {
     }
     

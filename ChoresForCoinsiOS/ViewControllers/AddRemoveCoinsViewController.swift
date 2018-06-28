@@ -67,10 +67,25 @@ class AddRemoveCoinsViewController: UIViewController {
         
         //edit header information
         let name = Auth.auth().currentUser?.displayName
-        if let username = name {
-            usernameLabel.text = username
+        if name != nil {
+            displayHeaderName()
             //getRunningTotal()
             
+        }
+    }
+    
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
         }
     }
     
@@ -249,9 +264,9 @@ class AddRemoveCoinsViewController: UIViewController {
                                 if userID == uid {
                                     // user is in database
                                     self.idFound = true
-                                    if let username = Auth.auth().currentUser?.displayName{
+                                    if (Auth.auth().currentUser?.displayName) != nil{
                                         //self.getRunningTotal()
-                                        self.usernameLabel.text = username
+                                        self.displayHeaderName()
                                         return
                                     }
                                     

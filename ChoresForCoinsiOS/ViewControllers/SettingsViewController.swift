@@ -35,8 +35,8 @@ class SettingsViewController: UIViewController {
         
         childRedeemView.isHidden = true
         
-        if let username = Auth.auth().currentUser?.displayName{
-            usernameLabel.text = username
+        if (Auth.auth().currentUser?.displayName) != nil{
+            displayHeaderName()
         }
         
         //gets the firebase generated id
@@ -50,6 +50,20 @@ class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotal()
+    }
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
