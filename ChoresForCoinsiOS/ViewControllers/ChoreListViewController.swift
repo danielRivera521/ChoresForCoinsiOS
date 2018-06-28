@@ -51,21 +51,10 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         createChores()
         
         //edit header information
-        let name = Auth.auth().currentUser?.displayName
-        if let username = name {
-            usernameLabel.text = username
-            getRunningTotal()
-        }
+        displayHeaderName()
+        getRunningTotal()
         
-//        //check if user is a parent
-//        isUserParent()
-//        
-//        // disables the add chore feature for a child.
-//        if !isActiveUserParent {
-//            if  let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-//                tabBarItem.isEnabled = false
-//            }
-//        }
+
     }
     
     
@@ -85,6 +74,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         if !firstView{
             createChores()
+            displayHeaderName()
             getRunningTotal()
         }
         
@@ -105,9 +95,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                                 if userID == uid {
                                     // user is in database
                                     self.idFound = true
-                                    if let username = Auth.auth().currentUser?.displayName{
+                                    if (Auth.auth().currentUser?.displayName) != nil{
                                         self.getRunningTotal()
-                                        self.usernameLabel.text = username
+                                        self.displayHeaderName()
                                         return
                                     }
                                     
@@ -142,8 +132,23 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
+        
     }
     
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.usernameLabel.text = name
+                }
+            }
+        }
+    }
     
     //MARK: TableView set up
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

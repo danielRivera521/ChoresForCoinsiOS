@@ -55,10 +55,10 @@ class ChoreDetailsViewController: UIViewController {
         
         childRedeemView.isHidden = true
         
-        if let username = Auth.auth().currentUser?.displayName{
-            headerUserNameLabel.text = username
-            getChoreData()
-        }
+        //set the header name display
+        displayHeaderName()
+        getChoreData()
+        
         completedBtn.isEnabled = true
         
         //gets the firebase generated id
@@ -76,6 +76,21 @@ class ChoreDetailsViewController: UIViewController {
         
         getChildren()
         getCoinTotals()
+    }
+    
+    func displayHeaderName(){
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let name = value?["user_name"] as? String{
+                    self.headerUserNameLabel.text = name
+                }
+            }
+        }
     }
     
     
