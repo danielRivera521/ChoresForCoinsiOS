@@ -15,6 +15,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var choreListTV: UITableView!
     @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var profileButton: UIButton!
     
     var chores: [Chore] = [Chore]()
     var coinValue = 11
@@ -25,7 +26,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var choreIDNum: String?
     var firstView = true
     var isActiveUserParent = false
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         //check if user is a parent. if the account is a child account the add chore tab will be disabled.
 
         isUserParent()
+        
+        // get photo for profile button
+        getPhoto()
 
     }
     
@@ -285,6 +289,40 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         
+    }
+    
+    func getPhoto() {
+        var uid = ""
+        if let UID = Auth.auth().currentUser?.uid {
+            uid = UID
+        }
+        
+        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? [String:Any] {
+                // get profile picture
+                if let filename = val["profilePicture"] as? String {
+                    let fileref = Storage.storage().reference().child(filename)
+                    fileref.getData(maxSize: 100000000, completion: { (data, error) in
+                        if error == nil {
+                            if data != nil {
+                                let img = UIImage.init(data: data!)
+                                
+                                // make sure UI is getting updated on Main thread
+                                DispatchQueue.main.async {
+                                    self.profileButton.setBackgroundImage(img, for: .normal)
+                                    // turn button into a circle
+                                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                                    self.profileButton.layer.masksToBounds = true
+                                }
+                                
+                            }
+                        } else {
+                            print(error?.localizedDescription)
+                        }
+                    })
+                }
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -10,17 +10,21 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var parentKeyLabelSmall: UILabel!
     @IBOutlet weak var parentKeyLabel: UILabel!
     @IBOutlet weak var parentKeyTextField: UITextField!
+    @IBOutlet weak var profilePicButton: UIButton!
+    @IBOutlet weak var updateProfilePicView: UIView!
     
     var authUI: FUIAuth?
-    
     var email: String?
     var parentKey: String?
     var username: String?
     var isParent: Bool?
+    var isFirstLoad = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        isFirstLoad = false
+        
         // get current user
         let user = Auth.auth().currentUser
         if let user = user {
@@ -40,12 +44,20 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
                         self.parentKey = parentKeyUnwrapped
                         self.parentKeyLabel.text = parentKeyUnwrapped
                     }
+                    
+                    self.getPhoto()
                 }
             }
         }
         
         if let emailUnwrapped = email {
             emailTextField.text = emailUnwrapped
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if !isFirstLoad {
+            getPhoto()
         }
     }
     
@@ -140,6 +152,40 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: email)
+    }
+    
+    func getPhoto() {
+        var uid = ""
+        if let UID = Auth.auth().currentUser?.uid {
+            uid = UID
+        }
+        
+        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? [String:Any] {
+                // get profile picture
+                if let filename = val["profilePicture"] as? String {
+                    let fileref = Storage.storage().reference().child(filename)
+                    fileref.getData(maxSize: 100000000, completion: { (data, error) in
+                        if error == nil {
+                            if data != nil {
+                                let img = UIImage.init(data: data!)
+                                
+                                // make sure UI is getting updated on Main thread
+                                DispatchQueue.main.async {
+                                    self.profilePicButton.setBackgroundImage(img, for: .normal)
+                                    // turn button into a circle
+                                    self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.width/2
+                                    self.profilePicButton.layer.masksToBounds = true
+                                }
+                                
+                            }
+                        } else {
+                            print(error?.localizedDescription)
+                        }
+                    })
+                }
+            }
+        }
     }
     
     @IBAction func updatePassword(_ sender: UIButton) {

@@ -21,6 +21,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -32,6 +33,9 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             usernameLabel.text = username
             getRunningTotal()
         }
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     override func didReceiveMemoryWarning() {
@@ -159,6 +163,40 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         AlertController.showAlert(self, title: "No Picture Selected", message: "Please take an Image with your camera of the completed chore to complete this chore.")
+    }
+    
+    func getPhoto() {
+        var uid = ""
+        if let UID = Auth.auth().currentUser?.uid {
+            uid = UID
+        }
+        
+        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? [String:Any] {
+                // get profile picture
+                if let filename = val["profilePicture"] as? String {
+                    let fileref = Storage.storage().reference().child(filename)
+                    fileref.getData(maxSize: 100000000, completion: { (data, error) in
+                        if error == nil {
+                            if data != nil {
+                                let img = UIImage.init(data: data!)
+                                
+                                // make sure UI is getting updated on Main thread
+                                DispatchQueue.main.async {
+                                    self.profileButton.setBackgroundImage(img, for: .normal)
+                                    // turn button into a circle
+                                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                                    self.profileButton.layer.masksToBounds = true
+                                }
+                                
+                            }
+                        } else {
+                            print(error?.localizedDescription)
+                        }
+                    })
+                }
+            }
+        }
     }
     
 }

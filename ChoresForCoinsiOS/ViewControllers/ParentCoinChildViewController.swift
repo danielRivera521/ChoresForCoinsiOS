@@ -14,6 +14,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var childrenTableView: UITableView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     var ref: DatabaseReference?
     var coinValue = 11
@@ -49,6 +50,9 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         // gets coin totals for all children
         getCoinTotals()
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     func displayHeaderName(){
@@ -145,6 +149,40 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                 if let cointotal = coinTotals[selectedCellIndex].cointotal {
                     destination.coinValue = cointotal
                     destination.childId = children[selectedCellIndex].userid
+                }
+            }
+        }
+    }
+    
+    func getPhoto() {
+        var uid = ""
+        if let UID = Auth.auth().currentUser?.uid {
+            uid = UID
+        }
+        
+        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? [String:Any] {
+                // get profile picture
+                if let filename = val["profilePicture"] as? String {
+                    let fileref = Storage.storage().reference().child(filename)
+                    fileref.getData(maxSize: 100000000, completion: { (data, error) in
+                        if error == nil {
+                            if data != nil {
+                                let img = UIImage.init(data: data!)
+                                
+                                // make sure UI is getting updated on Main thread
+                                DispatchQueue.main.async {
+                                    self.profileButton.setBackgroundImage(img, for: .normal)
+                                    // turn button into a circle
+                                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                                    self.profileButton.layer.masksToBounds = true
+                                }
+                                
+                            }
+                        } else {
+                            print(error?.localizedDescription)
+                        }
+                    })
                 }
             }
         }
