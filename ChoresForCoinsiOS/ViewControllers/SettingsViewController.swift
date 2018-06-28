@@ -17,6 +17,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var profileButton: UIButton!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -45,11 +46,15 @@ class SettingsViewController: UIViewController {
         //gets the custom parent id created in the registration
         getParentId()
         
+        // get photo for profile button
+        getPhoto()
+        
         self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "whiteBG"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotal()
+        getPhoto()
     }
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
@@ -156,6 +161,26 @@ class SettingsViewController: UIViewController {
             }
             
             self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                }
+            }
+            
         }
     }
     

@@ -21,6 +21,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -32,6 +33,15 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             usernameLabel.text = username
             getRunningTotal()
         }
+        
+        // get photo for profile button
+        getPhoto()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        getPhoto()
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -159,6 +169,26 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         AlertController.showAlert(self, title: "No Picture Selected", message: "Please take an Image with your camera of the completed chore to complete this chore.")
+    }
+    
+    func getPhoto() {
+        let userID = Auth.auth().currentUser?.uid
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                }
+            }
+            
+        }
     }
     
 }

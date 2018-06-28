@@ -20,6 +20,7 @@ class AddChoreViewController: UIViewController {
     @IBOutlet weak var choreValueTextField: UITextField!
     @IBOutlet weak var choreNoteTextView: UITextView!
     @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var profileButton: UIButton!
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
@@ -58,12 +59,16 @@ class AddChoreViewController: UIViewController {
             getParentId()
         }
         
+        // get profile photo for profile button
+        getPhoto()
+        
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotal()
+        getPhoto()
     }
     
     override func didReceiveMemoryWarning() {
@@ -256,6 +261,26 @@ class AddChoreViewController: UIViewController {
             }
             
             self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                     //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                    
+                }
+            }
         }
     }
     

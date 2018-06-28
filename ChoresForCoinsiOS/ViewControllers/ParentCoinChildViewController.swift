@@ -14,6 +14,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var childrenTableView: UITableView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     var ref: DatabaseReference?
     var coinValue = 11
@@ -49,6 +50,9 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         // gets coin totals for all children
         getCoinTotals()
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     func displayHeaderName(){
@@ -69,6 +73,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     override func viewWillAppear(_ animated: Bool) {
         if !firstRun {
             getRunningTotalParent()
+            getPhoto()
         }
     }
 
@@ -147,6 +152,26 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                     destination.childId = children[selectedCellIndex].userid
                 }
             }
+        }
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                }
+            }
+            
         }
     }
     

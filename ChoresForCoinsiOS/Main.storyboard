@@ -257,6 +257,7 @@
                         <outlet property="childRedeemView" destination="hu1-17-zjp" id="xVZ-iO-uER"/>
                         <outlet property="choreListTV" destination="loI-KR-X34" id="hAF-om-VI7"/>
                         <outlet property="coinAmtLabel" destination="vJj-gy-wFi" id="dWZ-Gh-ubG"/>
+                        <outlet property="profileButton" destination="x0w-Ri-WMW" id="krc-NB-27F"/>
                         <outlet property="usernameLabel" destination="y9N-Eh-TMa" id="eVf-cq-UFO"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromChoresList" id="Yia-uk-i10"/>
                     </connections>
@@ -288,7 +289,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="XP8-Hg-WXt" secondAttribute="height" multiplier="1:1" id="SXo-8s-K6m"/>
                                         </constraints>
-                                        <state key="normal" image="profilePic5"/>
+                                        <state key="normal" backgroundImage="profilePic5"/>
                                         <connections>
                                             <segue destination="ABl-CU-dru" kind="presentation" id="bm7-WQ-ArU"/>
                                         </connections>
@@ -458,6 +459,8 @@
                         <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="4Rh-6U-GVQ"/>
                         <outlet property="parentKeyTextField" destination="fum-xN-ubL" id="ivC-AB-Dfc"/>
                         <outlet property="passwordTextField" destination="fvp-4L-aBR" id="sff-qE-mW6"/>
+                        <outlet property="profilePicButton" destination="XP8-Hg-WXt" id="DNN-Ef-5Tx"/>
+                        <outlet property="updateProfilePicView" destination="HsM-2G-TSf" id="PDf-4Y-GqU"/>
                         <outlet property="usernameTextField" destination="GxR-fO-VoJ" id="ato-8r-wSn"/>
                     </connections>
                 </viewController>
@@ -982,6 +985,7 @@
                         <outlet property="choreValueTextField" destination="Ovw-Si-pQS" id="q4M-lo-15D"/>
                         <outlet property="coinAmtLabel" destination="G6P-CT-eX6" id="LgU-HH-1QZ"/>
                         <outlet property="dueDateTextField" destination="meV-cH-eqE" id="dVz-Qu-9N5"/>
+                        <outlet property="profileButton" destination="ITP-Cg-ahr" id="zBA-li-zqQ"/>
                         <outlet property="startDateTextField" destination="JaL-6P-NFh" id="SND-sj-VuY"/>
                         <outlet property="usernameLabel" destination="L9L-lR-LBL" id="Vm0-PB-jX4"/>
                         <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
@@ -1346,6 +1350,7 @@
                         <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="leh-E8-Fc6"/>
                         <outlet property="coinValueTextField" destination="vkd-0h-YKp" id="MuV-zw-Grb"/>
                         <outlet property="multiplierValueTextField" destination="TYh-2W-UqW" id="ysu-bm-sYd"/>
+                        <outlet property="profileButton" destination="5FP-4v-sSN" id="TxS-h3-PLG"/>
                         <outlet property="usernameLabel" destination="7Lo-So-qYU" id="so5-3m-dFg"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromSettings" id="TW0-XL-iud"/>
                     </connections>
@@ -1484,6 +1489,7 @@
                     <connections>
                         <outlet property="childrenTableView" destination="lh4-Wd-uEi" id="Ng8-AP-U6A"/>
                         <outlet property="coinAmtLabel" destination="ZVM-2r-Tl5" id="E5P-mm-hNr"/>
+                        <outlet property="profileButton" destination="9tR-Sh-fGg" id="eMm-Bq-dwF"/>
                         <outlet property="usernameLabel" destination="w2p-xC-m4m" id="8ea-zu-F6M"/>
                     </connections>
                 </viewController>
@@ -1891,6 +1897,7 @@
                         <outlet property="btnGrayMinus" destination="cJ1-9M-FfA" id="J8o-ag-kKQ"/>
                         <outlet property="coinAmtLabel" destination="fny-wj-t1c" id="n6m-gR-reD"/>
                         <outlet property="coinTotalLabel" destination="tpv-GN-H9H" id="S0D-Yn-WQs"/>
+                        <outlet property="profileButton" destination="317-aF-8fj" id="YCj-Qh-02E"/>
                         <outlet property="usernameLabel" destination="GbC-Hw-56e" id="ZYe-Rz-q5L"/>
                     </connections>
                 </viewController>
@@ -2378,18 +2385,26 @@
                                     <constraint firstItem="0E2-HG-l4w" firstAttribute="top" secondItem="PxT-4M-s71" secondAttribute="bottom" id="tnf-Es-Apu"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bok-QF-QLQ">
+                                <rect key="frame" x="282" y="44" width="85" height="30"/>
+                                <state key="normal" title="Take Picture"/>
+                                <connections>
+                                    <action selector="takeProfilePic:" destination="ABl-CU-dru" eventType="touchUpInside" id="Orb-Ah-jrz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="pjg-7T-Wry" firstAttribute="trailing" secondItem="bok-QF-QLQ" secondAttribute="trailing" constant="8" id="0Vr-nr-KU2"/>
                             <constraint firstItem="pjg-7T-Wry" firstAttribute="bottom" secondItem="nnD-oN-RFt" secondAttribute="bottom" constant="8" id="3Aj-Ra-Iav"/>
                             <constraint firstItem="W1T-mY-3ae" firstAttribute="leading" secondItem="pjg-7T-Wry" secondAttribute="leading" id="BNi-u5-z6t"/>
                             <constraint firstItem="GwG-GB-J2U" firstAttribute="leading" secondItem="pjg-7T-Wry" secondAttribute="leading" constant="8" id="Ghq-zC-DBm"/>
                             <constraint firstItem="W1T-mY-3ae" firstAttribute="top" secondItem="GwG-GB-J2U" secondAttribute="bottom" id="Quw-lf-OrK"/>
                             <constraint firstItem="nnD-oN-RFt" firstAttribute="height" secondItem="Znu-ep-Yit" secondAttribute="height" multiplier="0.8" id="S4Q-0v-Jra"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GwG-GB-J2U" secondAttribute="trailing" constant="20" symbolic="YES" id="SWN-0Y-ZzY"/>
                             <constraint firstItem="GwG-GB-J2U" firstAttribute="top" secondItem="pjg-7T-Wry" secondAttribute="top" id="U4c-rw-flH"/>
                             <constraint firstItem="nnD-oN-RFt" firstAttribute="leading" secondItem="pjg-7T-Wry" secondAttribute="leading" constant="8" id="cJx-KV-NB6"/>
                             <constraint firstItem="pjg-7T-Wry" firstAttribute="trailing" secondItem="nnD-oN-RFt" secondAttribute="trailing" constant="8" id="pUM-gz-yLX"/>
+                            <constraint firstItem="bok-QF-QLQ" firstAttribute="top" secondItem="pjg-7T-Wry" secondAttribute="top" id="sWO-8X-gMc"/>
                             <constraint firstItem="W1T-mY-3ae" firstAttribute="trailing" secondItem="pjg-7T-Wry" secondAttribute="trailing" id="wYt-vd-Sfu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pjg-7T-Wry"/>
@@ -2787,6 +2802,7 @@
                         <outlet property="dueDateLabel" destination="KO2-4e-Xiw" id="wpJ-gu-GFs"/>
                         <outlet property="editUIButton" destination="bSq-U0-DY5" id="MLZ-HJ-4Nf"/>
                         <outlet property="headerUserNameLabel" destination="ENd-rF-5Y9" id="Kxe-lY-swL"/>
+                        <outlet property="profileButton" destination="rAW-4t-ayH" id="c4C-gv-ajo"/>
                         <outlet property="startDateLabel" destination="FwK-SV-FeU" id="hnE-tj-tnf"/>
                         <outlet property="usernameLabel" destination="8rK-SS-e9D" id="764-F7-mX8"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromChoreDetails" id="GCd-rR-cmP"/>
@@ -2957,6 +2973,7 @@
                     </view>
                     <connections>
                         <outlet property="coinAmtLabel" destination="Icj-xH-Lr3" id="cJn-Zy-Jkh"/>
+                        <outlet property="profileButton" destination="be6-Zc-DSa" id="Zim-yd-Hki"/>
                         <outlet property="usernameLabel" destination="BAb-Up-N4G" id="H8o-E7-BVX"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromTakePhoto" id="0Cp-zN-Xa7"/>
                     </connections>
@@ -3311,6 +3328,7 @@
                         <outlet property="choreValueTextField" destination="OBi-Ax-d5A" id="Ck3-2m-NpS"/>
                         <outlet property="coinAmtLabel" destination="RgL-wo-Z5L" id="Wfx-nW-Zx0"/>
                         <outlet property="dueDateTextField" destination="LaJ-Vj-bhm" id="N2b-9h-zEE"/>
+                        <outlet property="profileButton" destination="2iv-gm-wmG" id="gXX-88-PCf"/>
                         <outlet property="startDateTextField" destination="dCP-6f-1HZ" id="czu-To-YgD"/>
                         <outlet property="usernameLabel" destination="R1k-U5-QNc" id="rBA-vn-eFA"/>
                         <outlet property="usernameTextField" destination="Ef5-EW-iQY" id="1IE-yB-o5F"/>
@@ -3371,6 +3389,6 @@
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="0dr-E4-ccy"/>
-        <segue reference="HOK-Pp-4Xx"/>
+        <segue reference="IdO-99-Zmk"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -22,6 +22,7 @@ class ChoreEditViewController: UIViewController {
     @IBOutlet weak var choreNoteTextView: UITextView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     var ref: DatabaseReference?
     var userID: String?
@@ -41,10 +42,14 @@ class ChoreEditViewController: UIViewController {
         
         //gets the custom parent id created in the registration
         getParentId()
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotal()
+        getPhoto()
     }
     
     override func didReceiveMemoryWarning() {
@@ -170,6 +175,26 @@ class ChoreEditViewController: UIViewController {
             }
             
             self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                }
+            }
+            
         }
     }
     

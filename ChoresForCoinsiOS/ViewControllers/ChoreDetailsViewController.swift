@@ -24,6 +24,7 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var choreNoteTextView: UITextView!
     @IBOutlet weak var editUIButton: UIButton!
     @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var profileButton: UIButton!
     
     @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var headerUserNameLabel: UILabel!
@@ -66,10 +67,14 @@ class ChoreDetailsViewController: UIViewController {
         
         //gets the custom parent id created in the registration
         getParentId()
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotal()
+        getPhoto()
     }
     
     func getRunningTotal(){
@@ -146,34 +151,8 @@ class ChoreDetailsViewController: UIViewController {
             
             if let choreImageURL = imageLocale {
                 
-                let session = URLSession.shared
-                
-                let url: URL  = URL(string: choreImageURL)!
-                
-                let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
-                    
-                    if let error = error {
-                        AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
-                        return
-                    } else {
-                        if (response as? HTTPURLResponse) != nil {
-                            
-                            DispatchQueue.main.async {
-                                if let imageData = data {
-                                    let image = UIImage(data: imageData)
-                                    self.choreImageImageView.image = image
-                                }
-                            }
-                        }
-                    }
-                    
-                })
-                
-                getImageFromURL.resume()
-                
+                self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
             }
-            
-            
         }
     }
     
@@ -285,6 +264,26 @@ class ChoreDetailsViewController: UIViewController {
         }
         
         
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                }
+            }
+            
+        }
     }
     
     @IBAction func toCoinView(_ sender: UIButton) {

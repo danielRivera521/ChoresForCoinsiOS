@@ -27,6 +27,7 @@ class AddRemoveCoinsViewController: UIViewController {
     @IBOutlet weak var btnGrayMinus: UIButton!
     @IBOutlet weak var btnGrayAdd: UIButton!
     @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var profileButton: UIButton!
     
     var ref: DatabaseReference?
     var coinValue: Int?
@@ -72,6 +73,9 @@ class AddRemoveCoinsViewController: UIViewController {
             //getRunningTotal()
             
         }
+        
+        // get photo for profile button
+        getPhoto()
     }
     
     func displayHeaderName(){
@@ -91,6 +95,7 @@ class AddRemoveCoinsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getRunningTotalParent()
+        getPhoto()
     }
     
     override func didReceiveMemoryWarning() {
@@ -321,6 +326,27 @@ class AddRemoveCoinsViewController: UIViewController {
         }
         
         numString = ""
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                    
+                }
+            }
+            
+        }
     }
     
     @IBAction func done(_ sender: UIButton) {

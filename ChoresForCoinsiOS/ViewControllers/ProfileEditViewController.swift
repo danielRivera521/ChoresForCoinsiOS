@@ -10,17 +10,21 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var parentKeyLabelSmall: UILabel!
     @IBOutlet weak var parentKeyLabel: UILabel!
     @IBOutlet weak var parentKeyTextField: UITextField!
+    @IBOutlet weak var profilePicButton: UIButton!
+    @IBOutlet weak var updateProfilePicView: UIView!
     
     var authUI: FUIAuth?
-    
     var email: String?
     var parentKey: String?
     var username: String?
     var isParent: Bool?
+    var isFirstLoad = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        isFirstLoad = false
+        
         // get current user
         let user = Auth.auth().currentUser
         if let user = user {
@@ -40,12 +44,20 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
                         self.parentKey = parentKeyUnwrapped
                         self.parentKeyLabel.text = parentKeyUnwrapped
                     }
+                    
+                    self.getPhoto()
                 }
             }
         }
         
         if let emailUnwrapped = email {
             emailTextField.text = emailUnwrapped
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if !isFirstLoad {
+            getPhoto()
         }
     }
     
@@ -140,6 +152,26 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: email)
+    }
+    
+    func getPhoto() {
+        let userID = Auth.auth().currentUser?.uid
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profilePicButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.width/2
+                    self.profilePicButton.layer.masksToBounds = true
+                }
+            }
+            
+        }
     }
     
     @IBAction func updatePassword(_ sender: UIButton) {
