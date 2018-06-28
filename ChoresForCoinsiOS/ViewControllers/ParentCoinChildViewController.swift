@@ -73,6 +73,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     override func viewWillAppear(_ animated: Bool) {
         if !firstRun {
             getRunningTotalParent()
+            getPhoto()
         }
     }
 
@@ -155,36 +156,22 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func getPhoto() {
-        var uid = ""
-        if let UID = Auth.auth().currentUser?.uid {
-            uid = UID
-        }
         
-        Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-            if let val = snapshot.value as? [String:Any] {
-                // get profile picture
-                if let filename = val["profilePicture"] as? String {
-                    let fileref = Storage.storage().reference().child(filename)
-                    fileref.getData(maxSize: 100000000, completion: { (data, error) in
-                        if error == nil {
-                            if data != nil {
-                                let img = UIImage.init(data: data!)
-                                
-                                // make sure UI is getting updated on Main thread
-                                DispatchQueue.main.async {
-                                    self.profileButton.setBackgroundImage(img, for: .normal)
-                                    // turn button into a circle
-                                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
-                                    self.profileButton.layer.masksToBounds = true
-                                }
-                                
-                            }
-                        } else {
-                            print(error?.localizedDescription)
-                        }
-                    })
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
                 }
             }
+            
         }
     }
     

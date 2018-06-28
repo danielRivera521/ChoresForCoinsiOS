@@ -14,12 +14,12 @@ import MobileCoreServices
 class ProfilePictureSelectViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private var imagePicker: UIImagePickerController!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -56,7 +56,6 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     
     // MARK: Delegate Methods
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let ref = Database.database().reference()
         let mediaType = info[UIImagePickerControllerMediaType] as! String
         
         if mediaType == (kUTTypeImage as String) {
@@ -74,20 +73,35 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
                 
                 if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
                     fileref.putData(UIImagePNGRepresentation(img)!, metadata: meta, completion: { (meta, error) in
-                        if error == nil {
-                            ref.child("user/\(userid)/profilePicture").setValue(filename)
-                        } else {
-                            print(error?.localizedDescription)
-                            AlertController.showAlert(self, title: "Alert", message: "Picture was not able to be saved.")
+                        if error != nil {
+                            AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                            return
                         }
+                        
+                        fileref.downloadURL(completion: { (url, error) in
+                            if let error = error {
+                                AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
+                                return
+                            } else {
+                                if let urlString = url?.absoluteString{
+                                    self.createProfileImageURL(userID: userid, imageUrl: urlString)
+                                }
+                            }
+                        })
                     })
                 }
-            }
-            
-            dismiss(animated: true) {
-                self.dismiss(animated: true, completion: nil)
+                
+                dismiss(animated: true) {
+                    self.dismiss(animated: true, completion: nil)
+                }
             }
         }
+    }
+    func createProfileImageURL(userID: String, imageUrl: String){
+        
+        let ref = Database.database().reference()
+        
+        ref.child("user/\(userID)/profile_image_url").setValue(imageUrl)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
