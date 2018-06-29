@@ -1460,9 +1460,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="QtQ-q5-P19" kind="presentation" id="RXN-m6-ZMC"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -1491,6 +1488,7 @@
                         <outlet property="coinAmtLabel" destination="ZVM-2r-Tl5" id="E5P-mm-hNr"/>
                         <outlet property="profileButton" destination="9tR-Sh-fGg" id="eMm-Bq-dwF"/>
                         <outlet property="usernameLabel" destination="w2p-xC-m4m" id="8ea-zu-F6M"/>
+                        <segue destination="QtQ-q5-P19" kind="presentation" identifier="goToCalc" id="Scx-lm-0xf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UYe-IQ-qVL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3198,7 +3196,7 @@
         <segue reference="6S7-b7-Z4r"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="TW0-XL-iud"/>
-        <segue reference="IdO-99-Zmk"/>
+        <segue reference="Yia-uk-i10"/>
+        <segue reference="7DE-Oe-Cje"/>
     </inferredMetricsTieBreakers>
 </document>

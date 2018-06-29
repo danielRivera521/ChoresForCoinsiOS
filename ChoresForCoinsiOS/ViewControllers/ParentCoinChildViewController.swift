@@ -210,9 +210,12 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
-        selectedCellIndex = indexPath.row
-        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCellIndex = indexPath.row
+        performSegue(withIdentifier: "goToCalc", sender: self)
     }
     
     @IBAction func dismissView(_ sender: Any) {

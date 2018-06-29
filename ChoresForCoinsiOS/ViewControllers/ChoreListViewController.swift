@@ -26,6 +26,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var choreIDNum: String?
     var firstView = true
     var isActiveUserParent = false
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
     
     
     override func viewDidLoad() {
@@ -51,13 +53,11 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         //cresates chore list
         createChores()
         
+        //check if user is a parent. if the account is a child account the add chore tab will be disabled.
+        isUserParent()
+        
         //edit header information
         displayHeaderName()
-        getRunningTotal()
-        
-        //check if user is a parent. if the account is a child account the add chore tab will be disabled.
-        
-        isUserParent()
         
         // get photo for profile button
         getPhoto()
@@ -82,7 +82,11 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         if !firstView{
             createChores()
             displayHeaderName()
-            getRunningTotal()
+            if isActiveUserParent {
+                getRunningTotalParent()
+            } else {
+                getRunningTotal()
+            }
             getPhoto()
         }
         
@@ -143,6 +147,61 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    func getRunningTotalParent(){
+        getChildren()
+        getCoinTotals()
+    }
+    
+    // gets all children with same parent id as user
+    func getChildren() {
+        children.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
+            
+            for key in Array(dictUsers.keys) {
+                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                self.children = self.children.filter({$0.parentid == self.parentID})
+                self.children = self.children.filter({$0.userparent == false})
+                
+            }
+        }
+        
+        
+    }
+    
+    func getCoinTotals() {
+        coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            
+            for key in Array(dictRunningTotal.keys) {
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
+            }
+            
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.key == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
         
@@ -158,70 +217,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    //MARK: TableView set up
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chores.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChoreCellTableViewCell
-        
-        let choreItem = chores[indexPath.row]
-        
-        cell.choreNameCellLabel.text = choreItem.name
-        
-        if let completed = choreItem.completed {
-            if completed {
-                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
-            } else {
-                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
-            }
-        }
-        
-        cell.usernameCellLabel.text = choreItem.choreUsername
-        cell.dueDateCellLabel.text = choreItem.dueDate
-        
-        //gets the image URL from the chores array
-        if let choreImageURL =  chores[indexPath.row].choreURL{
-            
-            //creates the session
-            let session = URLSession.shared
-            
-            //create URL variable from string value
-            let url: URL  = URL(string: choreImageURL)!
-            
-            //runs a task to get the image from the URL
-            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
-                
-                //if there is an error
-                if let error = error {
-                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
-                    return
-                } else {
-                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
-                    if (response as? HTTPURLResponse) != nil {
-                        
-                        DispatchQueue.main.async {
-                            if let imageData = data {
-                                let image = UIImage(data: imageData)
-                                cell.imageCellImageView.image = image
-                            }
-                        }
-                    }
-                }
-                
-            })
-            
-            getImageFromURL.resume()
-            
-        }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
-    }
     
     func createChores(){
         //database reference
@@ -252,28 +248,41 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func isUserParent(){
         
-        Database.database().reference().child("running_total").observeSingleEvent(of: .value) { (snapshot) in
-            self.isActiveUserParent = true
-            let value = snapshot.value as? NSDictionary
-            
-            for id in (value?.keyEnumerator())!{
-                if let idValue = id as? String {
-                    
-                    if self.userID! == idValue {
-                        self.isActiveUserParent = false
-                        break
-                    }
-                    
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? Bool {
+                self.isActiveUserParent = val
+                self.disableAddChoreTabItem()
+                
+                if self.isActiveUserParent {
+                    self.getRunningTotalParent()
+                } else {
+                    self.getRunningTotal()
                 }
             }
-            
-            self.disableAddChoreTabItem()
-            
         }
+        
+//        Database.database().reference().child("running_total").observeSingleEvent(of: .value) { (snapshot) in
+//            self.isActiveUserParent = true
+//            let value = snapshot.value as? NSDictionary
+//
+//            for id in (value?.keyEnumerator())!{
+//                if let idValue = id as? String {
+//
+//                    if self.userID! == idValue {
+//                        self.isActiveUserParent = false
+//                        break
+//                    }
+//
+//                }
+//            }
+//
+//            self.disableAddChoreTabItem()
+//
+//        }
     }
     
     func disableAddChoreTabItem(){
-        if  let arrayOfTabBarItems = tabBarController?.tabBar.items as! AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+        if let arrayOfTabBarItems = tabBarController?.tabBar.items as! AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
             tabBarItem.isEnabled = isActiveUserParent
         }
     }
@@ -327,6 +336,75 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
     }
+    
+    
+    //MARK: TableView set up
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chores.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChoreCellTableViewCell
+        
+        let choreItem = chores[indexPath.row]
+        
+        cell.choreNameCellLabel.text = choreItem.name
+        
+        if let completed = choreItem.completed {
+            if completed {
+                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
+            } else {
+                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
+            }
+        }
+        
+        cell.usernameCellLabel.text = choreItem.choreUsername
+        cell.dueDateCellLabel.text = choreItem.dueDate
+        
+        //gets the image URL from the chores array
+        if let choreImageURL =  chores[indexPath.row].choreURL{
+            
+            //creates the session
+            let session = URLSession.shared
+            
+            //create URL variable from string value	
+            let url: URL  = URL(string: choreImageURL)!
+            
+            //runs a task to get the image from the URL
+            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
+                
+                //if there is an error
+                if let error = error {
+                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
+                    return
+                } else {
+                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
+                    if (response as? HTTPURLResponse) != nil {
+                        
+                        DispatchQueue.main.async {
+                            if let imageData = data {
+                                let image = UIImage(data: imageData)
+                                cell.imageCellImageView.image = image
+                            }
+                        }
+                    }
+                }
+                
+            })
+            
+            getImageFromURL.resume()
+            
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
+    }
+    
+    
+    // MARK: Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
