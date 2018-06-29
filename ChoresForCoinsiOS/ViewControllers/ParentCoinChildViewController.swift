@@ -72,7 +72,9 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     
     override func viewWillAppear(_ animated: Bool) {
         if !firstRun {
+            coinValue = 0
             getRunningTotalParent()
+            // get photo for profile button
             getPhoto()
         }
     }
@@ -128,28 +130,46 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func getCoinTotals() {
-        //coinTotals.removeAll()
+        coinTotals.removeAll()
         
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
         
             for key in Array(dictRunningTotal.keys) {
-                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
             }
             
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.userid == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
             
             self.childrenTableView.reloadData()
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        firstRun = false
         if let destination = segue.destination as? AddRemoveCoinsViewController {
             if let selectedCellIndex = selectedCellIndex {
                 if let cointotal = coinTotals[selectedCellIndex].cointotal {
                     destination.coinValue = cointotal
                     destination.childId = children[selectedCellIndex].userid
+                    destination.childName = children[selectedCellIndex].username
                 }
             }
         }
