@@ -14,6 +14,7 @@ class ChildUser {
     var username: String?
     var userparent: Bool?
     var parentid: String?
+    var isRedeem: Bool?
     
     init(dictionary: [String:AnyObject], key: String) {
         self.key = key
@@ -28,6 +29,9 @@ class ChildUser {
         }
         if let parentid = dictionary["parent_id"] as? String {
             self.parentid = parentid
+        }
+        if let isRedeem = dictionary["isRedeem"] as? Bool {
+            self.isRedeem = isRedeem
         }
     }
 }

@@ -24,6 +24,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var redDot: UIImageView!
     
      private var imagePicker: UIImagePickerController!
     
@@ -43,6 +45,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        childRedeemView.isHidden = true
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
@@ -305,6 +309,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
+            
+            self.checkRedeem(children: self.children)
         }
         
         
@@ -451,6 +457,23 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -554,6 +577,29 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    @IBAction func toCoinView(_ sender: UIButton) {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if isParent {
+                    self.performSegue(withIdentifier: "toCoinFromChoreEdit", sender: nil)
+                } else {
+                    self.childRedeemView.isHidden = false
+                }
+            }
+        })
+    }
+    
+    @IBAction func childRedeem(_ sender: UIButton) {
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
+    }
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         dismiss(animated: true, completion: nil)
@@ -563,7 +609,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
         if let id = choreId {
             removeChildNode(child: id)
-            performSegue(withIdentifier: "segueToList", sender: self)
+            //performSegue(withIdentifier: "segueToList", sender: self)
+            tabBarController?.selectedIndex = 0
         }
         
     }
@@ -574,7 +621,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             updateChore(id: cid)
             
             
-            performSegue(withIdentifier: "segueToList", sender: self)
+            // performSegue(withIdentifier: "segueToList", sender: self)
+            tabBarController?.selectedIndex = 0
         }
     }
     

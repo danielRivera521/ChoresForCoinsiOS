@@ -25,10 +25,10 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var editUIButton: UIButton!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
-    
     @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var redDot: UIImageView!
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -214,6 +214,8 @@ class ChoreDetailsViewController: UIViewController {
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
+            
+            self.checkRedeem(children: self.children)
         }
         
         
@@ -305,6 +307,23 @@ class ChoreDetailsViewController: UIViewController {
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
@@ -332,9 +351,13 @@ class ChoreDetailsViewController: UIViewController {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        // zero out coin total and update db
-        
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

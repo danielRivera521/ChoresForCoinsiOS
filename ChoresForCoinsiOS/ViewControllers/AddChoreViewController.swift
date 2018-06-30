@@ -26,6 +26,7 @@ class AddChoreViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var redDot: UIImageView!
     
     
     // MARK: Properties
@@ -156,6 +157,8 @@ class AddChoreViewController: UIViewController {
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
+            
+            self.checkRedeem(children: self.children)
         }
         
         
@@ -291,6 +294,22 @@ class AddChoreViewController: UIViewController {
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: Actions
     
@@ -355,7 +374,13 @@ class AddChoreViewController: UIViewController {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
     @IBAction func changeChorePicture(_ sender: UIButton) {

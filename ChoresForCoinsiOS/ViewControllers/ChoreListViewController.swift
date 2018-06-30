@@ -16,6 +16,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var choreListTV: UITableView!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var redDot: UIImageView!
     
     var chores: [Chore] = [Chore]()
     var coinValue = 11
@@ -163,6 +164,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
+            
+            self.checkRedeem(children: self.children)
         }
         
         
@@ -299,7 +302,21 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -399,9 +416,13 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        // zero out coin total and update db
-        
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            ref?.child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }

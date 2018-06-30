@@ -15,6 +15,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var redDot: UIImageView!
     
     var ref: DatabaseReference?
     var coinValue = 11
@@ -27,6 +28,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     var coinTotals = [RunningTotal] ()
     var selectedCellIndex: Int?
     var isParent = true
+    var isRedeem = false
     
     
     override func viewDidLoad() {
@@ -76,6 +78,8 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             getRunningTotalParent()
             // get photo for profile button
             getPhoto()
+            
+            childrenTableView.reloadData()
         }
     }
 
@@ -119,11 +123,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
                 self.children = self.children.filter({$0.userparent == false})
-                
             }
-            
-            
-            self.childrenTableView.reloadData()
         }
         
        
@@ -157,7 +157,6 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             }
             
             self.coinAmtLabel.text = String(sumTotal)
-            
             self.childrenTableView.reloadData()
         }
     }
@@ -170,6 +169,9 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                     destination.coinValue = cointotal
                     destination.childId = children[selectedCellIndex].userid
                     destination.childName = children[selectedCellIndex].username
+                    if let redeem = self.children[selectedCellIndex].isRedeem {
+                        destination.isRedeem = redeem
+                    }
                 }
             }
         }
@@ -195,6 +197,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    
     // MARK: Table View setup
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return children.count
@@ -203,7 +206,20 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        cell.textLabel?.text = children[indexPath.row].username
+        if let username = children[indexPath.row].username {
+            if children.count > 0 {
+                if let redeem = children[indexPath.row].isRedeem {
+                    if redeem {
+                        cell.textLabel?.text = "\(username): REDEEM PENDING"
+                    } else {
+                        cell.textLabel?.text = username
+                    }
+                } else {
+                    cell.textLabel?.text = username
+                }
+            }
+        }
+        
         if !coinTotals.isEmpty {
             if let cointotal = coinTotals[indexPath.row].cointotal {
                 cell.detailTextLabel?.text = String(cointotal)

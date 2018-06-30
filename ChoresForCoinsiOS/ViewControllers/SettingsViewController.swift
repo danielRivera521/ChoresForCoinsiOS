@@ -18,6 +18,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var redDot: UIImageView!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -143,6 +144,8 @@ class SettingsViewController: UIViewController {
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
+            
+            self.checkRedeem(children: self.children)
         }
         
         
@@ -199,6 +202,22 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: Actions
     
@@ -237,9 +256,13 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        // zero out coin total and update db
-        
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
 }
