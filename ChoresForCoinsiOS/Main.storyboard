@@ -263,6 +263,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Byj-iA-iGy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1JU-OB-mb0" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1274.4000000000001" y="974.6305418719212"/>
         </scene>
@@ -990,6 +991,7 @@
                         <outlet property="usernameLabel" destination="L9L-lR-LBL" id="Vm0-PB-jX4"/>
                         <outlet property="usernameTextField" destination="bT4-0k-dzp" id="mod-Ln-eCE"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromAddChore" id="4QU-Dj-v8X"/>
+                        <segue destination="1JU-OB-mb0" kind="unwind" unwindAction="unwindToChoreListWithSegue:" id="wzu-Ec-oy7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FfG-Hm-pjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2266,6 +2268,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bSq-U0-DY5">
                                 <rect key="frame" x="337" y="101" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editChoreBtn:" destination="6dG-q3-qFR" eventType="touchUpInside" id="HhF-jb-L1F"/>
+                                    <segue destination="l7o-YR-ylh" kind="presentation" identifier="editChoreSegue" id="Sir-Tr-8XP"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q44-lQ-i2t">
                                 <rect key="frame" x="0.0" y="196.33333333333337" width="375" height="178.66666666666663"/>
@@ -2797,6 +2803,7 @@
                         <outlet property="profileButton" destination="be6-Zc-DSa" id="Zim-yd-Hki"/>
                         <outlet property="usernameLabel" destination="BAb-Up-N4G" id="H8o-E7-BVX"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromTakePhoto" id="0Cp-zN-Xa7"/>
+                        <segue destination="1JU-OB-mb0" kind="unwind" identifier="segueToList" unwindAction="unwindToChoreListWithSegue:" id="BQj-gw-kOS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ut1-qG-WNc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3154,6 +3161,7 @@
                         <outlet property="usernameLabel" destination="R1k-U5-QNc" id="rBA-vn-eFA"/>
                         <outlet property="usernameTextField" destination="Ef5-EW-iQY" id="1IE-yB-o5F"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromChoreEdit" id="0dr-E4-ccy"/>
+                        <segue destination="1JU-OB-mb0" kind="unwind" identifier="segueToList" unwindAction="unwindToChoreListWithSegue:" id="X6B-rN-cF3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F6V-gE-j4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3196,7 +3204,7 @@
         <segue reference="6S7-b7-Z4r"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="Yia-uk-i10"/>
-        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="0dr-E4-ccy"/>
+        <segue reference="HOK-Pp-4Xx"/>
     </inferredMetricsTieBreakers>
 </document>

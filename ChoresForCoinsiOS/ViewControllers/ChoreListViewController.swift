@@ -261,24 +261,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         
-//        Database.database().reference().child("running_total").observeSingleEvent(of: .value) { (snapshot) in
-//            self.isActiveUserParent = true
-//            let value = snapshot.value as? NSDictionary
-//
-//            for id in (value?.keyEnumerator())!{
-//                if let idValue = id as? String {
-//
-//                    if self.userID! == idValue {
-//                        self.isActiveUserParent = false
-//                        break
-//                    }
-//
-//                }
-//            }
-//
-//            self.disableAddChoreTabItem()
-//
-//        }
     }
     
     func disableAddChoreTabItem(){
@@ -425,6 +407,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         childRedeemView.isHidden = true
     }
     
+   @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
     
 }
 

@@ -188,6 +188,9 @@ class AddChoreViewController: UIViewController {
         choreValueTextField.text = nil
         choreNoteTextView.text = nil
         
+        AlertController.showAlert(self, title: "Success", message: "Chore Created")
+        
+        performSegue(withIdentifier: "segueToList", sender: self)
     }
     //creates initial assignment
     func createAssignmentID(choreID: String){
@@ -223,13 +226,13 @@ class AddChoreViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-            var count = 0
+        
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
                 self.children = self.children.filter({$0.userparent! == false})
                 
-                count += 1
+            
             }
         }
         
@@ -241,11 +244,10 @@ class AddChoreViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
+        
             for key in Array(dictRunningTotal.keys) {
                 self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
-                count += 1
+            
             }
             
             var sumTotal = 0

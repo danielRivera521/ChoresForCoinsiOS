@@ -119,7 +119,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             }
             
         }
-        
+        performSegue(withIdentifier: "segueToList", sender: self)
     }
     
     private func createChoreImageURL(imageUrl: String){

@@ -311,5 +311,16 @@ class ChoreDetailsViewController: UIViewController {
                 takePictureVC.choreId = choreId!
             }
         }
+        
+        if segue.identifier == "editChoreSegue"{
+            if let editChoreVC = segue.destination as? ChoreEditViewController {
+                if let id = choreId{
+                    editChoreVC.choreId = id
+                }
+            }
+        }
+    }
+    @IBAction func editChoreBtn(_ sender: UIButton) {
+        performSegue(withIdentifier: "editChoreSegue", sender: nil)
     }
 }
