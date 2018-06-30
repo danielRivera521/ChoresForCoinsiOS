@@ -38,8 +38,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         firstView = true
         ref = Database.database().reference()
         
-        //checks if the user has an account in the database
-        checkDatabase()
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
@@ -55,6 +53,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         //check if user is a parent. if the account is a child account the add chore tab will be disabled.
         isUserParent()
+        
+        //checks if the user has an account in the database
+        checkDatabase()
         
         //edit header information
         displayHeaderName()
@@ -82,11 +83,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         if !firstView{
             createChores()
             displayHeaderName()
-            if isActiveUserParent {
-                getRunningTotalParent()
-            } else {
-                getRunningTotal()
-            }
+            isUserParent()
             getPhoto()
         }
         
@@ -108,7 +105,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                                     // user is in database
                                     self.idFound = true
                                     if (Auth.auth().currentUser?.displayName) != nil{
-                                        self.getRunningTotal()
+                                        self.isUserParent()
                                         self.displayHeaderName()
                                         return
                                     }
@@ -261,24 +258,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         
-//        Database.database().reference().child("running_total").observeSingleEvent(of: .value) { (snapshot) in
-//            self.isActiveUserParent = true
-//            let value = snapshot.value as? NSDictionary
-//
-//            for id in (value?.keyEnumerator())!{
-//                if let idValue = id as? String {
-//
-//                    if self.userID! == idValue {
-//                        self.isActiveUserParent = false
-//                        break
-//                    }
-//
-//                }
-//            }
-//
-//            self.disableAddChoreTabItem()
-//
-//        }
     }
     
     func disableAddChoreTabItem(){
@@ -425,6 +404,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         childRedeemView.isHidden = true
     }
     
+   @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
     
 }
 

@@ -21,13 +21,13 @@ class SettingsViewController: UIViewController {
     
     var isFirstLoad = true
     var coinValue = 0
-    var children = [ChildUser] ()
-    var coinTotals = [RunningTotal] ()
     var runningTotal = 0
     var parentID: String?
     var userID: String?
     var isParent = true
-    
+    var isActiveUserParent = false
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
     
     
     override func viewDidLoad() {
@@ -53,9 +53,18 @@ class SettingsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getRunningTotal()
+        isUserParent()
         getPhoto()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: Custom Functions
+    
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
         
@@ -69,37 +78,6 @@ class SettingsViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    @IBAction func toggleBonusDay(_ sender: UISwitch) {
-    }
-    
-    @IBAction func selectBackground(_ sender: UIButton) {
-        // switch to determine which button was selected via tag
-        switch sender.tag {
-        case 1:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "whiteBG.png")!)
-        case 2:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "orangeBG.png")!)
-        case 3:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "greenBG.png")!)
-        case 4:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "redBG.png")!)
-        case 5:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "purpleBG.png")!)
-        default:
-            break
-        }
-    }
-    func getRunningTotal(){
-        getChildren()
-        getCoinTotals()
     }
     
     //gets the parent generated id from the user's node in the database
@@ -116,6 +94,41 @@ class SettingsViewController: UIViewController {
         
     }
     
+    func isUserParent(){
+        
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? Bool {
+                self.isActiveUserParent = val
+                
+                if self.isActiveUserParent {
+                    self.getRunningTotalParent()
+                } else {
+                    self.getRunningTotal()
+                }
+            }
+        }
+    }
+    
+    func getRunningTotal(){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
+            }
+        }
+        
+    }
+    
+    func getRunningTotalParent(){
+        getChildren()
+        getCoinTotals()
+    }
+    
     // gets all children with same parent id as user
     func getChildren() {
         children.removeAll()
@@ -123,15 +136,15 @@ class SettingsViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-            var count = 0
+            
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent! == false})
+                self.children = self.children.filter({$0.userparent == false})
                 
-                count += 1
             }
         }
+        
         
     }
     
@@ -141,18 +154,20 @@ class SettingsViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
+            
             for key in Array(dictRunningTotal.keys) {
-                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
-                count += 1
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
             }
             
             var sumTotal = 0
             
             for coinTotal in self.coinTotals {
                 for child in self.children {
-                    if coinTotal.userid == child.userid {
+                    if coinTotal.key == child.userid {
                         if let total = coinTotal.cointotal {
                             sumTotal += total
                         }
@@ -181,6 +196,30 @@ class SettingsViewController: UIViewController {
                 }
             }
             
+        }
+    }
+    
+    
+    // MARK: Actions
+    
+    @IBAction func toggleBonusDay(_ sender: UISwitch) {
+    }
+    
+    @IBAction func selectBackground(_ sender: UIButton) {
+        // switch to determine which button was selected via tag
+        switch sender.tag {
+        case 1:
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "whiteBG.png")!)
+        case 2:
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "orangeBG.png")!)
+        case 3:
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "greenBG.png")!)
+        case 4:
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "redBG.png")!)
+        case 5:
+            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "purpleBG.png")!)
+        default:
+            break
         }
     }
     
