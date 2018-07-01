@@ -14,24 +14,35 @@ import MobileCoreServices
 
 class TakePictureViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
-    var choreId: String?
-    var coinValue = 0
-    
-    private var imagePicker: UIImagePickerController!
-    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var childRedeemView: UIView!
+    @IBOutlet weak var redDot: UIImageView!
+    
+    var userID: String?
+    var parentID: String?
+    var choreId: String?
+    var coinValue = 0
+    var isActiveUserParent = false
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
+    
+    private var imagePicker: UIImagePickerController!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        childRedeemView.isHidden = true
+        
+        //gets the firebase generated id
+        userID = (Auth.auth().currentUser?.uid)!
+        
         //edit header information
         let name = Auth.auth().currentUser?.displayName
         if let username = name {
             usernameLabel.text = username
-            getRunningTotal()
         }
         
         // get photo for profile button
@@ -39,14 +50,44 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        isUserParent()
         getPhoto()
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //gets the parent generated id from the user's node in the database
+    func getParentId(){
+        let userID = Auth.auth().currentUser?.uid
+        
+        if let actualUID = userID{
+            _ = Database.database().reference().child("user").child(actualUID).observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let id = value?["parent_id"] as? String
+                if let actualID = id{
+                    self.parentID = actualID
+                }
+            }
+        }
+        
+    }
+    
+    func isUserParent(){
+        
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? Bool {
+                self.isActiveUserParent = val
+                
+                if self.isActiveUserParent {
+                    self.getRunningTotalParent()
+                } else {
+                    self.getRunningTotal()
+                }
+            }
+        }
     }
     
     func getRunningTotal(){
@@ -61,32 +102,64 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
+        
     }
     
-    @IBAction func doGoBack(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+    func getRunningTotalParent(){
+        getChildren()
+        getCoinTotals()
     }
     
-    @IBAction func takePictureBtn(_ sender: UIButton) {
+    // gets all children with same parent id as user
+    func getChildren() {
+        children.removeAll()
         
-        //instantiates the imagePicker
-        imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        
-        //if the camera is not available, use the photo library
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            imagePicker.sourceType = .camera
-        } else {
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
             
-            //may remove this option if current image from camera is necessary.
-            imagePicker.sourceType = .photoLibrary
+            for key in Array(dictUsers.keys) {
+                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                self.children = self.children.filter({$0.parentid == self.parentID})
+                self.children = self.children.filter({$0.userparent == false})
+                
+            }
+            
+            self.checkRedeem(children: self.children)
         }
         
-        //image can be edited and sets the mediatype to the source type which is the camera
-        imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
         
-        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func getCoinTotals() {
+        coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            
+            for key in Array(dictRunningTotal.keys) {
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
+            }
+            
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.key == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
+        }
     }
     
     //function to access storage
@@ -119,7 +192,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             }
             
         }
-        
+        performSegue(withIdentifier: "segueToList", sender: self)
     }
     
     private func createChoreImageURL(imageUrl: String){
@@ -140,7 +213,10 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             
             // updates the chore completed from false to true
             ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
-            
+            if let displayName = Auth.auth().currentUser?.displayName{
+                let displayText = "Completed by \(displayName)"
+                ref.child("\(choreId!)/chore_username").setValue(displayText)
+            }
             var selectedImageFromPicker: UIImage?
             
             if let editedImage = info["UIImagePickerControllerEditedImage"]{
@@ -191,4 +267,68 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func toCoinView(_ sender: UIButton) {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if isParent {
+                    self.performSegue(withIdentifier: "toCoinFromTakePhoto", sender: nil)
+                } else {
+                    self.childRedeemView.isHidden = false
+                }
+            }
+        })
+    }
+    
+    @IBAction func childRedeem(_ sender: UIButton) {
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
+    }
+    
+    @IBAction func doGoBack(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func takePictureBtn(_ sender: UIButton) {
+        
+        //instantiates the imagePicker
+        imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        
+        //if the camera is not available, use the photo library
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.sourceType = .camera
+        } else {
+            
+            //may remove this option if current image from camera is necessary.
+            imagePicker.sourceType = .photoLibrary
+        }
+        
+        //image can be edited and sets the mediatype to the source type which is the camera
+        imagePicker.allowsEditing = true
+        imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+        
+        self.present(imagePicker, animated: true, completion: nil)
+    }
 }

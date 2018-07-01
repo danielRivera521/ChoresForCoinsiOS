@@ -18,6 +18,8 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var coinTotalTextField: UITextField!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var redDotCoin: UIImageView!
+    @IBOutlet weak var redDotRedeem: UIImageView!
     
     
     // MARK: Properties
@@ -36,6 +38,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     var runningTotal = 0
     var isParent = true
     var firstRun = true
+    var isRedeem = false
     
     
     // MARK: View Controller Methods
@@ -46,6 +49,11 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         // set child name label
         if let childName = childName {
             childNameLabel.text = childName
+        }
+        
+        if isRedeem {
+            redDotCoin.isHidden = false
+            redDotRedeem.isHidden = false
         }
         
         // get username and set it to label in header
@@ -259,6 +267,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         
         if let uid = childId {
             databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": coinValue])
+            databaseRef.child("running_total").child(uid).updateChildValues(["isRedeem": false])
         }
     }
     
@@ -313,9 +322,15 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         coinValue = 0
         coinTotalTextField.text = "\(self.coinValue!)"
         
+        if let uid = childId {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+        }
+        
         // update new coin value on database
         updateTotalCoins()
+        
         // dismiss view
+        dismiss(animated: true, completion: nil)
     }
     
     

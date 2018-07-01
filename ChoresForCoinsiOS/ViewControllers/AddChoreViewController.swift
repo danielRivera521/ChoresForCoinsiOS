@@ -11,9 +11,12 @@ import Firebase
 
 class AddChoreViewController: UIViewController {
     
+    
+    // MARK: Outlets
+    
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!    
+    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var choreDescriptionTextView: UITextView!
     @IBOutlet weak var startDateTextField: UITextField!
     @IBOutlet weak var dueDateTextField: UITextField!
@@ -21,14 +24,16 @@ class AddChoreViewController: UIViewController {
     @IBOutlet weak var choreNoteTextView: UITextView!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
-    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var redDot: UIImageView!
+    
+    
+    // MARK: Properties
+    
     var isFirstLoad = true
     var coinValue = 0
-    
     var ref: DatabaseReference?
-    
     // create date picker
     let picker = UIDatePicker()
     // array to hold all users with same generatedId
@@ -36,16 +41,22 @@ class AddChoreViewController: UIViewController {
     var currentUID: String?
     var userID: String?
     var parentID: String?
-    var children = [ChildUser] ()
-    var coinTotals = [RunningTotal] ()
     var runningTotal = 0
     var isParent = true
+    var isActiveUserParent = false
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
     
+    
+    // MARK: View Controller functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         childRedeemView.isHidden = true
+        
+        //gets the firebase generated id
+        userID = (Auth.auth().currentUser?.uid)!
         
         if (Auth.auth().currentUser?.displayName) != nil{
             displayHeaderName()
@@ -59,22 +70,28 @@ class AddChoreViewController: UIViewController {
             getParentId()
         }
         
+        //isUserParent()
+        
         // get profile photo for profile button
         getPhoto()
         
-        //gets the firebase generated id
-        userID = (Auth.auth().currentUser?.uid)!
+        isFirstLoad = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getRunningTotal()
-        getPhoto()
+        if !isFirstLoad {
+            isUserParent()
+            getPhoto()
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    // MARK: Custom functions
     
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
@@ -91,15 +108,93 @@ class AddChoreViewController: UIViewController {
         }
     }
     
-    @IBAction func changeChorePicture(_ sender: UIButton) {
+    func isUserParent(){
+        
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? Bool {
+                self.isActiveUserParent = val
+                
+                if self.isActiveUserParent {
+                    self.getRunningTotalParent()
+                } else {
+                    self.getRunningTotal()
+                }
+            }
+        }
     }
     
-    //populates the running total for the user's coins in the top right hand corner
     func getRunningTotal(){
         
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
+            }
+        }
+        
+    }
+    
+    func getRunningTotalParent(){
         getChildren()
         getCoinTotals()
     }
+    
+    // gets all children with same parent id as user
+    func getChildren() {
+        children.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
+            
+            for key in Array(dictUsers.keys) {
+                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                self.children = self.children.filter({$0.parentid == self.parentID})
+                self.children = self.children.filter({$0.userparent == false})
+                
+            }
+            
+            self.checkRedeem(children: self.children)
+        }
+        
+        
+    }
+    
+    func getCoinTotals() {
+        coinTotals.removeAll()
+        
+        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
+            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
+            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
+            
+            for key in Array(dictRunningTotal.keys) {
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
+            }
+            
+            var sumTotal = 0
+            
+            for coinTotal in self.coinTotals {
+                for child in self.children {
+                    if coinTotal.key == child.userid {
+                        if let total = coinTotal.cointotal {
+                            sumTotal += total
+                        }
+                    }
+                }
+            }
+            
+            self.coinAmtLabel.text = String(sumTotal)
+        }
+    }
+    
     func createDatePickerStart() {
         // create toolbar for done button
         let toolbar = UIToolbar()
@@ -152,6 +247,85 @@ class AddChoreViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    //creates initial assignment
+    func createAssignmentID(choreID: String){
+        let newAssignRef = ref?.child("chore_assignment").childByAutoId()
+        let assignID = newAssignRef?.key
+        if let assignID = assignID {
+            ref?.child("chore_assignment/\(assignID)/chore_id").setValue(choreID)
+            ref?.child("chore_assignment/\(assignID)/chore_completed").setValue(false)
+        }
+        
+    }
+    
+    //gets the parent generated id from the user's node in the database
+    func getParentId(){
+        let userID = Auth.auth().currentUser?.uid
+        
+        if let actualUID = userID{
+            _ = Database.database().reference().child("user").child(actualUID).observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                let id = value?["parent_id"] as? String
+                if let actualID = id{
+                    self.parentID = actualID
+                }
+            }
+        }
+        
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
+                    
+                }
+            }
+        }
+    }
+    
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: Actions
+    
+    @IBAction func toCoinView(_ sender: UIButton) {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if isParent {
+                    self.performSegue(withIdentifier: "toCoinFromAddChore", sender: nil)
+                } else {
+                    self.childRedeemView.isHidden = false
+                }
+            }
+        })
+    }
+    
     @IBAction func saveChore(_ sender: UIButton) {
         //creates a new chore reference
         let newChoreRef = ref?.child("chores").childByAutoId()
@@ -188,119 +362,27 @@ class AddChoreViewController: UIViewController {
         choreValueTextField.text = nil
         choreNoteTextView.text = nil
         
-    }
-    //creates initial assignment
-    func createAssignmentID(choreID: String){
-        let newAssignRef = ref?.child("chore_assignment").childByAutoId()
-        let assignID = newAssignRef?.key
-        if let assignID = assignID {
-            ref?.child("chore_assignment/\(assignID)/chore_id").setValue(choreID)
-            ref?.child("chore_assignment/\(assignID)/chore_completed").setValue(false)
+        // alert user that chore was saved
+        let alert = UIAlertController(title: "Success", message: "Chore Saved", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            // change tabs programmatically
+            self.tabBarController?.selectedIndex = 0
         }
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
         
-    }
-    
-    //gets the parent generated id from the user's node in the database
-    func getParentId(){
-        let userID = Auth.auth().currentUser?.uid
-        
-        if let actualUID = userID{
-            _ = Database.database().reference().child("user").child(actualUID).observeSingleEvent(of: .value) { (snapshot) in
-                let value = snapshot.value as? NSDictionary
-                let id = value?["parent_id"] as? String
-                if let actualID = id{
-                    self.parentID = actualID
-                }
-            }
-        }
-        
-    }
-    
-    // gets all children with same parent id as user
-    func getChildren() {
-        children.removeAll()
-        
-        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-            let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-            var count = 0
-            for key in Array(dictUsers.keys) {
-                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-                self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent! == false})
-                
-                count += 1
-            }
-        }
-        
-    }
-    
-    func getCoinTotals() {
-        coinTotals.removeAll()
-        
-        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
-            for key in Array(dictRunningTotal.keys) {
-                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
-                count += 1
-            }
-            
-            var sumTotal = 0
-            
-            for coinTotal in self.coinTotals {
-                for child in self.children {
-                    if coinTotal.userid == child.userid {
-                        if let total = coinTotal.cointotal {
-                            sumTotal += total
-                        }
-                    }
-                }
-            }
-            
-            self.coinAmtLabel.text = String(sumTotal)
-        }
-    }
-    
-    func getPhoto() {
-        
-        let DatabaseRef = Database.database().reference()
-        if let uid = userID{
-            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                //gets the image URL from the user database
-                if let profileURL = value?["profile_image_url"] as? String{
-
-                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
-                     //turn button into a circle
-                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
-                    self.profileButton.layer.masksToBounds = true
-                    
-                }
-            }
-        }
-    }
-    
-    @IBAction func toCoinView(_ sender: UIButton) {
-        // checks if user is parent. If yes, go to parent coin view, else show redeem view
-        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
-            if let isParent = snapshot.value as? Bool {
-                if isParent {
-                    self.performSegue(withIdentifier: "toCoinFromAddChore", sender: nil)
-                } else {
-                    self.childRedeemView.isHidden = false
-                }
-            }
-        })
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        // zero out coin total and update db
-        
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
+    @IBAction func changeChorePicture(_ sender: UIButton) {
+    }
 }

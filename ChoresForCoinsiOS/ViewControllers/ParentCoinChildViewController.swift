@@ -10,11 +10,12 @@ import UIKit
 import Firebase
 
 class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var childrenTableView: UITableView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var redDot: UIImageView!
     
     var ref: DatabaseReference?
     var coinValue = 11
@@ -27,6 +28,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     var coinTotals = [RunningTotal] ()
     var selectedCellIndex: Int?
     var isParent = true
+    var isRedeem = false
     
     
     override func viewDidLoad() {
@@ -76,9 +78,11 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             getRunningTotalParent()
             // get photo for profile button
             getPhoto()
+            
+            childrenTableView.reloadData()
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         firstRun = false
     }
@@ -114,19 +118,15 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-
+            
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
                 self.children = self.children.filter({$0.userparent == false})
-                
             }
-            
-            
-            self.childrenTableView.reloadData()
         }
         
-       
+        
     }
     
     func getCoinTotals() {
@@ -135,7 +135,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-        
+            
             for key in Array(dictRunningTotal.keys) {
                 for child in self.children {
                     if key == child.userid {
@@ -146,18 +146,22 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             
             var sumTotal = 0
             
-            for coinTotal in self.coinTotals {
-                for child in self.children {
-                    if coinTotal.userid == child.userid {
-                        if let total = coinTotal.cointotal {
-                            sumTotal += total
-                        }
-                    }
+            //            for coinTotal in self.coinTotals {
+            //                for child in self.children {
+            //                    if coinTotal.userid == child.userid {
+            //                        if let total = coinTotal.cointotal {
+            //                            sumTotal += total
+            //                        }
+            //                    }
+            //                }
+            //            }
+            
+            for coinAmt in self.coinTotals{
+                if let total = coinAmt.cointotal{
+                    sumTotal += total
                 }
             }
-            
             self.coinAmtLabel.text = String(sumTotal)
-            
             self.childrenTableView.reloadData()
         }
     }
@@ -170,6 +174,9 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                     destination.coinValue = cointotal
                     destination.childId = children[selectedCellIndex].userid
                     destination.childName = children[selectedCellIndex].username
+                    if let redeem = self.children[selectedCellIndex].isRedeem {
+                        destination.isRedeem = redeem
+                    }
                 }
             }
         }
@@ -195,6 +202,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    
     // MARK: Table View setup
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return children.count
@@ -203,7 +211,20 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        cell.textLabel?.text = children[indexPath.row].username
+        if let username = children[indexPath.row].username {
+            if children.count > 0 {
+                if let redeem = children[indexPath.row].isRedeem {
+                    if redeem {
+                        cell.textLabel?.text = "\(username): REDEEM PENDING"
+                    } else {
+                        cell.textLabel?.text = username
+                    }
+                } else {
+                    cell.textLabel?.text = username
+                }
+            }
+        }
+        
         if !coinTotals.isEmpty {
             if let cointotal = coinTotals[indexPath.row].cointotal {
                 cell.detailTextLabel?.text = String(cointotal)
@@ -226,33 +247,5 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         dismiss(animated: true, completion: nil)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

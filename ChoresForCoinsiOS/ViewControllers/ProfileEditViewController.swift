@@ -78,9 +78,16 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
             
             _ = saveUsername(ref: ref, uid: uid)
             _ = saveEmail(ref: ref, uid: uid)
+            
+            // alert user that chore was saved
+            let alert = UIAlertController(title: "Success", message: "Profile Changes Saved", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
         }
-
-        dismiss(animated: true, completion: nil)
+        
     }
     
     func saveUsername(ref: DatabaseReference, uid: String) -> Bool {

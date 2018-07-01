@@ -25,10 +25,10 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var editUIButton: UIButton!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
-    
     @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
+    @IBOutlet weak var redDot: UIImageView!
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -38,12 +38,11 @@ class ChoreDetailsViewController: UIViewController {
     var choreId: String?
     var userID: String?
     var parentID: String?
-    
-    //children and coinTotal arrays used to hold an array of ChildUsers and RunningTotal objects
-    var children = [ChildUser] ()
-    var coinTotals = [RunningTotal] ()
     var runningTotal = 0
     var isParent = true
+    var isActiveUserParent = false
+    var children = [ChildUser] ()
+    var coinTotals = [RunningTotal] ()
     
     
     private var imagePicker: UIImagePickerController!
@@ -56,31 +55,27 @@ class ChoreDetailsViewController: UIViewController {
         
         childRedeemView.isHidden = true
         
+        //gets the firebase generated id
+        userID = (Auth.auth().currentUser?.uid)!
+        
         //set the header name display
         displayHeaderName()
         getChoreData()
         
         completedBtn.isEnabled = true
         
-        //gets the firebase generated id
-        userID = (Auth.auth().currentUser?.uid)!
-        
         //gets the custom parent id created in the registration
         getParentId()
         
         // get photo for profile button
         getPhoto()
+        
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        getRunningTotal()
+        isUserParent()
         getPhoto()
-    }
-    
-    func getRunningTotal(){
-        
-        getChildren()
-        getCoinTotals()
     }
     
     func displayHeaderName(){
@@ -136,7 +131,9 @@ class ChoreDetailsViewController: UIViewController {
             }
             
             if let choreValue = chorValue{
-                self.choreCoinValue = Int(choreValue)!
+                if let choreVal = Int(choreValue) {
+                    self.choreCoinValue = choreVal
+                }
                 self.choreValueLabel.text = choreValue
             }
             
@@ -170,6 +167,44 @@ class ChoreDetailsViewController: UIViewController {
         
     }
     
+    func isUserParent(){
+        
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+            if let val = snapshot.value as? Bool {
+                self.isActiveUserParent = val
+                
+                if self.isActiveUserParent {
+                    self.getRunningTotalParent()
+                } else {
+                    self.getRunningTotal()
+                }
+            }
+            
+            //disables edit chore if user is a child
+            self.editUIButton.isEnabled = self.isActiveUserParent
+        }
+    }
+    
+    func getRunningTotal(){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                self.coinAmtLabel.text = "\(self.coinValue)"
+            }
+        }
+        
+    }
+    
+    func getRunningTotalParent(){
+        getChildren()
+        getCoinTotals()
+    }
+    
     // gets all children with same parent id as user
     func getChildren() {
         children.removeAll()
@@ -177,15 +212,17 @@ class ChoreDetailsViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-            var count = 0
+            
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent! == false})
+                self.children = self.children.filter({$0.userparent == false})
                 
-                count += 1
             }
+            
+            self.checkRedeem(children: self.children)
         }
+        
         
     }
     
@@ -195,18 +232,20 @@ class ChoreDetailsViewController: UIViewController {
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            var count = 0
+            
             for key in Array(dictRunningTotal.keys) {
-                self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                
-                count += 1
+                for child in self.children {
+                    if key == child.userid {
+                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
+                    }
+                }
             }
             
             var sumTotal = 0
             
             for coinTotal in self.coinTotals {
                 for child in self.children {
-                    if coinTotal.userid == child.userid {
+                    if coinTotal.key == child.userid {
                         if let total = coinTotal.cointotal {
                             sumTotal += total
                         }
@@ -216,19 +255,6 @@ class ChoreDetailsViewController: UIViewController {
             
             self.coinAmtLabel.text = String(sumTotal)
         }
-    }
-    
-    @IBAction func doGoBack(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func markComplete(_ sender: UIButton) {
-        
-        
-        addCoins()
-        
-        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
-        
     }
     
     func addCoins (){
@@ -286,6 +312,38 @@ class ChoreDetailsViewController: UIViewController {
         }
     }
     
+    func checkRedeem(children: [ChildUser]) {
+        for child in children {
+            if let childuid = child.userid {
+                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
+                    if let isRedeem = snapshot.value as? Bool {
+                        if isRedeem && self.isActiveUserParent {
+                            self.redDot.isHidden = false
+                        } else {
+                            self.redDot.isHidden = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    @IBAction func doGoBack(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func markComplete(_ sender: UIButton) {
+        
+        
+        addCoins()
+        
+        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
+        
+    }
+    
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -300,9 +358,13 @@ class ChoreDetailsViewController: UIViewController {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        // zero out coin total and update db
-        
-        childRedeemView.isHidden = true
+        if let uid = userID {
+            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+            
+            childRedeemView.isHidden = true
+            
+            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -311,5 +373,16 @@ class ChoreDetailsViewController: UIViewController {
                 takePictureVC.choreId = choreId!
             }
         }
+        
+        if segue.identifier == "editChoreSegue"{
+            if let editChoreVC = segue.destination as? ChoreEditViewController {
+                if let id = choreId{
+                    editChoreVC.choreId = id
+                }
+            }
+        }
+    }
+    @IBAction func editChoreBtn(_ sender: UIButton) {
+        performSegue(withIdentifier: "editChoreSegue", sender: nil)
     }
 }
