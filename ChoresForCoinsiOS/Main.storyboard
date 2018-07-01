@@ -649,7 +649,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftx-ku-Nrh" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="312" width="375" height="48.666666666666686"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bT4-0k-dzp">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bT4-0k-dzp">
                                         <rect key="frame" x="38" y="10" width="300" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -2354,8 +2354,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3kX-7h-Lvb" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="375" width="375" height="48.666666666666686"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rK-SS-e9D">
-                                        <rect key="frame" x="142" y="12" width="90" height="24"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rK-SS-e9D">
+                                        <rect key="frame" x="187" y="24" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2985,7 +2985,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ubp-0f-Fbk" userLabel="UsernameView">
                                 <rect key="frame" x="0.0" y="375" width="375" height="48.666666666666686"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ef5-EW-iQY">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ef5-EW-iQY">
                                         <rect key="frame" x="38" y="10" width="300" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -3382,7 +3382,7 @@
         <segue reference="6S7-b7-Z4r"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="0dr-E4-ccy"/>
-        <segue reference="3V0-eC-vGf"/>
+        <segue reference="4QU-Dj-v8X"/>
+        <segue reference="X6b-eg-OV6"/>
     </inferredMetricsTieBreakers>
 </document>

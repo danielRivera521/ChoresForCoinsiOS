@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
     @IBOutlet weak var childrenTableView: UITableView!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
@@ -82,7 +82,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             childrenTableView.reloadData()
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         firstRun = false
     }
@@ -118,7 +118,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
-
+            
             for key in Array(dictUsers.keys) {
                 self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
                 self.children = self.children.filter({$0.parentid == self.parentID})
@@ -126,7 +126,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             }
         }
         
-       
+        
     }
     
     func getCoinTotals() {
@@ -135,7 +135,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
             let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-        
+            
             for key in Array(dictRunningTotal.keys) {
                 for child in self.children {
                     if key == child.userid {
@@ -146,16 +146,21 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             
             var sumTotal = 0
             
-            for coinTotal in self.coinTotals {
-                for child in self.children {
-                    if coinTotal.userid == child.userid {
-                        if let total = coinTotal.cointotal {
-                            sumTotal += total
-                        }
-                    }
+            //            for coinTotal in self.coinTotals {
+            //                for child in self.children {
+            //                    if coinTotal.userid == child.userid {
+            //                        if let total = coinTotal.cointotal {
+            //                            sumTotal += total
+            //                        }
+            //                    }
+            //                }
+            //            }
+            
+            for coinAmt in self.coinTotals{
+                if let total = coinAmt.cointotal{
+                    sumTotal += total
                 }
             }
-            
             self.coinAmtLabel.text = String(sumTotal)
             self.childrenTableView.reloadData()
         }
@@ -242,33 +247,5 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         dismiss(animated: true, completion: nil)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

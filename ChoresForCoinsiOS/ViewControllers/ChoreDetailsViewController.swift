@@ -69,6 +69,8 @@ class ChoreDetailsViewController: UIViewController {
         
         // get photo for profile button
         getPhoto()
+        
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -177,6 +179,9 @@ class ChoreDetailsViewController: UIViewController {
                     self.getRunningTotal()
                 }
             }
+            
+            //disables edit chore if user is a child
+            self.editUIButton.isEnabled = self.isActiveUserParent
         }
     }
     
@@ -322,6 +327,8 @@ class ChoreDetailsViewController: UIViewController {
             }
         }
     }
+    
+    
     
     
     @IBAction func doGoBack(_ sender: UIButton) {

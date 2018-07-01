@@ -213,7 +213,10 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             
             // updates the chore completed from false to true
             ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
-            
+            if let displayName = Auth.auth().currentUser?.displayName{
+                let displayText = "Completed by \(displayName)"
+                ref.child("\(choreId!)/chore_username").setValue(displayText)
+            }
             var selectedImageFromPicker: UIImage?
             
             if let editedImage = info["UIImagePickerControllerEditedImage"]{

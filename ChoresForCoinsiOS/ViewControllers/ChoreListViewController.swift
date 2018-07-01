@@ -228,20 +228,14 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         self.ref?.observe(.value) { (snapshot) in
             let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
             let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
-            var count = 0
             for key in Array(dictChores.keys){
                 
                 self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
                 
                 self.chores = self.chores.filter({$0.parentID == self.parentID })
                 
-                
-                count += 1
-                
-                print("count = \(count)")
             }
             self.choreListTV.reloadData()
-            print(self.chores.count)
         }
         
     }
