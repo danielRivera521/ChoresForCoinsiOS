@@ -16,7 +16,7 @@
         <!--Chore List-->
         <scene sceneID="Z47-gj-Ftc">
             <objects>
-                <viewController id="0aj-d2-s3B" customClass="ChoreListViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="choreListTab" id="0aj-d2-s3B" customClass="ChoreListViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MmR-Ow-AS6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3382,7 +3382,7 @@
         <segue reference="6S7-b7-Z4r"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="4QU-Dj-v8X"/>
-        <segue reference="X6b-eg-OV6"/>
+        <segue reference="0dr-E4-ccy"/>
+        <segue reference="7DE-Oe-Cje"/>
     </inferredMetricsTieBreakers>
 </document>

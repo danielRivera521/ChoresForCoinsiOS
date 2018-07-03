@@ -256,8 +256,13 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
                 let value = snapshot.value as? NSDictionary
                 //gets the image URL from the user database
                 if let profileURL = value?["profile_image_url"] as? String{
-                    
-                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+               
+                    let url = URL(string: profileURL)
+                    ImageService.getImage(withURL: url!, completion: { (image) in
+                        
+                        self.profileButton.setBackgroundImage(image, for: .normal)
+                    })
+             //       self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
