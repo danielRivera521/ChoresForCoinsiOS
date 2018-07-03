@@ -59,6 +59,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
         if !isFirstLoad {
             getPhoto()
         }
+        isFirstLoad = false
     }
     
     @IBAction func toGoBack(_ sender: UIButton) {
@@ -171,7 +172,12 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
                 //gets the image URL from the user database
                 if let profileURL = value?["profile_image_url"] as? String{
                     
-                    self.profilePicButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    let url = URL(string: profileURL)
+                    ImageService.getImage(withURL: url!, completion: { (image) in
+                        
+                        self.profilePicButton.setBackgroundImage(image, for: .normal)
+                    })
+//                    self.profilePicButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.width/2
                     self.profilePicButton.layer.masksToBounds = true

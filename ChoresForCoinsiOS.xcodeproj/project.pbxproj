@@ -19,6 +19,7 @@
 		65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9020D438A500DD9A3F /* DataService.swift */; };
 		65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9220D4D49100DD9A3F /* UserModel.swift */; };
 		65EF0C9520D5D05E00DD9A3F /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65EF0C9420D5D05E00DD9A3F /* AlertController.swift */; };
+		65F3219F20EADC0C00070635 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F3219E20EADC0C00070635 /* ImageService.swift */; };
 		65F81F6C20E59627005405F9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F81F6B20E59627005405F9 /* Extensions.swift */; };
 		A008FE1F511A9F6E625200E2 /* Pods_ChoresForCoinsiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 580522261D2D4D5A2E444C0B /* Pods_ChoresForCoinsiOS.framework */; };
 		B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */; };
@@ -57,6 +58,7 @@
 		65EF0C9020D438A500DD9A3F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		65EF0C9220D4D49100DD9A3F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		65EF0C9420D5D05E00DD9A3F /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		65F3219E20EADC0C00070635 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		65F81F6B20E59627005405F9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7D46CFFFE584052B03A1F459 /* Pods-ChoresForCoinsiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChoresForCoinsiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS.release.xcconfig"; sourceTree = "<group>"; };
 		B0004B7A20D5D4B6008C7376 /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */,
+				65F3219E20EADC0C00070635 /* ImageService.swift */,
 				65EF0C9220D4D49100DD9A3F /* UserModel.swift */,
 				65EF0C9020D438A500DD9A3F /* DataService.swift */,
 				65EF0C9420D5D05E00DD9A3F /* AlertController.swift */,
@@ -345,6 +348,7 @@
 			files = (
 				65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */,
 				B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */,
+				65F3219F20EADC0C00070635 /* ImageService.swift in Sources */,
 				B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */,
 				B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,

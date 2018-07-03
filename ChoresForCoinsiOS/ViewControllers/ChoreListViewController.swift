@@ -287,7 +287,13 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 //gets the image URL from the user database
                 if let profileURL = value?["profile_image_url"] as? String{
                     
-                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    let url = URL(string: profileURL)
+                    ImageService.getImage(withURL: url!, completion: { (image) in
+                        
+                        self.profileButton.setBackgroundImage(image, for: .normal)
+                    })
+                    
+                  //  self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
@@ -354,36 +360,47 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         //gets the image URL from the chores array
         if let choreImageURL =  chores[indexPath.row].choreURL{
             
-            //creates the session
-            let session = URLSession.shared
             
-            //create URL variable from string value	
-            let url: URL  = URL(string: choreImageURL)!
+            let url = URL(string: choreImageURL)
+            ImageService.getImage(withURL: url!, completion: { (image) in
+                
             
-            //runs a task to get the image from the URL
-            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
-                
-                //if there is an error
-                if let error = error {
-                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
-                    return
-                } else {
-                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
-                    if (response as? HTTPURLResponse) != nil {
-                        
-                        DispatchQueue.main.async {
-                            if let imageData = data {
-                                let image = UIImage(data: imageData)
-                                cell.imageCellImageView.image = image
-                            }
-                        }
-                    }
-                }
-                
+                cell.imageCellImageView.image = image
             })
             
-            getImageFromURL.resume()
             
+//            //creates the session
+//            let session = URLSession.shared
+//
+//            //create URL variable from string value
+//            let url: URL  = URL(string: choreImageURL)!
+//
+//            //runs a task to get the image from the URL
+//            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
+//
+//                //if there is an error
+//                if let error = error {
+//                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
+//                    return
+//                } else {
+//                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
+//                    if (response as? HTTPURLResponse) != nil {
+//
+//                        DispatchQueue.main.async {
+//                            if let imageData = data {
+//                                let image = UIImage(data: imageData)
+//                                cell.imageCellImageView.image = image
+//                            }
+//                        }
+//                    }
+//                }
+//
+//            })
+//
+//            getImageFromURL.resume()
+            
+        } else {
+            cell.imageCellImageView.image = nil
         }
         
         return cell
