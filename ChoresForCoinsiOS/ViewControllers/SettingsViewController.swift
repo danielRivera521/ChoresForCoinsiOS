@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var bgImage: UIImageView!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -43,6 +44,8 @@ class SettingsViewController: UIViewController {
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
+        
+        getBackground()
         
         //gets the custom parent id created in the registration
         getParentId()
@@ -223,6 +226,30 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    func getBackground() {
+        if let uid = self.userID {
+            
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: Actions
     
@@ -230,20 +257,32 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func selectBackground(_ sender: UIButton) {
-        // switch to determine which button was selected via tag
-        switch sender.tag {
-        case 1:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "whiteBG.png")!)
-        case 2:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "orangeBG.png")!)
-        case 3:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "greenBG.png")!)
-        case 4:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "redBG.png")!)
-        case 5:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "purpleBG.png")!)
-        default:
-            break
+        if let uid = userID {
+            var bgSelection = 0
+            
+            // switch to determine which button was selected via tag
+            switch sender.tag {
+            case 1:
+                bgSelection = 0
+                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+            case 2:
+                bgSelection = 1
+                self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+            case 3:
+                bgSelection = 2
+                self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+            case 4:
+                bgSelection = 3
+                self.bgImage.image = #imageLiteral(resourceName: "redBG")
+            case 5:
+                bgSelection = 4
+                self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+            default:
+                bgSelection = 0
+                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+            }
+            
+            Database.database().reference().child("user/\(uid)/bg_image").setValue(bgSelection)
         }
     }
     

@@ -473,6 +473,7 @@
                         <viewLayoutGuide key="safeArea" id="Ns7-I5-yH5"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="v9s-iV-mDm" id="iOG-q5-ccg"/>
                         <outlet property="emailTextField" destination="fvp-4L-aBR" id="Eje-nJ-n5g"/>
                         <outlet property="parentKeyLabel" destination="rPb-bS-wMk" id="lWG-jr-sBZ"/>
                         <outlet property="parentKeyLabelSmall" destination="HZT-Xp-a36" id="4Rh-6U-GVQ"/>
@@ -612,6 +613,7 @@
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="bgImage" destination="4HW-PK-3pI" id="jyP-VN-mld"/>
                         <segue destination="q0I-az-h0x" kind="presentation" identifier="toCoinFromOverview" id="ADq-oW-pF9"/>
                     </connections>
                 </viewController>
@@ -1019,6 +1021,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_S" id="0ie-jw-VkK"/>
                     <connections>
+                        <outlet property="bgImage" destination="Hns-AM-LnV" id="cWY-7G-aYF"/>
                         <outlet property="childRedeemView" destination="Z9M-tZ-0ow" id="8qM-cH-Wz2"/>
                         <outlet property="choreDescriptionTextView" destination="5P0-uy-DTh" id="D48-gA-jxv"/>
                         <outlet property="choreImageUIButton" destination="E3X-nZ-8sP" id="yMP-zc-736"/>
@@ -1218,6 +1221,9 @@
                                                 <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectBackground:" destination="mZr-ny-ubW" eventType="touchUpInside" id="19b-zZ-Fzs"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Swc-cu-kWe">
                                         <rect key="frame" x="18.333333333333343" y="273.99999999999994" width="337.33333333333326" height="43.333333333333314"/>
@@ -1227,6 +1233,9 @@
                                                 <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectBackground:" destination="mZr-ny-ubW" eventType="touchUpInside" id="UpD-jN-lsZ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YRZ-tG-oLd">
                                         <rect key="frame" x="18.333333333333343" y="364.99999999999994" width="337.33333333333326" height="43.333333333333314"/>
@@ -1236,6 +1245,9 @@
                                                 <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectBackground:" destination="mZr-ny-ubW" eventType="touchUpInside" id="v8W-iW-ayK"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Op-zc-pkM">
                                         <rect key="frame" x="19" y="111.99999999999999" width="337.33333333333331" height="43.333333333333329"/>
@@ -1245,6 +1257,9 @@
                                                 <integer key="value" value="2"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="selectBackground:" destination="mZr-ny-ubW" eventType="touchUpInside" id="hlV-nm-w0C"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGY-Mv-jcJ">
                                         <rect key="frame" x="19" y="31.333333333333318" width="337.33333333333331" height="43.333333333333343"/>
@@ -1426,6 +1441,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
+                        <outlet property="bgImage" destination="Bdz-f7-STD" id="lGS-x4-slJ"/>
                         <outlet property="bonusDaySwitch" destination="4Wr-Ni-72u" id="b2e-Tg-Y67"/>
                         <outlet property="childRedeemView" destination="ZoU-8u-V6T" id="35w-le-gqE"/>
                         <outlet property="coinAmtLabel" destination="JhJ-k8-sPy" id="leh-E8-Fc6"/>
@@ -1577,6 +1593,7 @@
                         <viewLayoutGuide key="safeArea" id="ACw-Tn-YeR"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="zb2-Te-N3z" id="AlK-Og-F9X"/>
                         <outlet property="childrenTableView" destination="lh4-Wd-uEi" id="Ng8-AP-U6A"/>
                         <outlet property="coinAmtLabel" destination="ZVM-2r-Tl5" id="E5P-mm-hNr"/>
                         <outlet property="profileButton" destination="9tR-Sh-fGg" id="eMm-Bq-dwF"/>
@@ -1830,6 +1847,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="L9c-rq-7lY" id="74w-lK-2zF"/>
                         <outlet property="childNameLabel" destination="U2Q-Zg-8se" id="ppX-Yc-RR7"/>
                         <outlet property="coinAmtLabel" destination="fny-wj-t1c" id="n6m-gR-reD"/>
                         <outlet property="coinTotalTextField" destination="l4I-pq-XSk" id="CKj-MC-R0k"/>
@@ -1918,6 +1936,7 @@
                         <viewLayoutGuide key="safeArea" id="qvy-Fa-oBF"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="bUi-qG-dO7" id="WpZ-nI-XQL"/>
                         <segue destination="vEf-KN-FAV" kind="presentation" identifier="goToOverview" id="Gxm-IN-KRx"/>
                         <segue destination="H6A-gN-jhU" kind="presentation" identifier="goToParentChild" id="bOT-yv-52n"/>
                     </connections>
@@ -2006,6 +2025,7 @@
                         <viewLayoutGuide key="safeArea" id="0zP-F8-b8B"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="rwr-C7-tte" id="g87-1w-b2k"/>
                         <segue destination="vEf-KN-FAV" kind="presentation" identifier="goToOverViewFromPC" id="0ls-Pt-Ljb"/>
                     </connections>
                 </viewController>
@@ -2161,6 +2181,7 @@
                         <viewLayoutGuide key="safeArea" id="9yw-8x-uQq"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="ui3-Ev-fFt" id="31U-1Q-18H"/>
                         <outlet property="emailTextField" destination="jqV-Vu-bKP" id="5dB-Zs-8tx"/>
                         <outlet property="parentIDTextField" destination="cR1-hV-gCj" id="skg-VM-egQ"/>
                         <outlet property="usernameTextField" destination="pHx-5I-TLJ" id="WsZ-jW-vOb"/>
@@ -2365,6 +2386,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pjg-7T-Wry"/>
                     </view>
+                    <connections>
+                        <outlet property="bgImage" destination="D7y-x7-b3M" id="GO9-sx-umF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3kr-4o-HnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2762,6 +2786,7 @@
                         <viewLayoutGuide key="safeArea" id="egl-NY-Sae"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="FHk-kR-gff" id="EIO-F6-KRY"/>
                         <outlet property="childRedeemView" destination="t1y-5I-zRn" id="RLa-I1-XK1"/>
                         <outlet property="choreDescriptionTextView" destination="CS1-zd-ylj" id="2kd-RN-Zt3"/>
                         <outlet property="choreImageImageView" destination="Q44-lQ-i2t" id="14O-uo-SOw"/>
@@ -2983,6 +3008,7 @@
                         <viewLayoutGuide key="safeArea" id="SND-6o-v3F"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="7Ar-Lw-kr3" id="kBR-Co-LXQ"/>
                         <outlet property="childRedeemView" destination="KkM-I9-Co9" id="Yp5-M8-vLf"/>
                         <outlet property="coinAmtLabel" destination="Icj-xH-Lr3" id="cJn-Zy-Jkh"/>
                         <outlet property="profileButton" destination="be6-Zc-DSa" id="Zim-yd-Hki"/>
@@ -3412,6 +3438,7 @@
                         <viewLayoutGuide key="safeArea" id="fL4-fh-c3O"/>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="iep-6D-Xq4" id="a8t-RH-tgy"/>
                         <outlet property="childRedeemView" destination="vbI-Pm-zJy" id="bOu-Z0-2FC"/>
                         <outlet property="choreDescriptionTextView" destination="csA-wP-sc1" id="aM9-jX-Dgx"/>
                         <outlet property="choreImageUIButton" destination="UVS-cT-pfm" id="ASq-eV-OWx"/>
@@ -3466,9 +3493,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="6S7-b7-Z4r"/>
-        <segue reference="mSl-Ec-VBM"/>
+        <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="0dr-E4-ccy"/>
-        <segue reference="3RF-ku-Rgp"/>
+        <segue reference="TW0-XL-iud"/>
+        <segue reference="OXB-qQ-rBy"/>
     </inferredMetricsTieBreakers>
 </document>
