@@ -166,6 +166,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    
                 }
             }
         }

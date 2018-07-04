@@ -36,6 +36,9 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        // bonus toggle off by default
+        bonusDaySwitch.isOn = false
+        
         childRedeemView.isHidden = true
         
         if (Auth.auth().currentUser?.displayName) != nil{
@@ -45,6 +48,7 @@ class SettingsViewController: UIViewController {
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
+        // show the correct background image based on user selection
         getBackground()
         
         //gets the custom parent id created in the registration
@@ -53,17 +57,55 @@ class SettingsViewController: UIViewController {
         // get photo for profile button
         getPhoto()
         
-        self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "whiteBG"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
         getPhoto()
+        // get app settings from database and fill out text fields and toggle button accordingly
+        getAppSettings()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // when view is going to disappear, check and save the setting values
+    override func viewWillDisappear(_ animated: Bool) {
+        // use parent id as key for each app setting object. This way all users with that parent id will have the save app settings... backgrounds are an individual setting
+        if let pid = parentID {
+            // get database object for app settings
+            let ref = Database.database().reference().child("app_settings/\(pid)")
+            
+            var coinValue = 1
+            var multValue: Double = 1
+            
+            // unwrap coin value and convert to int
+            if !(coinValueTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+                if let coinValUnwrapped = coinValueTextField.text {
+                    if let coinvalint = Int(coinValUnwrapped) {
+                        coinValue = coinvalint
+                    }
+                }
+            }
+            
+            // unwrap bonus value and convert to int
+            if !(multiplierValueTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+                if let multValueUnwrapped = multiplierValueTextField.text {
+                    if let multvalint = Double(multValueUnwrapped) {
+                        multValue = multvalint
+                    }
+                }
+            }
+            
+            // save coin value
+            ref.child("coin_dollar_value").setValue(coinValue)
+            // save bonus day toggle
+            ref.child("bonus_toggled").setValue(bonusDaySwitch.isOn)
+            //bonus coin value
+            ref.child("multiplier_value").setValue(multValue)
+        }
     }
     
     
@@ -92,6 +134,9 @@ class SettingsViewController: UIViewController {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    
+                    // get app settings from database and fill out text fields and toggle button accordingly
+                    self.getAppSettings()
                 }
             }
         }
@@ -244,6 +289,29 @@ class SettingsViewController: UIViewController {
                         self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
                     default:
                         self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+    }
+    
+    func getAppSettings() {
+        if let pid = parentID {
+            // get database object for app settings
+            let ref = Database.database().reference().child("app_settings/\(pid)")
+            
+            ref.observeSingleEvent(of: .value) { (snapshot) in
+                if let appSettings = snapshot.value as? NSDictionary {
+                    if let coinval = appSettings["coin_dollar_value"] as? Int {
+                        self.coinValueTextField.text = "\(coinval)"
+                    }
+                    
+                    if let bonusToggle = appSettings["bonus_toggled"] as? Bool {
+                        self.bonusDaySwitch.isOn = bonusToggle
+                    }
+                    
+                    if let multVal = appSettings["multiplier_value"] as? Double {
+                        self.multiplierValueTextField.text = "\(multVal)"
                     }
                 }
             }
