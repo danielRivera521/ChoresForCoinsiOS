@@ -105,6 +105,8 @@ class SettingsViewController: UIViewController {
             ref.child("bonus_toggled").setValue(bonusDaySwitch.isOn)
             //bonus coin value
             ref.child("multiplier_value").setValue(multValue)
+            
+            print("Message from Settings View: mult = \(multValue)")
         }
     }
     

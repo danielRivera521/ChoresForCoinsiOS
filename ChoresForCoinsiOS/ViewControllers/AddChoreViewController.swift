@@ -295,6 +295,7 @@ class AddChoreViewController: UIViewController {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    
                 }
             }
         }
@@ -342,7 +343,6 @@ class AddChoreViewController: UIViewController {
             }
         }
     }
-    
     
     // MARK: Actions
     

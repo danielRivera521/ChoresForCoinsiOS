@@ -266,33 +266,40 @@ class ChoreDetailsViewController: UIViewController {
         
         var bonusOn = false
         var multiplier: Double = 1
-        databaseRef.child("app_settings").observeSingleEvent(of: .value) { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            
-            let isBonus = value?["bonus_toggled"] as? Bool
-            if let unwrappedIsBonus = isBonus {
-                bonusOn = unwrappedIsBonus
-            }
-            
-            let multiply = value?["multiplier_value"] as? Double
-            if let mValue = multiply {
+        
+        if let pid = parentID {
+            databaseRef.child("app_settings/\(pid)").observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
                 
-                multiplier = mValue
+                let isBonus = value?["bonus_toggled"] as? Bool
+                if let unwrappedIsBonus = isBonus {
+                    bonusOn = unwrappedIsBonus
+                }
+                
+                let multiply = value?["multiplier_value"] as? Double
+                if let mValue = multiply {
+                    
+                    multiplier = mValue
+                }
+                
+                if bonusOn {
+                    
+                    var choreCoinVal: Double = Double(self.choreCoinValue)
+                    
+                    choreCoinVal *= multiplier
+                    
+                    self.choreCoinValue = Int(choreCoinVal)
+                }
+                
+                self.coinValue += self.choreCoinValue
+                
+                if let uid = Auth.auth().currentUser?.uid{
+                    databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+                }
+                
+                self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
             }
         }
-        if bonusOn {
-            var choreCoinVal: Double = Double(choreCoinValue)
-            
-            choreCoinVal *= multiplier
-            
-            choreCoinValue = Int(choreCoinVal)
-        }
-        coinValue += choreCoinValue
-        if let uid = Auth.auth().currentUser?.uid{
-            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
-        }
-        
-        
     }
     
     func getPhoto() {
@@ -369,12 +376,7 @@ class ChoreDetailsViewController: UIViewController {
     }
     
     @IBAction func markComplete(_ sender: UIButton) {
-        
-        
         addCoins()
-        
-        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
-        
     }
     
     @IBAction func toCoinView(_ sender: UIButton) {
