@@ -27,7 +27,7 @@ class AddChoreViewController: UIViewController {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var redDot: UIImageView!
-    
+    @IBOutlet weak var bgImage: UIImageView!
     
     // MARK: Properties
     
@@ -52,6 +52,8 @@ class AddChoreViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getBackground()
         
         childRedeemView.isHidden = true
         
@@ -92,6 +94,31 @@ class AddChoreViewController: UIViewController {
     
     
     // MARK: Custom functions
+    
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+        
+        
+    }
     
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
@@ -268,6 +295,7 @@ class AddChoreViewController: UIViewController {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    
                 }
             }
         }
@@ -315,7 +343,6 @@ class AddChoreViewController: UIViewController {
             }
         }
     }
-    
     
     // MARK: Actions
     

@@ -29,6 +29,7 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var bgImage: UIImageView!
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -50,6 +51,8 @@ class ChoreDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getBackground()
         
         // Do any additional setup after loading the view.
         
@@ -263,33 +266,40 @@ class ChoreDetailsViewController: UIViewController {
         
         var bonusOn = false
         var multiplier: Double = 1
-        databaseRef.child("app_settings").observeSingleEvent(of: .value) { (snapshot) in
-            let value = snapshot.value as? NSDictionary
-            
-            let isBonus = value?["bonus_toggled"] as? Bool
-            if let unwrappedIsBonus = isBonus {
-                bonusOn = unwrappedIsBonus
-            }
-            
-            let multiply = value?["multiplier_value"] as? Double
-            if let mValue = multiply {
+        
+        if let pid = parentID {
+            databaseRef.child("app_settings/\(pid)").observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
                 
-                multiplier = mValue
+                let isBonus = value?["bonus_toggled"] as? Bool
+                if let unwrappedIsBonus = isBonus {
+                    bonusOn = unwrappedIsBonus
+                }
+                
+                let multiply = value?["multiplier_value"] as? Double
+                if let mValue = multiply {
+                    
+                    multiplier = mValue
+                }
+                
+                if bonusOn {
+                    
+                    var choreCoinVal: Double = Double(self.choreCoinValue)
+                    
+                    choreCoinVal *= multiplier
+                    
+                    self.choreCoinValue = Int(choreCoinVal)
+                }
+                
+                self.coinValue += self.choreCoinValue
+                
+                if let uid = Auth.auth().currentUser?.uid{
+                    databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+                }
+                
+                self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
             }
         }
-        if bonusOn {
-            var choreCoinVal: Double = Double(choreCoinValue)
-            
-            choreCoinVal *= multiplier
-            
-            choreCoinValue = Int(choreCoinVal)
-        }
-        coinValue += choreCoinValue
-        if let uid = Auth.auth().currentUser?.uid{
-            databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
-        }
-        
-        
     }
     
     func getPhoto() {
@@ -335,7 +345,30 @@ class ChoreDetailsViewController: UIViewController {
         }
     }
     
-    
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+        
+        
+    }
     
     
     @IBAction func doGoBack(_ sender: UIButton) {
@@ -343,12 +376,7 @@ class ChoreDetailsViewController: UIViewController {
     }
     
     @IBAction func markComplete(_ sender: UIButton) {
-        
-        
         addCoins()
-        
-        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
-        
     }
     
     @IBAction func toCoinView(_ sender: UIButton) {

@@ -19,6 +19,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var bgImage: UIImageView!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -35,6 +36,9 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        // bonus toggle off by default
+        bonusDaySwitch.isOn = false
+        
         childRedeemView.isHidden = true
         
         if (Auth.auth().currentUser?.displayName) != nil{
@@ -44,23 +48,66 @@ class SettingsViewController: UIViewController {
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
+        // show the correct background image based on user selection
+        getBackground()
+        
         //gets the custom parent id created in the registration
         getParentId()
         
         // get photo for profile button
         getPhoto()
         
-        self.view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "whiteBG"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
         getPhoto()
+        // get app settings from database and fill out text fields and toggle button accordingly
+        getAppSettings()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // when view is going to disappear, check and save the setting values
+    override func viewWillDisappear(_ animated: Bool) {
+        // use parent id as key for each app setting object. This way all users with that parent id will have the save app settings... backgrounds are an individual setting
+        if let pid = parentID {
+            // get database object for app settings
+            let ref = Database.database().reference().child("app_settings/\(pid)")
+            
+            var coinValue = 1
+            var multValue: Double = 1
+            
+            // unwrap coin value and convert to int
+            if !(coinValueTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+                if let coinValUnwrapped = coinValueTextField.text {
+                    if let coinvalint = Int(coinValUnwrapped) {
+                        coinValue = coinvalint
+                    }
+                }
+            }
+            
+            // unwrap bonus value and convert to int
+            if !(multiplierValueTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! {
+                if let multValueUnwrapped = multiplierValueTextField.text {
+                    if let multvalint = Double(multValueUnwrapped) {
+                        multValue = multvalint
+                    }
+                }
+            }
+            
+            // save coin value
+            ref.child("coin_dollar_value").setValue(coinValue)
+            // save bonus day toggle
+            ref.child("bonus_toggled").setValue(bonusDaySwitch.isOn)
+            //bonus coin value
+            ref.child("multiplier_value").setValue(multValue)
+            
+            print("Message from Settings View: mult = \(multValue)")
+        }
     }
     
     
@@ -89,6 +136,9 @@ class SettingsViewController: UIViewController {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    
+                    // get app settings from database and fill out text fields and toggle button accordingly
+                    self.getAppSettings()
                 }
             }
         }
@@ -223,6 +273,53 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    func getBackground() {
+        if let uid = self.userID {
+            
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+    }
+    
+    func getAppSettings() {
+        if let pid = parentID {
+            // get database object for app settings
+            let ref = Database.database().reference().child("app_settings/\(pid)")
+            
+            ref.observeSingleEvent(of: .value) { (snapshot) in
+                if let appSettings = snapshot.value as? NSDictionary {
+                    if let coinval = appSettings["coin_dollar_value"] as? Int {
+                        self.coinValueTextField.text = "\(coinval)"
+                    }
+                    
+                    if let bonusToggle = appSettings["bonus_toggled"] as? Bool {
+                        self.bonusDaySwitch.isOn = bonusToggle
+                    }
+                    
+                    if let multVal = appSettings["multiplier_value"] as? Double {
+                        self.multiplierValueTextField.text = "\(multVal)"
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: Actions
     
@@ -230,20 +327,32 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func selectBackground(_ sender: UIButton) {
-        // switch to determine which button was selected via tag
-        switch sender.tag {
-        case 1:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "whiteBG.png")!)
-        case 2:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "orangeBG.png")!)
-        case 3:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "greenBG.png")!)
-        case 4:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "redBG.png")!)
-        case 5:
-            self.view.backgroundColor = UIColor(patternImage: UIImage(named: "purpleBG.png")!)
-        default:
-            break
+        if let uid = userID {
+            var bgSelection = 0
+            
+            // switch to determine which button was selected via tag
+            switch sender.tag {
+            case 1:
+                bgSelection = 0
+                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+            case 2:
+                bgSelection = 1
+                self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+            case 3:
+                bgSelection = 2
+                self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+            case 4:
+                bgSelection = 3
+                self.bgImage.image = #imageLiteral(resourceName: "redBG")
+            case 5:
+                bgSelection = 4
+                self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+            default:
+                bgSelection = 0
+                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+            }
+            
+            Database.database().reference().child("user/\(uid)/bg_image").setValue(bgSelection)
         }
     }
     

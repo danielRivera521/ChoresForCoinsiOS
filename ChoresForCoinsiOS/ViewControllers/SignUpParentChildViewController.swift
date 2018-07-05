@@ -12,17 +12,15 @@ import FirebaseUI
 
 class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
 
+    @IBOutlet weak var bgImage: UIImageView!
+    
     var authUI: FUIAuth?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getBackground()
 
-//        // check is user is already signed in
-//        Auth.auth().addStateDidChangeListener { (auth, user) in
-//            if user != nil {
-//                self.performSegue(withIdentifier: "goToOverview", sender: self)
-//            }
-//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,6 +49,33 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
             } else if error == nil {
                 // go to overview page
                 performSegue(withIdentifier: "goToOverview", sender: self)
+            }
+        }
+    }
+    
+    func getBackground() {
+        var userID = ""
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            userID = uid
+        }
+        
+        Database.database().reference().child("user/\(userID)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? Int {
+                switch value {
+                case 0:
+                    self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                case 1:
+                    self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                case 2:
+                    self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                case 3:
+                    self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                case 4:
+                    self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                default:
+                    self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                }
             }
         }
     }
