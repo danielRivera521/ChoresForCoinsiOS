@@ -126,11 +126,19 @@ class CreateAccountViewController: UIViewController {
         if let email = Auth.auth().currentUser?.email{
             
             if let name = email.components(separatedBy: CharacterSet(charactersIn: ("@0123456789"))).first {
+                //only use the letters and numbers in an email address
                 
+                //create a custom character set of just letters and numbers.
+                var alphaNumericCharacterSet = CharacterSet.letters
+                alphaNumericCharacterSet.formUnion(CharacterSet.decimalDigits)
+                
+                //if the string name has characters not in the characterset (inverted) it will not be joined to the string.
+                let newName = name.components(separatedBy: alphaNumericCharacterSet.inverted).joined()
                 if let uid = Auth.auth().currentUser?.uid{
                     let last5 = uid.suffix(5)
-                    generatedID = name + last5
+                    generatedID = newName + last5
                 }
+            
             }
         }
         

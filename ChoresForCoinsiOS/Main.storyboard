@@ -27,6 +27,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="loI-KR-X34">
                                 <rect key="frame" x="0.0" y="71.666666666666686" width="414" height="615.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="87" id="xkm-wP-pnB" customClass="ChoreCellTableViewCell" customModule="ChoresForCoinsiOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="87"/>
@@ -35,7 +36,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="86.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qvu-y4-0fp">
+                                                <view contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="Qvu-y4-0fp">
                                                     <rect key="frame" x="20" y="11" width="136.66666666666666" height="65"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="En4-ZY-IQj">
@@ -50,14 +51,14 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="qrN-ka-9aK">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.94999999999999996" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qrN-ka-9aK">
                                                             <rect key="frame" x="-0.3333333333333286" y="3" width="137" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="k6c-c7-6g6" firstAttribute="top" secondItem="En4-ZY-IQj" secondAttribute="bottom" constant="4" id="2mY-VJ-ULC"/>
                                                         <constraint firstItem="qrN-ka-9aK" firstAttribute="centerX" secondItem="En4-ZY-IQj" secondAttribute="centerX" id="AiW-dX-g0i"/>
@@ -86,7 +87,7 @@
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="I7B-ln-MR3" firstAttribute="top" secondItem="vcZ-P6-GzW" secondAttribute="bottom" constant="4" id="Bx3-Sj-AFT"/>
                                                         <constraint firstItem="I7B-ln-MR3" firstAttribute="width" secondItem="vcZ-P6-GzW" secondAttribute="width" multiplier="0.15" id="JO7-kV-9JR"/>
@@ -127,6 +128,7 @@
                                                 <constraint firstItem="12A-iw-xMY" firstAttribute="leading" secondItem="Qvu-y4-0fp" secondAttribute="trailing" id="sna-Ls-1me"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="Qvu-y4-0fp" firstAttribute="width" secondItem="xkm-wP-pnB" secondAttribute="width" multiplier="0.33" id="0cN-yu-noS"/>
                                             <constraint firstItem="lQJ-Dz-Ubv" firstAttribute="width" secondItem="xkm-wP-pnB" secondAttribute="width" multiplier="0.33" id="zuW-gY-K0N"/>
@@ -3836,7 +3838,7 @@
         <segue reference="6S7-b7-Z4r"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="TW0-XL-iud"/>
-        <segue reference="OXB-qQ-rBy"/>
+        <segue reference="0dr-E4-ccy"/>
+        <segue reference="7DE-Oe-Cje"/>
     </inferredMetricsTieBreakers>
 </document>
