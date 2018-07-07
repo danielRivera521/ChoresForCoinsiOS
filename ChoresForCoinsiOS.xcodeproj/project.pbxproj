@@ -30,7 +30,9 @@
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
 		B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111D20DE49D7000453C3 /* ChildUser.swift */; };
 		B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111F20DE4A0F000453C3 /* RunningTotal.swift */; };
+		B04CD87220F07A9500A336F2 /* CustomAuthUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */; };
 		B077B56B20DB777200F42BB2 /* ChoreCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */; };
+		B07F2F6E20F089690076F065 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07F2F6D20F089690076F065 /* MessageUI.framework */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
 		B0CC653120D5038700E86D41 /* ProfilePictureSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */; };
@@ -69,7 +71,9 @@
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
 		B044111D20DE49D7000453C3 /* ChildUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildUser.swift; sourceTree = "<group>"; };
 		B044111F20DE4A0F000453C3 /* RunningTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTotal.swift; sourceTree = "<group>"; };
+		B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthUI.swift; sourceTree = "<group>"; };
 		B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreCellTableViewCell.swift; sourceTree = "<group>"; };
+		B07F2F6D20F089690076F065 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSelectViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B07F2F6E20F089690076F065 /* MessageUI.framework in Frameworks */,
 				A008FE1F511A9F6E625200E2 /* Pods_ChoresForCoinsiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,12 +168,13 @@
 			children = (
 				65EF0C8820D40AF200DD9A3F /* MyFirebaseClass.swift */,
 				65F3219E20EADC0C00070635 /* ImageService.swift */,
-				65EF0C9220D4D49100DD9A3F /* UserModel.swift */,
-				65EF0C9020D438A500DD9A3F /* DataService.swift */,
 				65EF0C9420D5D05E00DD9A3F /* AlertController.swift */,
-				6576490F20DA09BA002DE1AC /* Chore.swift */,
 				B044111D20DE49D7000453C3 /* ChildUser.swift */,
+				6576490F20DA09BA002DE1AC /* Chore.swift */,
+				65EF0C9020D438A500DD9A3F /* DataService.swift */,
 				B044111F20DE4A0F000453C3 /* RunningTotal.swift */,
+				65EF0C9220D4D49100DD9A3F /* UserModel.swift */,
+				B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -185,6 +191,7 @@
 		A167449B51BA6CE388CD9C05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B07F2F6D20F089690076F065 /* MessageUI.framework */,
 				580522261D2D4D5A2E444C0B /* Pods_ChoresForCoinsiOS.framework */,
 			);
 			name = Frameworks;
@@ -354,6 +361,7 @@
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
 				B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */,
 				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
+				B04CD87220F07A9500A336F2 /* CustomAuthUI.swift in Sources */,
 				B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */,
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
 				B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */,
