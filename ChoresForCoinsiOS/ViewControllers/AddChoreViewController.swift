@@ -47,6 +47,10 @@ class AddChoreViewController: UIViewController {
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     
+    var startDateTime: Date?
+    var dueDateTime: Date?
+    
+    
     var processSegue = true
     // MARK: View Controller functions
     
@@ -78,6 +82,9 @@ class AddChoreViewController: UIViewController {
         getPhoto()
         
         isFirstLoad = false
+        
+        //disable the dueDate. it will be enabled able the start date is completed.
+        dueDateTextField.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -260,8 +267,16 @@ class AddChoreViewController: UIViewController {
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: picker.date)
         
+        startDateTime = picker.date
+        dueDateTextField.isEnabled = true
+        
+        if checkDateValid(){
+        
         startDateTextField.text = "\(dateString)"
         self.view.endEditing(true)
+        } else {
+            AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
+        }
     }
     
     @objc func donePressedDue() {
@@ -269,9 +284,15 @@ class AddChoreViewController: UIViewController {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: picker.date)
+        dueDateTime = picker.date
         
+        //checks the due date against the start date.
+        if checkDateValid(){
         dueDateTextField.text = "\(dateString)"
         self.view.endEditing(true)
+        } else {
+            AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
+        }
     }
     
     //creates initial assignment
@@ -283,6 +304,27 @@ class AddChoreViewController: UIViewController {
             ref?.child("chore_assignment/\(assignID)/chore_completed").setValue(false)
         }
         
+    }
+    
+    //checks the start date against the due date and will return either true or false.
+    func checkDateValid()-> Bool{
+        var dueDate: Date
+        var startDate: Date
+        
+        if let checkDueDate = dueDateTime{
+            dueDate = checkDueDate
+        } else {
+            dueDate = Date()
+        }
+        
+        startDate = startDateTime!
+        
+        if startDate <= dueDate{
+            return true
+        }
+        
+        
+        return false
     }
     
     // method to check the number of characters in the title. Title should range from 1-20 characters.
