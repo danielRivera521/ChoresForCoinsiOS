@@ -20,6 +20,11 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var coinValView: UIView!
+    @IBOutlet weak var bonusDayView: UIView!
+    @IBOutlet weak var BonusMultView: UIView!
+    @IBOutlet weak var coinValHeight: NSLayoutConstraint!
+    @IBOutlet weak var coinValHeightiPad: NSLayoutConstraint!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -56,6 +61,8 @@ class SettingsViewController: UIViewController {
         
         // get photo for profile button
         getPhoto()
+        
+        checkIfParent()
         
     }
     
@@ -318,6 +325,20 @@ class SettingsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func checkIfParent() {
+        // checks if user is parent. If yes, go to parent coin view, else show redeem view
+        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let isParent = snapshot.value as? Bool {
+                if !isParent {
+                    self.coinValView.isHidden = true
+                    self.bonusDayView.isHidden = true
+                    self.BonusMultView.isHidden = true
+                    
+                }
+            }
+        })
     }
     
     
