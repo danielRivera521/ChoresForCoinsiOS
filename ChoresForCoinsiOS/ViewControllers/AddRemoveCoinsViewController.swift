@@ -353,18 +353,30 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func redeemCoins(_ sender: UIButton) {
-        coinValue = 0
-        coinTotalTextField.text = "\(self.coinValue!)"
-        
-        if let uid = childId {
-            Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+       let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem the coins for \(childName!)", preferredStyle: .alert)
+    
+        let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
+            
+            self.coinValue = 0
+            self.coinTotalTextField.text = "\(self.coinValue!)"
+            
+            if let uid = self.childId {
+                Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+            }
+            
+            // update new coin value on database
+            self.updateTotalCoins()
+            
+            // dismiss view
+            self.dismiss(animated: true, completion: nil)
         }
         
-        // update new coin value on database
-        updateTotalCoins()
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        // dismiss view
-        dismiss(animated: true, completion: nil)
+        redeemAlert.addAction(action)
+        redeemAlert.addAction(cancelAction)
+        
+        present(redeemAlert, animated: true, completion: nil)
     }
     
     

@@ -44,6 +44,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     
+    var startDateTime: Date?
+    var dueDateTime: Date?
+    
     var processSegue = true
     
     override func viewDidLoad() {
@@ -226,8 +229,16 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: picker.date)
         
-        startDateTextField.text = "\(dateString)"
-        self.view.endEditing(true)
+        startDateTime = picker.date
+        dueDateTextField.isEnabled = true
+        
+        if checkDateValid(){
+            
+            startDateTextField.text = "\(dateString)"
+            self.view.endEditing(true)
+        } else {
+            AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
+        }
     }
     
     @objc func donePressedDue() {
@@ -235,9 +246,15 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         let dateString = formatter.string(from: picker.date)
+        dueDateTime = picker.date
         
-        dueDateTextField.text = "\(dateString)"
-        self.view.endEditing(true)
+        //checks the due date against the start date.
+        if checkDateValid(){
+            dueDateTextField.text = "\(dateString)"
+            self.view.endEditing(true)
+        } else {
+            AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
+        }
     }
     
     //gets background color from user's settings within firebase
@@ -468,6 +485,26 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
+    //checks the start date against the due date and will return either true or false.
+    func checkDateValid()-> Bool{
+        var dueDate: Date
+        var startDate: Date
+        
+        if let checkDueDate = dueDateTime{
+            dueDate = checkDueDate
+        } else {
+            dueDate = Date()
+        }
+        
+        startDate = startDateTime!
+        
+        if startDate <= dueDate{
+            return true
+        }
+        
+        return false
+    }
+    
     // method to check the number of characters in the title. Title should range from 1-20 characters.
     func verifyChoreNameCharacters(choreName: String) -> Bool{
         
@@ -630,12 +667,21 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     @IBAction func deleteChore(_ sender: UIButton) {
-        
-        if let id = choreId {
-            removeChildNode(child: id)
-            performSegue(withIdentifier: "segueToList", sender: self)
+        if let choreName = choreNameTextField.text {
+            let deleteAlert = UIAlertController(title: "Are you Sure?", message: "Do you want to delete \(choreName)?", preferredStyle: .alert)
+            let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
+                if let id = self.choreId {
+                    self.removeChildNode(child: id)
+                    self.performSegue(withIdentifier: "segueToList", sender: self)
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            deleteAlert.addAction(deleteAction)
+            deleteAlert.addAction(cancelAction)
+            
+            present(deleteAlert, animated: true, completion: nil)
         }
-        
     }
     
     //calls the updatechore function to rewrite the chore object
