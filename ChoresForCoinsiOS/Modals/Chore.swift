@@ -17,6 +17,8 @@ class Chore{
     var completed: Bool?
     var parentID: String?
     var choreURL: String?
+    var chorePastDue: String?
+    var choreParentNotified: String?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -46,6 +48,14 @@ class Chore{
         
         if let choreImage = dictionary["image_url"] as? String {
             self.choreURL = choreImage
+        }
+        
+        if let chorePastDue = dictionary["past_due"] as? String {
+            self.chorePastDue = chorePastDue
+        }
+        
+        if let parentNotified = dictionary["past_due_notified"] as? String {
+            self.choreParentNotified = parentNotified
         }
         
         

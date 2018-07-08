@@ -327,6 +327,19 @@ class AddChoreViewController: UIViewController {
         return false
     }
     
+    func isValidDate(dateString: String) -> Bool {
+        let dateFormatterGet = DateFormatter()
+        dateFormatterGet.dateFormat = "MM/dd/yyyy"
+        dateFormatterGet.dateStyle = .medium
+        if let _ = dateFormatterGet.date(from: dateString) {
+            //date parsing succeeded
+            return true
+        } else {
+            //invalid date
+            return false
+        }
+    }
+    
     // method to check the number of characters in the title. Title should range from 1-20 characters.
     func verifyChoreNameCharacters(choreName: String) -> Bool{
         
@@ -398,6 +411,10 @@ class AddChoreViewController: UIViewController {
         }
     }
     
+    func isStringAnInt(string: String) -> Bool {
+        return Int(string) != nil
+    }
+    
     // MARK: Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
@@ -414,18 +431,42 @@ class AddChoreViewController: UIViewController {
     }
     
     @IBAction func saveChore(_ sender: UIButton) {
-        
+        //sets the processSegue to true. If it's set to false the chore creation and segue does not occur.
         processSegue = true
         
         if let nameString = choreNameTextField.text{
             if verifyChoreNameCharacters(choreName: nameString){
                 processSegue = true
             } else {
-                choreNameTextField.becomeFirstResponder()
+            choreValueTextField.becomeFirstResponder()
                 processSegue = false
-                
             }
         }
+        //checks if the coin value text field is empty and a integer or sets the processSegue is set to false.
+        if let coinValue = choreValueTextField.text{
+            if isStringAnInt(string: coinValue){
+                processSegue = true
+            } else {
+                choreValueTextField.becomeFirstResponder()
+                AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+                processSegue = false
+            }
+        } else {
+            AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+        }
+        
+        //checks if the text within both the startDateTextField and dueDate TextField are valid dates.
+        if let startDateString = startDateTextField.text {
+            if let dueDateString = dueDateTextField.text {
+                if isValidDate(dateString: startDateString) && isValidDate(dateString: dueDateString){
+                    processSegue = true
+                } else {
+                    AlertController.showAlert(self, title: "Chore Date Error", message: "Please be sure that valid dates are being used for the chore start and due dates.")
+                    processSegue = false
+                }
+            }
+        }
+        
         
         if processSegue{
             //creates a new chore reference

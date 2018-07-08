@@ -186,7 +186,27 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
                     AlertController.showAlert(self, title: "Error", message: "There was an error saving your new email. Please try again")
                     return
                 }
+
+                
             })
+            let emailAlert = UIAlertController(title: "Email Changed", message: "Email successfully changed. You will be logged out. Please log back into the application with your updated email account.", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                do{
+                    // sign out
+                    try self.authUI?.signOut()
+                    //self.performSegue(withIdentifier: "goToAuth", sender: self)
+                    self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                }
+                catch {
+                    //handle error
+                    print("Error in signout after email change")
+                }
+            }
+            
+            emailAlert.addAction(okAction)
+            present(emailAlert, animated: true, completion: nil)
+           
         }
         
         return false

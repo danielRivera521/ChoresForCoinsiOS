@@ -44,6 +44,7 @@ class ChoreDetailsViewController: UIViewController {
     var isActiveUserParent = false
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
+    var isPastDue = false
     
     
     private var imagePicker: UIImagePickerController!
@@ -113,6 +114,8 @@ class ChoreDetailsViewController: UIViewController {
             let choreNote = value?["chore_note"] as? String
             let imageLocale = value?["image_url"] as? String
             let chorComplete = value?["chore_completed"] as? Bool
+            let chorePastDue = value?["past_due"] as? String
+            let choreUserName = value?["user_name"] as? String
             
             if let choreName = chorName{
                 self.choreNameLabel.text = choreName
@@ -139,8 +142,11 @@ class ChoreDetailsViewController: UIViewController {
                 }
                 self.choreValueLabel.text = choreValue
             }
-            
-            self.usernameLabel.text = ""
+            if let userNameString = choreUserName{
+                self.usernameLabel.text = userNameString
+            } else {
+                self.usernameLabel.text = ""
+            }
             
             if let choreComplete = chorComplete {
                 if choreComplete {
@@ -152,6 +158,15 @@ class ChoreDetailsViewController: UIViewController {
             if let choreImageURL = imageLocale {
                 
                 self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
+            }
+            
+            if let choreDueString = chorePastDue {
+                if choreDueString == "yes"{
+            
+                    self.completedBtn.isEnabled = false
+                    self.completedBtn.setTitle("Past Due: Cannot Complete", for: UIControlState.normal)
+                    self.completedBtn.backgroundColor = UIColor.red
+                }
             }
         }
     }
