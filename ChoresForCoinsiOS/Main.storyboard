@@ -37,22 +37,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="left" translatesAutoresizingMaskIntoConstraints="NO" id="Qvu-y4-0fp">
-                                                    <rect key="frame" x="20.000000000000007" y="11" width="123.66666666666669" height="65"/>
+                                                    <rect key="frame" x="20" y="11" width="136.66666666666666" height="65"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="En4-ZY-IQj">
-                                                            <rect key="frame" x="0.0" y="24" width="123.66666666666667" height="17"/>
+                                                            <rect key="frame" x="0.0" y="24" width="136.66666666666666" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="k6c-c7-6g6">
-                                                            <rect key="frame" x="0.0" y="45" width="123.66666666666667" height="17"/>
+                                                            <rect key="frame" x="0.0" y="45" width="136.66666666666666" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.94999999999999996" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qrN-ka-9aK">
-                                                            <rect key="frame" x="-0.3333333333333286" y="3" width="124" height="17"/>
+                                                            <rect key="frame" x="-0.3333333333333286" y="3" width="137" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -72,16 +72,16 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQJ-Dz-Ubv">
-                                                    <rect key="frame" x="231.33333333333334" y="11" width="123.66666666666666" height="65"/>
+                                                    <rect key="frame" x="257.33333333333331" y="11" width="136.66666666666669" height="65"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Completed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcZ-P6-GzW">
-                                                            <rect key="frame" x="30.999999999999979" y="7.6666666666666679" width="123.66666666666669" height="17"/>
+                                                            <rect key="frame" x="34.333333333333371" y="7.6666666666666679" width="136.66666666666666" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redX" translatesAutoresizingMaskIntoConstraints="NO" id="I7B-ln-MR3">
-                                                            <rect key="frame" x="83.333333333333343" y="28.666666666666664" width="17.666666666666671" height="18"/>
+                                                            <rect key="frame" x="92" y="28.666666666666664" width="19.666666666666671" height="20"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="I7B-ln-MR3" secondAttribute="height" id="jm3-1v-BrP"/>
                                                             </constraints>
@@ -98,7 +98,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12A-iw-xMY">
-                                                    <rect key="frame" x="143.66666666666666" y="11" width="87.666666666666657" height="65"/>
+                                                    <rect key="frame" x="156.66666666666666" y="11" width="100.66666666666666" height="65"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Xcy-c5-vPi">
                                                             <rect key="frame" x="10" y="0.0" width="95" height="65"/>
@@ -268,7 +268,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xOL-dX-BLh"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Chore List" image="iconChoreList_S" id="d3l-og-cKF">
+                    <tabBarItem key="tabBarItem" title="Chore List" image="iconChoreList_Sinactive" selectedImage="iconChoreList_S" id="d3l-og-cKF">
                         <color key="badgeColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <connections>
@@ -559,7 +559,7 @@
                                 <rect key="frame" x="0.0" y="71.666666666666686" width="414" height="664.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="fT5-BI-9d9" style="IBUITableViewCellStyleDefault" id="xsD-Wg-BZP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="fT5-BI-9d9" style="IBUITableViewCellStyleDefault" id="xsD-Wg-BZP">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xsD-Wg-BZP" id="UHB-SM-5Eh">
@@ -1081,7 +1081,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zIt-le-Adg"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_S" id="0ie-jw-VkK"/>
+                    <tabBarItem key="tabBarItem" title="Add Chore" image="iconAddChore_Sinactive" selectedImage="iconAddChore_S" id="0ie-jw-VkK"/>
                     <connections>
                         <outlet property="bgImage" destination="Hns-AM-LnV" id="cWY-7G-aYF"/>
                         <outlet property="childRedeemView" destination="Z9M-tZ-0ow" id="8qM-cH-Wz2"/>
@@ -1672,13 +1672,13 @@
                                 <exclude reference="iOi-dc-ZsD"/>
                                 <exclude reference="j7b-qe-L9a"/>
                                 <exclude reference="shb-41-ma7"/>
+                                <exclude reference="GbO-9i-wNb"/>
+                                <exclude reference="Ne8-0l-bd0"/>
+                                <exclude reference="iEi-Sc-ruO"/>
                                 <exclude reference="3Q7-in-cVq"/>
                                 <exclude reference="LR4-Vv-Uke"/>
                                 <exclude reference="NGD-re-xMV"/>
                                 <exclude reference="rDg-u3-wRn"/>
-                                <exclude reference="GbO-9i-wNb"/>
-                                <exclude reference="Ne8-0l-bd0"/>
-                                <exclude reference="iEi-Sc-ruO"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -1711,22 +1711,22 @@
                                 <include reference="j7b-qe-L9a"/>
                                 <include reference="shb-41-ma7"/>
                                 <exclude reference="xMO-Vh-5Gy"/>
-                                <include reference="3Q7-in-cVq"/>
-                                <exclude reference="AtM-Qg-vQ9"/>
-                                <exclude reference="FSb-Hb-Jys"/>
-                                <include reference="LR4-Vv-Uke"/>
-                                <include reference="NGD-re-xMV"/>
-                                <include reference="rDg-u3-wRn"/>
                                 <include reference="GbO-9i-wNb"/>
                                 <exclude reference="Kfn-UI-2WL"/>
                                 <include reference="Ne8-0l-bd0"/>
                                 <include reference="iEi-Sc-ruO"/>
                                 <exclude reference="jX9-6J-9ss"/>
                                 <exclude reference="vFm-vv-pgZ"/>
+                                <include reference="3Q7-in-cVq"/>
+                                <exclude reference="AtM-Qg-vQ9"/>
+                                <exclude reference="FSb-Hb-Jys"/>
+                                <include reference="LR4-Vv-Uke"/>
+                                <include reference="NGD-re-xMV"/>
+                                <include reference="rDg-u3-wRn"/>
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_S" id="c1J-oS-J4D"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="iconSettings_Sinactive" selectedImage="iconSettings_S" id="c1J-oS-J4D"/>
                     <connections>
                         <outlet property="BonusMultView" destination="S1r-fj-3AW" id="Ica-X0-pE1"/>
                         <outlet property="bgImage" destination="Bdz-f7-STD" id="lGS-x4-slJ"/>
@@ -1837,7 +1837,7 @@
                                 <rect key="frame" x="0.0" y="101.66666666666669" width="414" height="634.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="leP-16-6Qr" detailTextLabel="Kyi-vo-c9U" style="IBUITableViewCellStyleValue1" id="Saf-ke-Dy6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="leP-16-6Qr" detailTextLabel="Kyi-vo-c9U" style="IBUITableViewCellStyleValue1" id="Saf-ke-Dy6">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Saf-ke-Dy6" id="gau-3L-vRk">
@@ -2623,16 +2623,19 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="JXL-k5-tgj"/>
                                                 <exclude reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="dsT-mW-hAA"/>
-                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="TWB-0y-qYb"/>
                                                 <exclude reference="a5G-pE-1kj"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <mask key="constraints">
+                                                <include reference="MQH-bB-Cnj"/>
+                                                <exclude reference="jkH-pT-CWf"/>
+                                                <exclude reference="uI4-rL-lGA"/>
                                                 <include reference="JXL-k5-tgj"/>
                                                 <include reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="On3-tD-4ds"/>
@@ -2641,9 +2644,6 @@
                                                 <exclude reference="jGO-dm-8Tl"/>
                                                 <exclude reference="xiz-on-NI6"/>
                                                 <exclude reference="xpJ-e3-8ja"/>
-                                                <include reference="MQH-bB-Cnj"/>
-                                                <exclude reference="jkH-pT-CWf"/>
-                                                <exclude reference="uI4-rL-lGA"/>
                                                 <exclude reference="2FX-HX-B1R"/>
                                                 <exclude reference="7e7-L4-zLl"/>
                                                 <include reference="TWB-0y-qYb"/>
@@ -2861,13 +2861,13 @@
                                         <exclude reference="wY4-TV-qRi"/>
                                         <exclude reference="ifx-Dr-EnB"/>
                                         <exclude reference="xf5-R1-uow"/>
-                                        <exclude reference="s52-uc-R8N"/>
                                         <exclude reference="PLb-Ai-zGM"/>
                                         <exclude reference="Yy8-M6-qFx"/>
                                         <exclude reference="dIS-cE-3yq"/>
                                         <exclude reference="e0k-f7-5zo"/>
                                         <exclude reference="prB-x9-uZT"/>
                                         <exclude reference="3Zp-Yi-1qC"/>
+                                        <exclude reference="s52-uc-R8N"/>
                                         <exclude reference="4Ky-y1-4Lg"/>
                                         <exclude reference="6PZ-vp-7le"/>
                                         <exclude reference="XU0-vx-1bh"/>
@@ -2890,7 +2890,6 @@
                                         <include reference="wY4-TV-qRi"/>
                                         <include reference="ifx-Dr-EnB"/>
                                         <include reference="xf5-R1-uow"/>
-                                        <include reference="s52-uc-R8N"/>
                                         <exclude reference="Kj5-en-0gc"/>
                                         <exclude reference="P8l-mt-1WE"/>
                                         <include reference="PLb-Ai-zGM"/>
@@ -2901,6 +2900,7 @@
                                         <include reference="prB-x9-uZT"/>
                                         <exclude reference="tnf-Es-Apu"/>
                                         <include reference="3Zp-Yi-1qC"/>
+                                        <include reference="s52-uc-R8N"/>
                                         <exclude reference="0Xl-FR-1aA"/>
                                         <include reference="4Ky-y1-4Lg"/>
                                         <include reference="6PZ-vp-7le"/>
@@ -4052,9 +4052,12 @@
         <image name="coin" width="46" height="46"/>
         <image name="greenBG" width="768" height="1023"/>
         <image name="iconAddChore_S" width="26" height="26"/>
+        <image name="iconAddChore_Sinactive" width="26" height="26"/>
         <image name="iconChoreList_S" width="23" height="25"/>
+        <image name="iconChoreList_Sinactive" width="23" height="25"/>
         <image name="iconOverview_S" width="26" height="26"/>
         <image name="iconSettings_S" width="26" height="26"/>
+        <image name="iconSettings_Sinactive" width="26" height="26"/>
         <image name="logo_L" width="598" height="281"/>
         <image name="niceWork" width="613" height="442"/>
         <image name="orangeBG" width="768" height="1023"/>
@@ -4075,7 +4078,7 @@
         <segue reference="Gxm-IN-KRx"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="TW0-XL-iud"/>
-        <segue reference="OXB-qQ-rBy"/>
+        <segue reference="Yia-uk-i10"/>
+        <segue reference="7DE-Oe-Cje"/>
     </inferredMetricsTieBreakers>
 </document>
