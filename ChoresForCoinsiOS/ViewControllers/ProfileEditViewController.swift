@@ -1,8 +1,9 @@
 import UIKit
 import Firebase
 import FirebaseUI
+import MessageUI
 
-class ProfileEditViewController: UIViewController, FUIAuthDelegate {
+class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -13,6 +14,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
     @IBOutlet weak var profilePicButton: UIButton!
     @IBOutlet weak var updateProfilePicView: UIView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var sentParentKeyButton: UIButton!
     
     var authUI: FUIAuth?
     var email: String?
@@ -37,6 +39,12 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
             // get user data from database
             Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
                 if let val = snapshot.value as? [String:Any] {
+                    if let userParent = val["user_parent"] as? Bool {
+                        if !userParent {
+                            self.sentParentKeyButton.isHidden = true
+                        }
+                    }
+                    
                     if let usernameUnwrapped = val["user_name"] as? String {
                         self.username = usernameUnwrapped
                         self.usernameTextField.text = usernameUnwrapped
@@ -215,6 +223,16 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
         }
     }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if let error = error {
+            AlertController.showAlert(self, title: "Error", message: "The email was not able to send. Please try again.")
+            print("Mail compose failed with error: \(error)")
+        }
+        
+        AlertController.showAlert(self, title: "Email Sent", message: "Your email will be sent!")
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func updatePassword(_ sender: UIButton) {
         Auth.auth().sendPasswordReset(withEmail: self.email!) { (error) in
             if let error = error {
@@ -224,6 +242,27 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate {
             }
             
             AlertController.showAlert(self, title: "Alert", message: "An email was sent to reset your password.")
+        }
+    }
+    
+    @IBAction func sendParentKey(_ sender: UIButton) {
+        // send email to someone with parent id included
+        if MFMailComposeViewController.canSendMail() {
+            let mailCompose = MFMailComposeViewController()
+            
+            if let parentid = parentKey {
+                if let user = username {
+                    mailCompose.setSubject("\(user) is sending you a Parent Key for the Chores for Coins application!")
+                    mailCompose.setMessageBody("Hello! \(user) is sending you a Parent Key for the Chores for Coins application!\nYour Parent Key is: \(parentid).\n In the application tap on your user picture in the top left corner to go to the profile edit page. From there, you can enter this Parent Key and have you app link up with your parent's account.\n\nThanks for using Chores for Coins!", isHTML: false)
+                } else {
+                    mailCompose.setSubject("Parent Key for the Chores for Coins application!")
+                    mailCompose.setMessageBody("Hello! Your Parent Key is: \(parentid).\n In the application tap on your user picture in the top left corner to go to the profile edit page. From there, you can enter this Parent Key and have you app link up with your parent's account.\n\nThanks for using Chores for Coins!", isHTML: false)
+                }
+                
+                mailCompose.mailComposeDelegate = self
+                
+                present(mailCompose, animated: true, completion: nil)
+            }
         }
     }
     

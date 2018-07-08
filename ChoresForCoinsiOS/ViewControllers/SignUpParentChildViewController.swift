@@ -53,6 +53,13 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
         }
     }
     
+//    func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
+//
+//        let customAuthUI = CustomAuthUI(authUI: authUI)
+//
+//        return customAuthUI
+//    }
+    
     func getBackground() {
         var userID = ""
         
@@ -81,6 +88,11 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
     }
     
     @IBAction func signInOrRegister(_ sender: UIButton) {
+//        if let authui = authUI {
+//            let authVC = CustomAuthUI(authUI: authui)
+//            present(authVC, animated: true, completion: nil)
+//        }
+        
         // present pre-made Auth UI
         if let authVC = authUI?.authViewController() {
             present(authVC, animated: true, completion: nil)
