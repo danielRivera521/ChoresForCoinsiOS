@@ -234,6 +234,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 self.chores = self.chores.filter({$0.parentID == self.parentID })
                 
+                
             }
             self.choreListTV.reloadData()
         }
@@ -293,7 +294,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                         self.profileButton.setBackgroundImage(image, for: .normal)
                     })
                     
-                  //  self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //  self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
@@ -350,6 +351,44 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             if completed {
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
             } else {
+                if let dueDateString = choreItem.dueDate{
+                    
+                    let dateFormatterGet = DateFormatter()
+                    dateFormatterGet.dateFormat = "MM/dd/yyyy"
+                    dateFormatterGet.dateStyle = .medium
+                    if let dueDate = dateFormatterGet.date(from: dueDateString){
+                        let dateNow = Date()
+                        if dueDate < dateNow {
+                            markChoreAsPastDue(key: choreItem.key)
+                            if isActiveUserParent{
+                                if let parentNotified = choreItem.choreParentNotified{
+                                    if parentNotified == "yes"{
+                                        //parent notified
+                                    } else {
+                                        
+                                        AlertController.showAlert(self, title: "Chore Past Due", message: "The chore named \(choreItem.name!) is now past due.")
+                                        ref?.child("chores/\(choreItem.key)/past_due_notified").setValue("yes")
+                                        choreItem.choreParentNotified = "yes"
+                                    }
+                                } else {
+                                    AlertController.showAlert(self, title: "Chore Past Due", message: "The chore named \(choreItem.name!) is now past due.")
+                                    ref?.child("chores/\(choreItem.key)/past_due_notified").setValue("yes")
+                                    choreItem.choreParentNotified = "yes"
+                                }
+                            }
+                            if let _ = choreItem.choreUsername {
+                                
+                                //choreItem has a username else
+                            } else {
+                                //set the username for the choreItem Object
+                                choreItem.choreUsername = "Failed to Complete"
+                            }
+                            
+                        }
+                        
+                    }
+                }
+                
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
             }
         }
@@ -364,40 +403,11 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             let url = URL(string: choreImageURL)
             ImageService.getImage(withURL: url!, completion: { (image) in
                 
-            
+                
                 cell.imageCellImageView.image = image
             })
             
             
-//            //creates the session
-//            let session = URLSession.shared
-//
-//            //create URL variable from string value
-//            let url: URL  = URL(string: choreImageURL)!
-//
-//            //runs a task to get the image from the URL
-//            let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
-//
-//                //if there is an error
-//                if let error = error {
-//                    AlertController.showAlert(self, title: "Download Image Error", message: error.localizedDescription)
-//                    return
-//                } else {
-//                    //if there isn't a respons the image value is set from the data to the imageView within the custom cell
-//                    if (response as? HTTPURLResponse) != nil {
-//
-//                        DispatchQueue.main.async {
-//                            if let imageData = data {
-//                                let image = UIImage(data: imageData)
-//                                cell.imageCellImageView.image = image
-//                            }
-//                        }
-//                    }
-//                }
-//
-//            })
-//
-//            getImageFromURL.resume()
             
         } else {
             cell.imageCellImageView.image = nil
@@ -410,7 +420,11 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         return 100.0
     }
     
-    
+    func markChoreAsPastDue(key: String){
+        ref?.child("chores/\(key)/past_due").setValue("yes")
+        ref?.child("chores/\(key)/user_name").setValue("Failed to Complete")
+        
+    }
     // MARK: Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
@@ -436,7 +450,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-   @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
     
 }
 
