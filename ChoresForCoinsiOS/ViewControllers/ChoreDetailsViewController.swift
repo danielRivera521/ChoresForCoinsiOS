@@ -30,6 +30,7 @@ class ChoreDetailsViewController: UIViewController {
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var detailImageHeightConstraint: NSLayoutConstraint!
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -158,6 +159,10 @@ class ChoreDetailsViewController: UIViewController {
             if let choreImageURL = imageLocale {
                 
                 self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
+            } else {
+                self.detailImageHeightConstraint.isActive = false
+                let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
+                heightConstraint.isActive = true
             }
             
             if let choreDueString = chorePastDue {
