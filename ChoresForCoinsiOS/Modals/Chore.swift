@@ -19,6 +19,7 @@ class Chore{
     var choreURL: String?
     var chorePastDue: String?
     var choreParentNotified: String?
+    var choreCompletedNotified: String?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -56,6 +57,10 @@ class Chore{
         
         if let parentNotified = dictionary["past_due_notified"] as? String {
             self.choreParentNotified = parentNotified
+        }
+        
+        if let choreCompletedNotified = dictionary["chore_completed_notified"] as? String{
+            self.choreCompletedNotified = choreCompletedNotified
         }
         
         
