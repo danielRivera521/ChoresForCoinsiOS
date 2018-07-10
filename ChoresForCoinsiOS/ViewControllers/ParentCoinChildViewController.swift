@@ -175,16 +175,6 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
             
             var sumTotal = 0
             
-            //            for coinTotal in self.coinTotals {
-            //                for child in self.children {
-            //                    if coinTotal.userid == child.userid {
-            //                        if let total = coinTotal.cointotal {
-            //                            sumTotal += total
-            //                        }
-            //                    }
-            //                }
-            //            }
-            
             for coinAmt in self.coinTotals{
                 if let total = coinAmt.cointotal{
                     sumTotal += total

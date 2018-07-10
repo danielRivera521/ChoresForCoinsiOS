@@ -816,8 +816,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXt-Dh-6lA" userLabel="DescriptionView">
                                 <rect key="frame" x="0.0" y="307" width="414" height="66.333333333333314"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Chore Description: Put away all toys in my room." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5P0-uy-DTh">
-                                        <rect key="frame" x="20.666666666666657" y="0.0" width="372.66666666666674" height="66.333333333333329"/>
+
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Chore Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5P0-uy-DTh">
+                                        <rect key="frame" x="21" y="0.0" width="372" height="66.333333333333329"/>
                                         <color key="backgroundColor" white="1" alpha="0.49068921232876711" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -4150,7 +4151,7 @@
         <segue reference="Gxm-IN-KRx"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
-        <segue reference="GCd-rR-cmP"/>
-        <segue reference="3V0-eC-vGf"/>
+        <segue reference="4QU-Dj-v8X"/>
+        <segue reference="X6b-eg-OV6"/>
     </inferredMetricsTieBreakers>
 </document>

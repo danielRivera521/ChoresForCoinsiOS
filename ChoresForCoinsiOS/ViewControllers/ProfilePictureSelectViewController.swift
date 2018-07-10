@@ -59,7 +59,59 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     
     @IBAction func selectProfilePic(_ sender: UIButton) {
         // send selected pic back to previous page
-        // will have to know if came from account creation page or profile edit page
+        
+        let selectedBtnTag = sender.tag
+        var profileImage: UIImage?
+        
+        switch selectedBtnTag{
+        case 1:
+            profileImage = #imageLiteral(resourceName: "profilePic1")
+        case 2:
+            profileImage = #imageLiteral(resourceName: "profilePic2")
+        case 3:
+            profileImage = #imageLiteral(resourceName: "profilePic3")
+        case 4:
+            profileImage = #imageLiteral(resourceName: "profilePic4")
+        case 5:
+            profileImage = #imageLiteral(resourceName: "profilePic5")
+        default:
+            profileImage = #imageLiteral(resourceName: "profilePic6")
+        }
+        
+        var userID = ""
+        if let userid = Auth.auth().currentUser?.uid {
+            userID = userid
+            let range = userID.index(userID.startIndex, offsetBy: 5)..<userID.endIndex
+            userID.removeSubrange(range)
+            let filename = "\(userID)ProfilePicture.png"
+            let fileref = Storage.storage().reference().child(filename)
+            let meta = StorageMetadata()
+            meta.contentType = "image/png"
+            
+            if let img = profileImage {
+                fileref.putData(UIImagePNGRepresentation(img)!, metadata: meta, completion: { (meta, error) in
+                    if error != nil {
+                        AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                        return
+                    }
+                    
+                    fileref.downloadURL(completion: { (url, error) in
+                        if let error = error {
+                            AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
+                            return
+                        } else {
+                            if let urlString = url?.absoluteString{
+                                self.createProfileImageURL(userID: userid, imageUrl: urlString)
+                            }
+                        }
+                    })
+                })
+            }
+            
+            dismiss(animated: true) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
     }
     
     @IBAction func takeProfilePic(_ sender: UIButton) {

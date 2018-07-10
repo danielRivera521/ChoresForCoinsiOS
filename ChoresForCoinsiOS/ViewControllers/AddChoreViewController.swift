@@ -9,8 +9,7 @@
 import UIKit
 import Firebase
 
-class AddChoreViewController: UIViewController {
-    
+class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // MARK: Outlets
     
@@ -29,6 +28,7 @@ class AddChoreViewController: UIViewController {
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     
+    
     // MARK: Properties
     
     var isFirstLoad = true
@@ -36,6 +36,7 @@ class AddChoreViewController: UIViewController {
     var ref: DatabaseReference?
     // create date picker
     let picker = UIDatePicker()
+    let childPicker = UIPickerView()
     // array to hold all users with same generatedId
     var family = [UserModel] ()
     var currentUID: String?
@@ -72,6 +73,8 @@ class AddChoreViewController: UIViewController {
             createDatePickerStart()
             createDatePickerDue()
             
+            
+            
             //acquire parent ID
             getParentId()
         }
@@ -85,6 +88,13 @@ class AddChoreViewController: UIViewController {
         
         //disable the dueDate. it will be enabled able the start date is completed.
         dueDateTextField.isEnabled = false
+        
+        // set up child picker
+        createChildPicker()
+        
+        //set placeholder for Username and hide and disable the chore notes section
+        usernameTextField.placeholder = "Click to Assign chore to a child"
+        choreNoteTextView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +109,49 @@ class AddChoreViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //MARK: UIPickerView Functions
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return children.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return children[row].username
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if let nameString = children[row].username{
+        
+            let compoundString = "Assigned to: \(nameString)"
+        
+            usernameTextField.text = compoundString
+        }
+    }
+    
+    func createChildPicker() {
+        // create toolbar for done button
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        childPicker.delegate = self
+        childPicker.dataSource = self
+        // done button
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressedChild))
+        toolbar.setItems([done], animated: false)
+        
+        usernameTextField.inputAccessoryView = toolbar
+        usernameTextField.inputView = childPicker
+    
+    }
+    
+    @objc func donePressedChild() {
+        //dismiss picker
+        self.view.endEditing(true)
+        
+    }
     
     // MARK: Custom functions
     

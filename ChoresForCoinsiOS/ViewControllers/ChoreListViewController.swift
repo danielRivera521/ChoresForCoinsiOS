@@ -361,6 +361,10 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         if let completed = choreItem.completed {
             if completed {
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
+                if isActiveUserParent{
+                    alertCompletedAddNote(chore: choreItem)
+                    choreItem.choreCompletedNotified = "yes"
+                }
             } else {
                 if let dueDateString = choreItem.dueDate{
                     
@@ -439,6 +443,75 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         ref?.child("chores/\(key)/past_due").setValue("yes")
         ref?.child("chores/\(key)/user_name").setValue("Failed to Complete")
         
+    }
+    
+    func alertCompletedAddNote(chore: Chore){
+        if let completedNotifyString = chore.choreCompletedNotified {
+            if completedNotifyString == "yes" {
+                //parent was already notified
+            }
+            // if completedNotify String does not exist
+        } else {
+            let key = chore.key
+            if let childName = chore.choreUsername{
+                let addNoteAlert = UIAlertController(title: "Chore Completed", message: "The chore named \(chore.name!) was completed by \(childName). Please write a note regarding the completion of this chore.", preferredStyle: UIAlertControllerStyle.alert)
+                let saveNote = UIAlertAction(title: "Save", style: .default) { (saveAction) in
+                    //read text from the alert box
+                    let noteTextField = addNoteAlert.textFields![0] as UITextField
+                    if let noteString = noteTextField.text {
+                        //save text to the chore.
+                        self.ref?.child("chores/\(key)/chore_note").setValue(noteString)
+                        self.ref?.child("chores/\(key)/chore_completed_notified").setValue("yes")
+                        
+                        addNoteAlert.dismiss(animated: true, completion: nil)
+                        
+                    } else {
+                        
+                        AlertController.showAlert(self, title: "Missing Text", message: "Please type in text into the note box.")
+                        
+                    }
+                    
+                }
+                
+                addNoteAlert.addTextField { (textField) in
+                    textField.placeholder = "Enter chore note"
+                }
+                addNoteAlert.addAction(saveNote)
+                
+                //code for adding image to the alert controller
+//                if let imageUrl = chore.choreURL{
+//
+//                    var alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//
+//                    let url = URL(string: imageUrl)
+//
+//                    ImageService.getImage(withURL: url!) { (urlImage) in
+//                        if let unwrappedImage = urlImage {
+//                            let maxSize = CGSize(width: 245, height: 300)
+//                            let imageSize = unwrappedImage.size
+//                            var ratio: CGFloat!
+//
+//                            if imageSize.width > imageSize.height{
+//                                ratio = maxSize.width / imageSize.width
+//                            } else {
+//                                ratio = maxSize.height / imageSize.height
+//                            }
+//
+//                            alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100 , height: 100))
+//
+//                            alertImageView.image = unwrappedImage
+//
+//                        }
+//                    }
+//
+//                    addNoteAlert.view.addSubview(alertImageView)
+//
+//                }
+                
+                present(addNoteAlert, animated: true, completion: nil)
+                
+            }
+        }
     }
     // MARK: Actions
     
