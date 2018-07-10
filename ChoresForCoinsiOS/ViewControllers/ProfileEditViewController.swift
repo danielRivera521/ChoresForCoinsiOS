@@ -233,7 +233,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
                         
                         self.profilePicButton.setBackgroundImage(image, for: .normal)
                     })
-//                    self.profilePicButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+
                     //turn button into a circle
                     self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.width/2
                     self.profilePicButton.layer.masksToBounds = true
