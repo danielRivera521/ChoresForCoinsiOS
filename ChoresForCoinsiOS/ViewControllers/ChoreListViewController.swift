@@ -17,6 +17,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var detailContainer: UIView!
+    @IBOutlet weak var editContainer: UIView!
     
     var chores: [Chore] = [Chore]()
     var coinValue = 11
@@ -29,10 +31,19 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var isActiveUserParent = false
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
+    var isLandscape = false
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // check if device is landscape
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            isLandscape = true
+        } else {
+            detailContainer.removeFromSuperview()
+            editContainer.removeFromSuperview()
+        }
         
         childRedeemView.isHidden = true
         
@@ -418,6 +429,10 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     func markChoreAsPastDue(key: String){

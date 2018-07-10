@@ -53,12 +53,12 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
         }
     }
     
-//    func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
-//
-//        let customAuthUI = CustomAuthUI(authUI: authUI)
-//
-//        return customAuthUI
-//    }
+    func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
+
+        let customAuthUI = CustomAuthUI(authUI: authUI)
+
+        return customAuthUI
+    }
     
     func getBackground() {
         var userID = ""
