@@ -37,6 +37,28 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        ref?.child("user").removeAllObservers()
+        ref?.removeAllObservers()
+        firstView = false
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        loadPage()
+        
+    }
+    
+    func loadPage(){
         // check if device is landscape
         if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
             isLandscape = true
@@ -74,31 +96,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         // get photo for profile button
         getPhoto()
-        
-    }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        ref?.child("user").removeAllObservers()
-        ref?.removeAllObservers()
-        firstView = false
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        if !firstView{
-            createChores()
-            displayHeaderName()
-            isUserParent()
-            getPhoto()
-        }
-        
     }
     
     func checkDatabase() {
@@ -234,11 +231,14 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         //database reference
         ref = Database.database().reference()
         
-        chores.removeAll()
-        //
+        
+        
         self.ref?.observe(.value) { (snapshot) in
+            self.chores.removeAll()
+            
             let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
             let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
+            
             for key in Array(dictChores.keys){
                 
                 self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
@@ -247,7 +247,14 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 
             }
+            var i = 1
+            print(self.chores.count)
+        
+            print(i)
+            i += 1
             self.choreListTV.reloadData()
+        
+            return
         }
         
     }
@@ -270,7 +277,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func disableAddChoreTabItem(){
-        if let arrayOfTabBarItems = tabBarController?.tabBar.items as! AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
             tabBarItem.isEnabled = isActiveUserParent
         }
     }
@@ -373,7 +380,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                     dateFormatterGet.dateStyle = .medium
                     if let dueDate = dateFormatterGet.date(from: dueDateString){
                         let dateNow = Date()
-                        if dueDate < dateNow {
+                        if dueDate <= dateNow {
                             markChoreAsPastDue(key: choreItem.key)
                             if isActiveUserParent{
                                 if let parentNotified = choreItem.choreParentNotified{
@@ -449,6 +456,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         if let completedNotifyString = chore.choreCompletedNotified {
             if completedNotifyString == "yes" {
                 //parent was already notified
+                return
             }
             // if completedNotify String does not exist
         } else {
@@ -509,6 +517,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
 //                }
                 
                 present(addNoteAlert, animated: true, completion: nil)
+                
+                chore.choreCompletedNotified = "yes"
                 
             }
         }

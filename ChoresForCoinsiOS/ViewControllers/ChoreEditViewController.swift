@@ -476,8 +476,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         let storRef = Storage.storage().reference()
         
         storRef.child(child).delete { (error) in
-            if let error = error {
-                AlertController.showAlert(self, title: "Delete Image from Storage Error", message: error.localizedDescription)
+            if let _ = error {
+                AlertController.showAlert(self, title: "Delete Image from Storage Error", message: "Unable to find or delete image associated with this chore.")
             } else {
                 AlertController.showAlert(self, title: "Delete Success", message: "Chore and chore image deleted.")
             }
@@ -590,13 +590,13 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             
             storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
                 if error != nil {
-                    AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                    AlertController.showAlert(self, title: "Image Upload Error", message: "Unable to upload the image to cloud storage." )
                     return
                 }
                 
                 storageRef.downloadURL(completion: { (url, error) in
-                    if let error = error {
-                        AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
+                    if let _ = error {
+                        AlertController.showAlert(self, title: "Download URL Error", message: "Image URL was not located.")
                         return
                     } else {
                         if let urlString = url?.absoluteString{

@@ -782,11 +782,11 @@
                                     <constraint firstItem="dWX-Jq-LEa" firstAttribute="width" secondItem="OYy-DR-0ue" secondAttribute="width" multiplier="0.8" id="wNX-dE-u0X"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3X-nZ-8sP">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E3X-nZ-8sP">
                                 <rect key="frame" x="0.0" y="130.33333333333337" width="414" height="132.66666666666663"/>
                                 <color key="backgroundColor" red="0.88094383480000005" green="0.58733743429999996" blue="0.083256371319999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Tap to add image">
+                                <state key="normal">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -816,7 +816,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXt-Dh-6lA" userLabel="DescriptionView">
                                 <rect key="frame" x="0.0" y="307" width="414" height="66.333333333333314"/>
                                 <subviews>
-
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Chore Description" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5P0-uy-DTh">
                                         <rect key="frame" x="21" y="0.0" width="372" height="66.333333333333329"/>
                                         <color key="backgroundColor" white="1" alpha="0.49068921232876711" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -965,11 +964,11 @@
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="10" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ovw-Si-pQS">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ovw-Si-pQS">
                                                 <rect key="frame" x="13.666666666666679" y="75.666666666666686" width="109.33333333333331" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
                                                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 </variation>
@@ -1854,7 +1853,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVM-2r-Tl5">
-                                        <rect key="frame" x="346" y="15.999999999999998" width="11.333333333333314" height="20.333333333333329"/>
+                                        <rect key="frame" x="346.33333333333331" y="15.999999999999998" width="11.333333333333314" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1863,7 +1862,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKB-qb-kkX">
-                                        <rect key="frame" x="365.33333333333331" y="5" width="40.666666666666686" height="40.666666666666664"/>
+                                        <rect key="frame" x="365.66666666666669" y="5" width="40.333333333333314" height="40.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="HKB-qb-kkX" secondAttribute="height" id="Ck3-PJ-M6q"/>
                                         </constraints>
@@ -2009,7 +2008,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fny-wj-t1c">
-                                        <rect key="frame" x="345.66666666666669" y="15.999999999999998" width="11.333333333333314" height="20.333333333333329"/>
+                                        <rect key="frame" x="345" y="15.999999999999998" width="11.333333333333314" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2018,7 +2017,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsF-QA-LAY">
-                                        <rect key="frame" x="365" y="5" width="41" height="41.666666666666664"/>
+                                        <rect key="frame" x="364.33333333333331" y="5" width="41.666666666666686" height="41.666666666666664"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BsF-QA-LAY" secondAttribute="height" id="FdZ-ZF-QPr"/>
                                         </constraints>
@@ -2140,7 +2139,7 @@
                                         </connections>
                                     </button>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="redDot" translatesAutoresizingMaskIntoConstraints="NO" id="RJ2-lw-Ey6">
-                                        <rect key="frame" x="185.66666666666666" y="29.000000000000004" width="13" height="12.666666666666668"/>
+                                        <rect key="frame" x="186" y="29.000000000000004" width="12.666666666666657" height="12.666666666666668"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="RJ2-lw-Ey6" secondAttribute="height" multiplier="1:1" id="D14-Sm-18D"/>
                                         </constraints>
@@ -3113,7 +3112,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PLA-Fp-Car" userLabel="DescriptionView">
                                 <rect key="frame" x="0.0" y="366.33333333333331" width="414" height="95.666666666666686"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Chore Description: Put away all toys in my room." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CS1-zd-ylj">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CS1-zd-ylj">
                                         <rect key="frame" x="20.666666666666657" y="5.3333333333333712" width="372.66666666666674" height="86.333333333333329"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3228,7 +3227,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2v7-P8-Pls" userLabel="NotesView">
                                 <rect key="frame" x="0.0" y="566.66666666666663" width="414" height="95.666666666666629"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Note about chore from parent or child" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmY-QH-8F3">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VmY-QH-8F3">
                                         <rect key="frame" x="20.666666666666657" y="4.6666666666667425" width="372.66666666666674" height="87"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3716,7 +3715,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygz-WW-UmH" userLabel="DescriptionView">
                                 <rect key="frame" x="0.0" y="367" width="414" height="95.666666666666686"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Chore Description: Put away all toys in my room." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="csA-wP-sc1">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="csA-wP-sc1">
                                         <rect key="frame" x="21" y="0.33333333333331439" width="372" height="95.666666666666671"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3735,7 +3734,7 @@
                                 <rect key="frame" x="0.0" y="161" width="414" height="162"/>
                                 <color key="backgroundColor" red="0.88094383478164673" green="0.5873374342918396" blue="0.083256371319293976" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Tap to add image">
+                                <state key="normal">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -3779,7 +3778,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5WR-tm-l0U" userLabel="NotesView">
                                 <rect key="frame" x="0.0" y="566.66666666666663" width="414" height="95.666666666666629"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Note about chore from parent or child" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-SZ-F4w">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zg2-SZ-F4w">
                                         <rect key="frame" x="21" y="5.3333333333333712" width="372" height="86"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3858,11 +3857,11 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="10" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OBi-Ax-d5A">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OBi-Ax-d5A">
                                                 <rect key="frame" x="14" y="37" width="109" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3898,7 +3897,7 @@
                                 <rect key="frame" x="0.0" y="662.33333333333337" width="414" height="73.666666666666629"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0Q-xf-KRO">
-                                        <rect key="frame" x="22" y="15.666666666666632" width="172.66666666666666" height="43.333333333333343"/>
+                                        <rect key="frame" x="22" y="12.666666666666629" width="172.66666666666666" height="50"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <state key="normal" title="DELETE" backgroundImage="btnRed_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3908,11 +3907,11 @@
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pi2-j2-N7x">
-                                        <rect key="frame" x="194.66666666666666" y="33.666666666666629" width="24.666666666666657" height="6.6666666666666643"/>
+                                        <rect key="frame" x="194.66666666666666" y="33.333333333333258" width="24.666666666666657" height="7.6666666666666643"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Oa-x0-NsH">
-                                        <rect key="frame" x="219.33333333333337" y="16.333333333333261" width="172.66666666666663" height="43.333333333333343"/>
+                                        <rect key="frame" x="219.33333333333337" y="12.333333333333258" width="172.66666666666663" height="50"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <state key="normal" title="SAVE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3963,7 +3962,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4mL-1d-jgZ">
-                                        <rect key="frame" x="345.66666666666669" y="15.666666666666663" width="11.333333333333314" height="20.333333333333329"/>
+                                        <rect key="frame" x="346" y="15.666666666666663" width="11.333333333333314" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3972,7 +3971,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cza-k9-qQI">
-                                        <rect key="frame" x="365" y="5.3333333333333321" width="41" height="41.333333333333343"/>
+                                        <rect key="frame" x="365.33333333333331" y="5.3333333333333321" width="40.666666666666686" height="41.333333333333343"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="cza-k9-qQI" secondAttribute="height" id="JDx-Jb-crF"/>
                                         </constraints>
@@ -4014,7 +4013,7 @@
                                 <rect key="frame" x="207" y="63.666666666666664" width="207" height="73.333333333333343"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T4d-ZX-zJ5">
-                                        <rect key="frame" x="0.33333333333334281" y="12.000000000000007" width="207.33333333333334" height="48"/>
+                                        <rect key="frame" x="0.33333333333334281" y="12.666666666666664" width="207.33333333333334" height="48"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="REDEEM">
                                             <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
