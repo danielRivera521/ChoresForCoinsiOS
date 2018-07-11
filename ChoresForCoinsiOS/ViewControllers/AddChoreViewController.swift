@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate {
+
     
     // MARK: Outlets
     
@@ -95,6 +96,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //disable the dueDate. it will be enabled able the start date is completed.
         dueDateTextField.isEnabled = false
         
+        choreDescriptionTextView.delegate = self
+        
         // set up child picker
         createChildPicker()
         
@@ -113,6 +116,12 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: Chore Description TextView Delegate
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = nil
     }
     
     //MARK: UIPickerView Functions
