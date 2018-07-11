@@ -26,9 +26,17 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadPage()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        isFirstLoad = true
+    }
+    
+    func loadPage(){
         getBackground()
-        
-        isFirstLoad = false
         
         // get current user
         let user = Auth.auth().currentUser
@@ -64,13 +72,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         if let emailUnwrapped = email {
             emailTextField.text = emailUnwrapped
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        if !isFirstLoad {
-            getPhoto()
-        }
-        isFirstLoad = false
+
     }
     
     func getBackground() {
