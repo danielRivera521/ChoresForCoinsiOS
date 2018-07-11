@@ -411,6 +411,12 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         cell.usernameCellLabel.text = choreItem.choreUsername
         cell.dueDateCellLabel.text = choreItem.dueDate
         
+        if let choreVal = choreItem.choreValue {
+            cell.choreValueCellLabel.text = "Chore Value: \(choreVal)"
+        } else {
+            cell.choreValueCellLabel.text = "Chore Value: 0"
+        }
+        
         //gets the image URL from the chores array
         if let choreImageURL =  chores[indexPath.row].choreURL{
             

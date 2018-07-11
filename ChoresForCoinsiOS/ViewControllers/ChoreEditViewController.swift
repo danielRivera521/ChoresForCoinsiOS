@@ -496,10 +496,12 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             dueDate = Date()
         }
         
-        startDate = startDateTime!
-        
-        if startDate <= dueDate{
-            return true
+        if let startdate = startDateTime {
+            startDate = startdate
+            
+            if startDate <= dueDate{
+                return true
+            }
         }
         
         return false
