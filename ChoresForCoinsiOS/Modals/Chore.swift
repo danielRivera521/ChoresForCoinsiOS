@@ -20,6 +20,7 @@ class Chore{
     var chorePastDue: String?
     var choreParentNotified: String?
     var choreCompletedNotified: String?
+    var choreValue: Int?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -63,6 +64,8 @@ class Chore{
             self.choreCompletedNotified = choreCompletedNotified
         }
         
-        
+        if let choreVal = dictionary["number_coins"] as? Int {
+            self.choreValue = choreVal
+        }
     }
 }

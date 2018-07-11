@@ -9,7 +9,8 @@
 import UIKit
 import Firebase
 
-class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
+class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate {
+
     
     // MARK: Outlets
     
@@ -57,6 +58,12 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set textfield delegates
+        choreNameTextField.delegate = self
+        usernameTextField.delegate = self
+        choreValueTextField.delegate = self
+        
         
         getBackground()
         
@@ -162,6 +169,11 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     // MARK: Custom functions
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
     
     func getBackground() {
         if let uid = Auth.auth().currentUser?.uid {
@@ -474,6 +486,13 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func isStringAnInt(string: String) -> Bool {
         return Int(string) != nil
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        
+        return true
     }
     
     // MARK: Actions
