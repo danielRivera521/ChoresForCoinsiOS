@@ -49,8 +49,6 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
                 }
             }
         }
-        
-        
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
@@ -91,17 +89,17 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
             if let img = profileImage {
                 fileref.putData(UIImagePNGRepresentation(img)!, metadata: meta, completion: { (meta, error) in
                     if error != nil {
-                        AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                        AlertController.showAlert(self, title: "Image Upload Error", message: "Error uploading image to storage." )
                         return
                     }
                     
                     fileref.downloadURL(completion: { (url, error) in
-                        if let error = error {
-                            AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
+                        if let _ = error {
+                            AlertController.showAlert(self, title: "Download URL Error", message: "Error in downloading image from the cloud database.")
                             return
                         } else {
                             if let urlString = url?.absoluteString{
-                                self.createProfileImageURL(userID: userid, imageUrl: urlString)
+                                self.createProfileImageURL(imageUrl: urlString)
                             }
                         }
                     })
@@ -129,60 +127,93 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         // lets user edit photos taken with camera or in photo library
         imagePicker.allowsEditing = true
         // sets the media type to the same as the camera or photo library
-        imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+        imagePicker.cameraCaptureMode = .photo
         
         // present the image picker
         self.present(imagePicker, animated: true, completion: nil)
     }
     
-    // MARK: Delegate Methods
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let mediaType = info[UIImagePickerControllerMediaType] as! String
-        
-        if mediaType == (kUTTypeImage as String) {
-            // a photo was taken
-            // save photo to firebase storage
-            var userID = ""
-            if let userid = Auth.auth().currentUser?.uid {
-                userID = userid
-                let range = userID.index(userID.startIndex, offsetBy: 5)..<userID.endIndex
-                userID.removeSubrange(range)
-                let filename = "\(userID)ProfilePicture.png"
-                let fileref = Storage.storage().reference().child(filename)
-                let meta = StorageMetadata()
-                meta.contentType = "image/png"
+    
+    // MARK: ImagePicker Methods
+    
+    //function to access storage
+    
+    func storeImage(image: UIImage){
+        let id = Auth.auth().currentUser?.uid
+        if let userId = id {
+            let imageName = "\(userId)ProfilePicture"
+            let storageRef = Storage.storage().reference().child("\(imageName).png")
+            
+            
+            if let uploadData = UIImagePNGRepresentation(image) {
                 
-                if let img = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                    fileref.putData(UIImagePNGRepresentation(img)!, metadata: meta, completion: { (meta, error) in
-                        if error != nil {
-                            AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                storageRef.putData(uploadData, metadata: nil) { (metadata, error) in
+                    if error != nil {
+                        AlertController.showAlert(self, title: "Image Upload Error", message: (error?.localizedDescription)! )
+                        return
+                    }
+                    
+                    storageRef.downloadURL(completion: { (url, error) in
+                        if let error = error {
+                            AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
                             return
-                        }
-                        
-                        fileref.downloadURL(completion: { (url, error) in
-                            if let error = error {
-                                AlertController.showAlert(self, title: "Download URL Error", message: error.localizedDescription)
-                                return
-                            } else {
-                                if let urlString = url?.absoluteString{
-                                    self.createProfileImageURL(userID: userid, imageUrl: urlString)
-                                }
+                        } else {
+                            if let urlString = url?.absoluteString{
+                                self.createProfileImageURL(imageUrl: urlString)
                             }
-                        })
+                        }
                     })
                 }
-                
-                dismiss(animated: true) {
-                    self.dismiss(animated: true, completion: nil)
-                }
+            }
+            
+            dismiss(animated: true) {
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
-    func createProfileImageURL(userID: String, imageUrl: String){
+    
+    private func createProfileImageURL(imageUrl: String){
+        let id = Auth.auth().currentUser?.uid
+        if let userId = id{
+            let ref = Database.database().reference()
+            
+            ref.child("users/\(userId)/profile_image_url").setValue(imageUrl)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        let ref = Database.database().reference()
+        let mediaType = info[UIImagePickerControllerMediaType] as! String
         
-        ref.child("user/\(userID)/profile_image_url").setValue(imageUrl)
+        if mediaType == (kUTTypeImage as String){
+            
+            
+            // a photo was taken
+            var selectedImageFromPicker: UIImage?
+            
+            if let editedImage = info["UIImagePickerControllerEditedImage"]{
+                // save edited image
+                selectedImageFromPicker = editedImage as? UIImage
+                
+            } else if let originalImage = info["UIImagePickerControllerOriginalImage"]{
+                // save original image
+                selectedImageFromPicker = originalImage as? UIImage
+            }
+            
+            //selectedImage unwrapped to be saved.
+            if let selectedImage = selectedImageFromPicker {
+                let reOrientatedImage = selectedImage.fixOrientation()
+                storeImage(image: reOrientatedImage)
+                
+            }
+            
+            dismiss(animated: true, completion: nil)
+            
+            
+        } else {
+            // a video option is selected
+            AlertController.showAlert(self, title: "Not Available", message: "The Video Option is not available at this time")
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

@@ -236,6 +236,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         
         if mediaType == (kUTTypeImage as String){
             
+            
             // a photo was taken
             let ref = Database.database().reference().child("chores")
             
@@ -258,7 +259,8 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             
             //selectedImage unwrapped to be saved.
             if let selectedImage = selectedImageFromPicker {
-                storeImage(image: selectedImage)
+                let reOrientatedImage = selectedImage.fixOrientation()
+                storeImage(image: reOrientatedImage)
                 
             }
             
@@ -266,9 +268,11 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             
             
         } else {
-            // a video was taken and do nothing.
+            // a video option is selected
+            AlertController.showAlert(self, title: "Not Available", message: "The Video Option is not available at this time")
         }
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
@@ -360,7 +364,9 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         
         //image can be edited and sets the mediatype to the source type which is the camera
         imagePicker.allowsEditing = true
-        imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+        imagePicker.cameraCaptureMode = .photo
+        //imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)
+        
         
         self.present(imagePicker, animated: true, completion: nil)
     }

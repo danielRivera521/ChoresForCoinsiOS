@@ -64,8 +64,8 @@ class Chore{
             self.choreCompletedNotified = choreCompletedNotified
         }
         
-        if let choreVal = dictionary["number_coins"] as? Int {
-            self.choreValue = choreVal
+        if let choreVal = dictionary["number_coins"] as? String {
+            self.choreValue = Int(choreVal)
         }
     }
 }
