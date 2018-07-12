@@ -117,6 +117,10 @@ class CreateAccountViewController: UIViewController {
             }
         }
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
     
     //code to generate a parent id using the name portion of email and last 5 characters from UID
     func createParentID() -> String{
