@@ -29,8 +29,8 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         let providers: [FUIAuthProvider] = [
-            FUIGoogleAuth(),
-            FUIFacebookAuth()
+            FUIGoogleAuth()
+//            FUIFacebookAuth()
         ]
         self.authUI?.providers = providers
     }

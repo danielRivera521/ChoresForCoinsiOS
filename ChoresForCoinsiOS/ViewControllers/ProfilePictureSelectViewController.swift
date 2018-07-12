@@ -141,7 +141,8 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     func storeImage(image: UIImage){
         let id = Auth.auth().currentUser?.uid
         if let userId = id {
-            let imageName = "\(userId)ProfilePicture"
+            let last5 = userId.suffix(5)
+            let imageName = "\(last5)ProfilePicture"
             let storageRef = Storage.storage().reference().child("\(imageName).png")
             
             
@@ -176,8 +177,8 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         let id = Auth.auth().currentUser?.uid
         if let userId = id{
             let ref = Database.database().reference()
-            
-            ref.child("users/\(userId)/profile_image_url").setValue(imageUrl)
+
+            ref.child("user/\(userId)/profile_image_url").setValue(imageUrl)
         }
     }
     
@@ -203,7 +204,8 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
             //selectedImage unwrapped to be saved.
             if let selectedImage = selectedImageFromPicker {
                 let reOrientatedImage = selectedImage.fixOrientation()
-                storeImage(image: reOrientatedImage)
+                let reSizedImage = reOrientatedImage.resize()
+                storeImage(image: reSizedImage)
                 
             }
             
