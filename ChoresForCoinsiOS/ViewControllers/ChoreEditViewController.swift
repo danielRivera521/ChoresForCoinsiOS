@@ -11,7 +11,7 @@ import Firebase
 import FirebaseUI
 import MobileCoreServices
 
-class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
@@ -52,6 +52,10 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        choreValueTextField.delegate = self
+        choreNameTextField.delegate = self
+        usernameTextField.delegate = self
+        
         getBackground()
         
         childRedeemView.isHidden = true
@@ -86,6 +90,13 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        
+        return true
     }
     
     func checkDatabase() {

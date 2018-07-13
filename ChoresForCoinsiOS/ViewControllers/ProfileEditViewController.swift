@@ -3,7 +3,7 @@ import Firebase
 import FirebaseUI
 import MessageUI
 
-class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailComposeViewControllerDelegate {
+class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailComposeViewControllerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -26,6 +26,9 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +36,13 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
     }
     override func viewDidDisappear(_ animated: Bool) {
         isFirstLoad = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        
+        return true
     }
     
     func loadPage(){
