@@ -41,6 +41,7 @@ class CreateAccountViewController: UIViewController {
         emailTextField.text = email
         if isParent{
             parentIDTextField.text = createParentID()
+            parentIDTextField.isEnabled = false
         }
     }
     
