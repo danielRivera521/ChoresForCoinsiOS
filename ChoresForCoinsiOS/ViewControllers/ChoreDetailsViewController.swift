@@ -350,14 +350,13 @@ class ChoreDetailsViewController: UIViewController {
     }
     
     func checkRedeem(children: [ChildUser]) {
+        self.redDot.isHidden = true
         for child in children {
             if let childuid = child.userid {
                 Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
-                        } else {
-                            self.redDot.isHidden = true
                         }
                     }
                 }

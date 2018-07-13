@@ -247,13 +247,10 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 
             }
-            var i = 1
-            print(self.chores.count)
-        
-            print(i)
-            i += 1
+          
+            self.chores.sort(by: { $0.dueDate! < $1.dueDate!})
             self.choreListTV.reloadData()
-        
+            
             return
         }
         
@@ -322,14 +319,16 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func checkRedeem(children: [ChildUser]) {
+        
+        self.redDot.isHidden = true
         for child in children {
-            if let childuid = child.userid {
+                
+                if let childuid = child.userid {
                 Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
-                        } else {
-                            self.redDot.isHidden = true
+                            return
                         }
                     }
                 }
@@ -493,34 +492,34 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 addNoteAlert.addAction(saveNote)
                 
                 //code for adding image to the alert controller
-//                if let imageUrl = chore.choreURL{
-//
-//                    var alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//
-//                    let url = URL(string: imageUrl)
-//
-//                    ImageService.getImage(withURL: url!) { (urlImage) in
-//                        if let unwrappedImage = urlImage {
-//                            let maxSize = CGSize(width: 245, height: 300)
-//                            let imageSize = unwrappedImage.size
-//                            var ratio: CGFloat!
-//
-//                            if imageSize.width > imageSize.height{
-//                                ratio = maxSize.width / imageSize.width
-//                            } else {
-//                                ratio = maxSize.height / imageSize.height
-//                            }
-//
-//                            alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100 , height: 100))
-//
-//                            alertImageView.image = unwrappedImage
-//
-//                        }
-//                    }
-//
-//                    addNoteAlert.view.addSubview(alertImageView)
-//
-//                }
+                //                if let imageUrl = chore.choreURL{
+                //
+                //                    var alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+                //
+                //                    let url = URL(string: imageUrl)
+                //
+                //                    ImageService.getImage(withURL: url!) { (urlImage) in
+                //                        if let unwrappedImage = urlImage {
+                //                            let maxSize = CGSize(width: 245, height: 300)
+                //                            let imageSize = unwrappedImage.size
+                //                            var ratio: CGFloat!
+                //
+                //                            if imageSize.width > imageSize.height{
+                //                                ratio = maxSize.width / imageSize.width
+                //                            } else {
+                //                                ratio = maxSize.height / imageSize.height
+                //                            }
+                //
+                //                            alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100 , height: 100))
+                //
+                //                            alertImageView.image = unwrappedImage
+                //
+                //                        }
+                //                    }
+                //
+                //                    addNoteAlert.view.addSubview(alertImageView)
+                //
+                //                }
                 
                 present(addNoteAlert, animated: true, completion: nil)
                 
