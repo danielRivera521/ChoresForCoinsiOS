@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var coinValueTextField: UITextField!
     @IBOutlet weak var bonusDaySwitch: UISwitch!
@@ -40,6 +40,9 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        coinValueTextField.delegate = self
+        multiplierValueTextField.delegate = self
         
         // bonus toggle off by default
         bonusDaySwitch.isOn = false
@@ -120,10 +123,17 @@ class SettingsViewController: UIViewController {
     
     // MARK: Custom Functions
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // dismiss keyboard when user touches outside of keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         self.view.endEditing(true)
+        
+        return true
     }
+    
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        // dismiss keyboard when user touches outside of keyboard
+//        self.view.endEditing(true)
+//    }
     
     func displayHeaderName(){
         let databaseRef = Database.database().reference()

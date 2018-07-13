@@ -15,7 +15,7 @@ import GoogleSignIn
 import FBSDKLoginKit
 
 
-class CreateAccountViewController: UIViewController {
+class CreateAccountViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -30,6 +30,10 @@ class CreateAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        usernameTextField.delegate = self
+        emailTextField.delegate = self
+        parentIDTextField.delegate = self
         
         getBackground()
         
@@ -73,6 +77,13 @@ class CreateAccountViewController: UIViewController {
         }
         
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        
+        return true
     }
     
     @IBAction func createAccount(_ sender: UIButton) {
