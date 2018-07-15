@@ -28,6 +28,10 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
     func getBackground() {
         if let uid = Auth.auth().currentUser?.uid {
             Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
@@ -137,6 +141,8 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     // MARK: ImagePicker Methods
     
     //function to access storage
+    
+    
     
     func storeImage(image: UIImage){
         let id = Auth.auth().currentUser?.uid
