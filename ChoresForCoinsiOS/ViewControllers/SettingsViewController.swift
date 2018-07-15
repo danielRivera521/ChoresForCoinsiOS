@@ -130,10 +130,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        // dismiss keyboard when user touches outside of keyboard
-//        self.view.endEditing(true)
-//    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
     
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
