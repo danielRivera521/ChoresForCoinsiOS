@@ -568,7 +568,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 if let pID = self.parentID{
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)
                 }
-                createAssignmentID(choreID: currentChoreId)
+               // createAssignmentID(choreID: currentChoreId)
                 
             }
             

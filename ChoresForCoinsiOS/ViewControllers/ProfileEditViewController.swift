@@ -45,6 +45,11 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         return true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
+    
     func loadPage(){
         getBackground()
         

@@ -99,6 +99,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         return true
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // dismiss keyboard when user touches outside of keyboard
+        self.view.endEditing(true)
+    }
+    
     func checkDatabase() {
         
         let databaseRef = Database.database().reference().child("user")
