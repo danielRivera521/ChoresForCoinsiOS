@@ -26,6 +26,7 @@
 		B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */; };
 		B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8020D5E687008C7376 /* SettingsViewController.swift */; };
 		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
+		B00DCA3B20FC653E00EED0E7 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */; };
 		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
 		B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111D20DE49D7000453C3 /* ChildUser.swift */; };
@@ -67,6 +68,7 @@
 		B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreListViewController.swift; sourceTree = "<group>"; };
 		B0004B8020D5E687008C7376 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
+		B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
 		B044111D20DE49D7000453C3 /* ChildUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildUser.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				B0CC653A20D525AF00E86D41 /* ChoreEditViewController.swift */,
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
 				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
+				B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */,
 				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
 				B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */,
 				B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */,
@@ -276,6 +279,8 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/ChartsRealm/ChartsRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -283,12 +288,16 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChartsRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -296,6 +305,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -374,6 +385,7 @@
 				B0CC653120D5038700E86D41 /* ProfilePictureSelectViewController.swift in Sources */,
 				65EF0C5E20D3533600DD9A3F /* AppDelegate.swift in Sources */,
 				B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */,
+				B00DCA3B20FC653E00EED0E7 /* OverviewTableViewCell.swift in Sources */,
 				65EF0C8920D40AF200DD9A3F /* MyFirebaseClass.swift in Sources */,
 				65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */,
 				65F81F6C20E59627005405F9 /* Extensions.swift in Sources */,
