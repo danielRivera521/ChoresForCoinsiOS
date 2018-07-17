@@ -163,6 +163,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @objc func donePressedChild() {
+        
         //dismiss picker
         self.view.endEditing(true)
         
@@ -532,6 +533,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         } else {
             AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+            processSegue = false
         }
         
         //checks if the text within both the startDateTextField and dueDate TextField are valid dates.

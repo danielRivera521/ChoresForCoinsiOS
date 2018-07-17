@@ -274,7 +274,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func disableAddChoreTabItem(){
-        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[2] as? UITabBarItem {
             tabBarItem.isEnabled = isActiveUserParent
         }
     }

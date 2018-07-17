@@ -245,7 +245,15 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             if let displayName = Auth.auth().currentUser?.displayName{
                 let displayText = "Completed by \(displayName)"
                 ref.child("\(choreId!)/chore_username").setValue(displayText)
+                
+                let now = Date()
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                let dateString = formatter.string(from: now)
+                ref.child("\(choreId!)/date_completed").setValue(dateString)
+                
             }
+           
             var selectedImageFromPicker: UIImage?
             
             if let editedImage = info["UIImagePickerControllerEditedImage"]{
