@@ -15,7 +15,7 @@ protocol ChoreSelectionDelegate: class {
 
 class ChoresMasterTableViewController: UITableViewController {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     weak var delegate: ChoreSelectionDelegate?
     
@@ -29,7 +29,7 @@ class ChoresMasterTableViewController: UITableViewController {
     var detailViewController: ChoresDetailSplitViewController?
 
     
-    // MARK: ViewController methods
+    // MARK: - ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,15 @@ class ChoresMasterTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
+        if let svc = self.splitViewController {
+            let leftNavController = svc.viewControllers.first as! UINavigationController
+            let masterViewController = leftNavController.topViewController as! ChoresMasterTableViewController
+            
+            masterViewController.delegate = svc.viewControllers.last as! ChoresDetailSplitViewController
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
@@ -48,13 +57,6 @@ class ChoresMasterTableViewController: UITableViewController {
         
         //cresates chore list
         createChores()
-        
-        if let svc = self.splitViewController {
-            let leftNavController = svc.viewControllers.first as! UINavigationController
-            let masterViewController = leftNavController.topViewController as! ChoresMasterTableViewController
-            
-            masterViewController.delegate = svc.viewControllers.last as! ChoresDetailSplitViewController
-        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -62,7 +64,7 @@ class ChoresMasterTableViewController: UITableViewController {
     }
     
     
-    // MARK: Custom Methods
+    // MARK: - Custom Methods
     
     //gets the parent generated id from the user's node in the database
     func getParentId(){
@@ -182,7 +184,7 @@ class ChoresMasterTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return children.count
+        return chores.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
