@@ -48,6 +48,13 @@ class ChoresMasterTableViewController: UITableViewController {
         
         //cresates chore list
         createChores()
+        
+        if let svc = self.splitViewController {
+            let leftNavController = svc.viewControllers.first as! UINavigationController
+            let masterViewController = leftNavController.topViewController as! ChoresMasterTableViewController
+            
+            masterViewController.delegate = svc.viewControllers.last as! ChoresDetailSplitViewController
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -117,6 +124,8 @@ class ChoresMasterTableViewController: UITableViewController {
                 self.children = self.children.filter({$0.parentid == self.parentID})
                 self.children = self.children.filter({$0.userparent == false})
             }
+            
+            self.tableView.reloadData()
         }
     }
     

@@ -155,9 +155,11 @@
 				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
 				B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */,
 				B0CC653820D5259800E86D41 /* ChoreDetailsViewController.swift */,
+				B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */,
 				B0CC653A20D525AF00E86D41 /* ChoreEditViewController.swift */,
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
 				B052D6B520FDC8A1004C25C8 /* ChoresMasterTableViewController.swift */,
+				B052D6B720FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift */,
 				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
 				B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */,
 				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
@@ -169,8 +171,6 @@
 				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
 				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
 				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
-				B052D6B720FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift */,
-				B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

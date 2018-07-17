@@ -53,7 +53,7 @@ class ChoresDetailSplitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ////////////// DELETE THIS /////////////////////////////////////////
+        // this is here so the app doesn't crash on first run. choreId get set at a differnt time in the app.
         choreId = "NotCorrect"
         
         //gets the firebase generated id
@@ -268,6 +268,13 @@ extension ChoresDetailSplitViewController:
 ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
         choreId = choreID
+        
+        //gets the firebase generated id
+        userID = (Auth.auth().currentUser?.uid)!
+        getChoreData()
+        
+        //gets the custom parent id created in the registration
+        getParentId()
     }
 }
 
