@@ -9,9 +9,15 @@
 import UIKit
 import Firebase
 
+protocol ChoreSelectionDelegate: class {
+    func choreSelected(_ choreID: String)
+}
+
 class ChoresMasterTableViewController: UITableViewController {
     
     // MARK: Properties
+    
+    weak var delegate: ChoreSelectionDelegate?
     
     var ref: DatabaseReference?
     var chores: [Chore] = [Chore]()
@@ -20,6 +26,7 @@ class ChoresMasterTableViewController: UITableViewController {
     var choreIDNum: String?
     var isActiveUserParent = false
     var children = [ChildUser] ()
+    var detailViewController: ChoresDetailSplitViewController?
 
     
     // MARK: ViewController methods
@@ -257,5 +264,14 @@ class ChoresMasterTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        choreIDNum = chores[indexPath.row].key
+        
+        if choreIDNum != nil {
+            let choreid = choreIDNum!
+            delegate?.choreSelected(choreid)
+        }
     }
 }

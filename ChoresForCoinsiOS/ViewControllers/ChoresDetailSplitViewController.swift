@@ -53,6 +53,9 @@ class ChoresDetailSplitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ////////////// DELETE THIS /////////////////////////////////////////
+        choreId = "NotCorrect"
+        
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         getChoreData()
@@ -260,3 +263,17 @@ class ChoresDetailSplitViewController: UIViewController {
         performSegue(withIdentifier: "editChoreSegue", sender: nil)
     }
 }
+
+extension ChoresDetailSplitViewController:
+ChoreSelectionDelegate {
+    func choreSelected(_ choreID: String) {
+        choreId = choreID
+    }
+}
+
+
+
+
+
+
+
