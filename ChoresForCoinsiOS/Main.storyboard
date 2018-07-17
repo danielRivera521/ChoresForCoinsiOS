@@ -733,8 +733,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="bzX-Ne-L1s" secondAttribute="trailing" id="ozx-0g-vQr"/>
                                                     </constraints>
                                                 </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ka-Fc-yBm">
-                                                    <rect key="frame" x="8" y="290" width="398" height="202.66666666666663"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ka-Fc-yBm" customClass="LineChartView" customModule="Charts">
+                                                    <rect key="frame" x="8" y="290" width="398" height="194.66666666666663"/>
                                                     <color key="backgroundColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tOV-3O-DQA" userLabel="PieChartsView">
@@ -774,7 +774,7 @@
                                                 <constraint firstAttribute="trailingMargin" secondItem="AVT-ib-Csk" secondAttribute="trailing" id="J2y-TX-vxi"/>
                                                 <constraint firstItem="tOV-3O-DQA" firstAttribute="leading" secondItem="hx6-Kl-s94" secondAttribute="leading" constant="8" id="LMv-if-WbH"/>
                                                 <constraint firstItem="AVT-ib-Csk" firstAttribute="leading" secondItem="hx6-Kl-s94" secondAttribute="leadingMargin" id="XTk-Wt-KP0"/>
-                                                <constraint firstAttribute="bottom" secondItem="9ka-Fc-yBm" secondAttribute="bottom" id="dWe-JZ-tgh"/>
+                                                <constraint firstAttribute="bottom" secondItem="9ka-Fc-yBm" secondAttribute="bottom" constant="8" id="dWe-JZ-tgh"/>
                                                 <constraint firstItem="9ka-Fc-yBm" firstAttribute="top" secondItem="tOV-3O-DQA" secondAttribute="bottom" constant="8" id="h3E-Ld-BQc"/>
                                                 <constraint firstItem="9ka-Fc-yBm" firstAttribute="leading" secondItem="hx6-Kl-s94" secondAttribute="leading" constant="8" id="hFQ-nP-wOF"/>
                                                 <constraint firstAttribute="trailing" secondItem="tOV-3O-DQA" secondAttribute="trailing" constant="8" id="mj1-NH-cAu"/>
@@ -785,6 +785,7 @@
                                             <outlet property="choresPieChart" destination="4zm-qo-ixT" id="5Rb-tI-vb8"/>
                                             <outlet property="coinsPieChart" destination="VfS-j8-G8V" id="MhS-Wk-r3l"/>
                                             <outlet property="usernameCellHeader" destination="bzX-Ne-L1s" id="onG-c6-j8p"/>
+                                            <outlet property="weeklyChart" destination="9ka-Fc-yBm" id="0dk-5n-Z2i"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

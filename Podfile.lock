@@ -8,9 +8,6 @@ PODS:
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
-  - ChartsRealm (3.1.1):
-    - Charts (~> 3.1.1)
-    - RealmSwift (~> 3.7.1)
   - FBSDKCoreKit (4.34.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.34.0):
@@ -86,15 +83,9 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - Realm (3.7.4):
-    - Realm/Headers (= 3.7.4)
-  - Realm/Headers (3.7.4)
-  - RealmSwift (3.7.4):
-    - Realm (= 3.7.4)
 
 DEPENDENCIES:
   - Charts
-  - ChartsRealm
   - FBSDKLoginKit
   - FBSDKShareKit
   - Firebase/Auth
@@ -111,7 +102,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Bolts
     - Charts
-    - ChartsRealm
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
@@ -130,13 +120,10 @@ SPEC REPOS:
     - KeychainSwift
     - leveldb-library
     - nanopb
-    - Realm
-    - RealmSwift
 
 SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
-  ChartsRealm: 35728e98e8d365a45c54fa7a1fa47663d2539887
   FBSDKCoreKit: 0ff57f093b85c8c9d5aba697d3edf68a8960ce78
   FBSDKLoginKit: 8c78f57a145afb756e4755e69195ebe08a42466e
   FBSDKShareKit: 511d1dfc71204c0a8d69e6c5e3c964dcf0d4f3d9
@@ -155,9 +142,7 @@ SPEC CHECKSUMS:
   KeychainSwift: bea6bd9f98af7b8d7ca4aa79fe105c00fab532db
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Realm: a469bb59e33f9926102ccaea4349822c53b9117e
-  RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
 
-PODFILE CHECKSUM: 5fc02212235b0aed23174bea8edbe36352290a1b
+PODFILE CHECKSUM: 49f99fbddc31347f36207022e58de94044e7ed80
 
 COCOAPODS: 1.5.3

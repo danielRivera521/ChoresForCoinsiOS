@@ -29,6 +29,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var childrenCoinsAllTimeTotal = [PieChartDataEntry] ()
     var childrenCompletedChores = [PieChartDataEntry] ()
     var childrenToDoChores = [PieChartDataEntry] ()
+    var childrenWeeklyChores = [[Double]] ()
+    let weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8"]
     
     
     // MARK: ViewController methods
@@ -110,7 +112,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             
             self.overviewTableView.reloadData()
             
-            // set data for coins and chores piechart
+            // set data for coins and chores piechart and week chart
             for _ in self.children {
                 let currentCoins = PieChartDataEntry(value: 10)
                 let totalCoins = PieChartDataEntry(value: 25)
@@ -121,6 +123,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 self.childrenCoinsAllTimeTotal.append(totalCoins)
                 self.childrenCompletedChores.append(completedChores)
                 self.childrenToDoChores.append(toDoChores)
+                
+                self.childrenWeeklyChores.append([5,8,4,7,5,50,4,6])
+                
             }
         }
     }
@@ -157,6 +162,23 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         return chartData
     }
     
+    func updateWeeklyChart(index: Int, values: [Double]) -> LineChartData {
+        var lineChartEntry = [ChartDataEntry] ()
+        
+        for i in 0..<values.count {
+            let value = ChartDataEntry(x: Double(i + 1), y: values[i])
+            
+            lineChartEntry.append(value)
+        }
+        
+        let line1 = LineChartDataSet(values: lineChartEntry, label: "Chores Completed Each Week")
+        
+        let data = LineChartData()
+        data.addDataSet(line1)
+        
+        return data
+    }
+    
     
     // MARK: TableView setup
     
@@ -179,6 +201,10 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             cell.choresPieChart.chartDescription?.text = ""
             cell.choresPieChart.centerText = "Chores"
             cell.choresPieChart.data = updateChoresChartData(index: indexPath.row)
+            
+            // set up weekly chore line chart
+            cell.weeklyChart.chartDescription?.text = ""
+            cell.weeklyChart.data = updateWeeklyChart(index: indexPath.row, values: childrenWeeklyChores[indexPath.row])
         }
         
         return cell

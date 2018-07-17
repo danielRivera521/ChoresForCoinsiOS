@@ -20,5 +20,4 @@ pod 'FBSDKShareKit'
 pod 'FBSDKLoginKit'
 pod 'KeychainSwift'
 pod 'Charts'
-pod 'ChartsRealm'
 end
