@@ -13,7 +13,7 @@ import MobileCoreServices
 
 class ChoresDetailSplitViewController: UIViewController {
     
-    // MARK: Outlets
+    // MARK: - Outlets
     
     @IBOutlet weak var choreNameLabel: UILabel!
     @IBOutlet weak var choreImageImageView: UIImageView!
@@ -26,9 +26,10 @@ class ChoresDetailSplitViewController: UIViewController {
     @IBOutlet weak var editUIButton: UIButton!
     @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var detailImageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bgImage: UIImageView!
     
     
-    // MARK: Properties
+    // MARK: - Properties
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -48,7 +49,7 @@ class ChoresDetailSplitViewController: UIViewController {
     private var imagePicker: UIImagePickerController!
     
     
-    // MARK: ViewController Methods
+    // MARK: - ViewController Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,10 +69,11 @@ class ChoresDetailSplitViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
+        getBackground()
     }
 
     
-    // MARK: Custom Methods
+    // MARK: - Custom Methods
     
     func getChoreData(){
         
@@ -236,6 +238,31 @@ class ChoresDetailSplitViewController: UIViewController {
         }
     }
     
+    func getBackground() {
+        if UIDevice.current.orientation == .portrait {
+            if let uid = Auth.auth().currentUser?.uid {
+                Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                    if let value = snapshot.value as? Int {
+                        switch value {
+                        case 0:
+                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                        case 1:
+                            self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                        case 2:
+                            self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                        case 3:
+                            self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                        case 4:
+                            self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                        default:
+                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "takePictureSegue" {
             if let takePictureVC = segue.destination as? TakePictureViewController{
@@ -253,7 +280,7 @@ class ChoresDetailSplitViewController: UIViewController {
     }
     
     
-    // MARK: Actions
+    // MARK: - Actions
     
     @IBAction func markComplete(_ sender: UIButton) {
         addCoins()

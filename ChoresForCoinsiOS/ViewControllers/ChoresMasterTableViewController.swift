@@ -26,6 +26,7 @@ class ChoresMasterTableViewController: UITableViewController {
     var choreIDNum: String?
     var isActiveUserParent = false
     var children = [ChildUser] ()
+    var masterViewController: ChoresMasterTableViewController?
     var detailViewController: ChoresDetailSplitViewController?
 
     
@@ -33,6 +34,10 @@ class ChoresMasterTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            splitViewController?.preferredDisplayMode = .allVisible
+        }
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -42,9 +47,10 @@ class ChoresMasterTableViewController: UITableViewController {
         
         if let svc = self.splitViewController {
             let leftNavController = svc.viewControllers.first as! UINavigationController
-            let masterViewController = leftNavController.topViewController as! ChoresMasterTableViewController
+            masterViewController = leftNavController.topViewController as? ChoresMasterTableViewController
+            detailViewController = svc.viewControllers.last as? ChoresDetailSplitViewController
             
-            masterViewController.delegate = svc.viewControllers.last as! ChoresDetailSplitViewController
+            masterViewController?.delegate = detailViewController!
         }
     }
     
@@ -283,6 +289,10 @@ class ChoresMasterTableViewController: UITableViewController {
         if choreIDNum != nil {
             let choreid = choreIDNum!
             delegate?.choreSelected(choreid)
+        }
+        
+        if let detailViewController = delegate as? ChoresDetailSplitViewController {
+            splitViewController?.showDetailViewController(detailViewController, sender: nil)
         }
     }
 }

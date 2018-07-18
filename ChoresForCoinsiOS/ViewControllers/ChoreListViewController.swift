@@ -11,11 +11,16 @@ import Firebase
 
 class ChoreListViewController: UIViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var bgImage: UIImageView!
+    
+    // MARK: - Properties
     
     var coinValue = 11
     var idFound = false
@@ -27,12 +32,12 @@ class ChoreListViewController: UIViewController {
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     
+    // MARK: - ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -51,6 +56,8 @@ class ChoreListViewController: UIViewController {
         loadPage()
         
     }
+    
+    // MARK: - Custom Methods
     
     func loadPage() {
         
@@ -76,6 +83,8 @@ class ChoreListViewController: UIViewController {
         
         // get photo for profile button
         getPhoto()
+        
+        getBackground()
     }
     
     func checkDatabase() {
@@ -267,6 +276,29 @@ class ChoreListViewController: UIViewController {
         }
     }
     
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+    }
+    
     func checkRedeem(children: [ChildUser]) {
         
         self.redDot.isHidden = true
@@ -301,7 +333,7 @@ class ChoreListViewController: UIViewController {
 //    }
     
     
-    // MARK: Actions
+    // MARK: - Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
