@@ -40,6 +40,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     var isParent = true
     var firstRun = true
     var isRedeem = false
+    var redeemedTotal = 0
     
     
     // MARK: View Controller Methods
@@ -91,13 +92,17 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         // get photo for profile button
         getPhoto()
         
+        // get redeem total value
+        getRedeemTotal()
+        
+        
         // makes it so tapping anywhere will dismiss keyboard
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        getRunningTotalParent()
-//        getPhoto()
+        //        getRunningTotalParent()
+        //        getPhoto()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -226,6 +231,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
             
             self.coinAmtLabel.text = String(sumTotal)
         }
+        
     }
     
     func checkDatabase() {
@@ -277,13 +283,13 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
                 let value = snapshot.value as? NSDictionary
                 //gets the image URL from the user database
                 if let profileURL = value?["profile_image_url"] as? String{
-                
+                    
                     let url = URL(string: profileURL)
                     ImageService.getImage(withURL: url!, completion: { (image) in
                         
                         self.profileButton.setBackgroundImage(image, for: .normal)
                     })
-              //      self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //      self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
@@ -291,6 +297,17 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             
+        }
+    }
+    func getRedeemTotal(){
+        
+        if let userID = self.childId{
+            Database.database().reference().child("running_total").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                if let redeemedCoins = value?["redeemed_coins"] as? Int {
+                    self.redeemedTotal = redeemedCoins
+                }
+            })
         }
     }
     
@@ -358,16 +375,20 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func redeemCoins(_ sender: UIButton) {
-       let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem the coins for \(childName!)", preferredStyle: .alert)
-    
+        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem the coins for \(childName!)", preferredStyle: .alert)
+        
         let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
             
+            let redeemedAmt = self.coinValue!
             self.coinValue = 0
             self.coinTotalTextField.text = "\(self.coinValue!)"
             
             if let uid = self.childId {
                 Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+                
             }
+            self.redeemedTotal += redeemedAmt
+            Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
             
             // update new coin value on database
             self.updateTotalCoins()
