@@ -32,10 +32,17 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     var isLandscape = false
+    var coinConversion: Double = 1
+    
+    var bgImage: UIImage?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //gets the background color
+        
+        getBackground()
         
     }
     
@@ -53,6 +60,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        //gets the background color
+        getBackground()
         
         loadPage()
         
@@ -79,6 +89,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         choreListTV.delegate = self
         choreListTV.dataSource = self
         
+        
         //gets the custom parent id created in the registration
         getParentId()
         
@@ -96,6 +107,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         // get photo for profile button
         getPhoto()
+        
     }
     
     func checkDatabase() {
@@ -225,13 +237,35 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+        
+        let imageView = UIImageView(image: self.bgImage)
+        self.choreListTV.backgroundView = imageView
+    }
     
     func createChores(){
         //database reference
         ref = Database.database().reference()
-        
-        
         
         self.ref?.observe(.value) { (snapshot) in
             self.chores.removeAll()
@@ -247,7 +281,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 
             }
-          
+            
             self.chores.sort(by: { $0.dueDate! < $1.dueDate!})
             self.choreListTV.reloadData()
             
@@ -274,7 +308,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func disableAddChoreTabItem(){
-        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[2] as? UITabBarItem {
             tabBarItem.isEnabled = isActiveUserParent
         }
     }
@@ -322,8 +356,8 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         self.redDot.isHidden = true
         for child in children {
-                
-                if let childuid = child.userid {
+            
+            if let childuid = child.userid {
                 Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
@@ -334,6 +368,22 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 }
             }
         }
+    }
+    
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
     }
     
     
@@ -379,7 +429,10 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                     dateFormatterGet.dateStyle = .medium
                     if let dueDate = dateFormatterGet.date(from: dueDateString){
                         let dateNow = Date()
-                        if dueDate <= dateNow {
+                        
+                        let dateCheck = Calendar.current.date(byAdding: .day, value: 1, to: dueDate)
+                        
+                        if dateCheck! < dateNow {
                             markChoreAsPastDue(key: choreItem.key)
                             if isActiveUserParent{
                                 if let parentNotified = choreItem.choreParentNotified{
@@ -432,6 +485,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 
                 
                 cell.imageCellImageView.image = image
+                cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
             })
             
             
@@ -491,35 +545,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 }
                 addNoteAlert.addAction(saveNote)
                 
-                //code for adding image to the alert controller
-                //                if let imageUrl = chore.choreURL{
-                //
-                //                    var alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-                //
-                //                    let url = URL(string: imageUrl)
-                //
-                //                    ImageService.getImage(withURL: url!) { (urlImage) in
-                //                        if let unwrappedImage = urlImage {
-                //                            let maxSize = CGSize(width: 245, height: 300)
-                //                            let imageSize = unwrappedImage.size
-                //                            var ratio: CGFloat!
-                //
-                //                            if imageSize.width > imageSize.height{
-                //                                ratio = maxSize.width / imageSize.width
-                //                            } else {
-                //                                ratio = maxSize.height / imageSize.height
-                //                            }
-                //
-                //                            alertImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100 , height: 100))
-                //
-                //                            alertImageView.image = unwrappedImage
-                //
-                //                        }
-                //                    }
-                //
-                //                    addNoteAlert.view.addSubview(alertImageView)
-                //
-                //                }
                 
                 present(addNoteAlert, animated: true, completion: nil)
                 
@@ -544,12 +569,33 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        if let uid = userID {
-            ref?.child("user/\(uid)/isRedeem").setValue(true)
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
             
-            childRedeemView.isHidden = true
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
             
-            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+    
         }
     }
     

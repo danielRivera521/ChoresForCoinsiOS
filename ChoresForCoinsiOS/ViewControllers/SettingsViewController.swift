@@ -36,6 +36,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     
+    var coinConversion: Double = 1    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -278,6 +279,21 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
             
         }
     }
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            Database.database().reference().child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
     
     func checkRedeem(children: [ChildUser]) {
         self.redDot.isHidden = true
@@ -405,13 +421,35 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        if let uid = userID {
-            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
             
-            childRedeemView.isHidden = true
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
             
-            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
         }
+
     }
     
 }

@@ -33,5 +33,6 @@ class ChildUser {
         if let isRedeem = dictionary["isRedeem"] as? Bool {
             self.isRedeem = isRedeem
         }
+        
     }
 }
