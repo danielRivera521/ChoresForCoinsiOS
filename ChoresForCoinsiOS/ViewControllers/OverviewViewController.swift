@@ -83,6 +83,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             //create choreList
             createChores()
             
+            // get profile pic
+            getPhoto()
+            
             let currentDate = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "LLLL"
@@ -116,6 +119,31 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     default:
                         self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
                     }
+                }
+            }
+        }
+    }
+    
+    func getPhoto() {
+        
+        let DatabaseRef = Database.database().reference()
+        if let uid = userID{
+            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                //gets the image URL from the user database
+                if let profileURL = value?["profile_image_url"] as? String{
+                    
+                    let url = URL(string: profileURL)
+                    ImageService.getImage(withURL: url!, completion: { (image) in
+                        
+                        self.profileButton.setBackgroundImage(image, for: .normal)
+                    })
+                    
+                    //  self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
+                    //turn button into a circle
+                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
+                    self.profileButton.layer.masksToBounds = true
                 }
             }
         }

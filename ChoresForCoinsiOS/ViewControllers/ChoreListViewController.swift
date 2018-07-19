@@ -338,6 +338,7 @@ class ChoreListViewController: UIViewController {
     //            }
     //        }
     //    }
+    
     func getConversionRate(){
         if let unwrappedParentID = parentID{
             
