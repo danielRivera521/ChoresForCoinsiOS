@@ -71,6 +71,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     func loadPage(){
         
+        childRedeemView.isHidden = true
+        
         if (Auth.auth().currentUser?.displayName) != nil{
             displayHeaderName()
             ref = Database.database().reference()
@@ -149,7 +151,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
-                    self.getChildren()
+                    //self.getChildren()
                 }
             }
         }
@@ -188,9 +190,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         
         for chore in chores{
             
-            if let _ = chore.chorePastDue{
-                incompleteChores += 1
-            }
+//            if let _ = chore.chorePastDue{
+//                incompleteChores += 1
+//            }
             
             if let cID = chore.childID{
                 if cID == uid {
@@ -198,6 +200,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     if let complete = chore.completed{
                         if complete{
                             completedChores += 1
+                        } else {
+                            incompleteChores += 1
                         }
                     }
                 }
@@ -322,6 +326,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     self.getRunningTotalParent()
                 } else {
                     self.getRunningTotal()
+                    self.getCoinTotals()
                 }
             }
         }
@@ -343,12 +348,14 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getRunningTotalParent(){
-        getChildren()
+        //getChildren()
         getCoinTotals()
     }
     
     func getCoinTotals() {
         coinTotals.removeAll()
+        
+        self.getChildren()
         
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
             let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
@@ -375,6 +382,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             self.coinAmtLabel.text = String(sumTotal)
+            self.overviewTableView.reloadData()
         }
     }
     
@@ -524,5 +532,36 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         })
+    }
+    
+    @IBAction func childRedeem(_ sender: UIButton) {
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
+            
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
+            
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
     }
 }

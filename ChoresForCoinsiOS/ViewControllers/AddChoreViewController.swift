@@ -17,6 +17,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var userNameView: UIView!
     @IBOutlet weak var choreDescriptionTextView: UITextView!
     @IBOutlet weak var startDateTextField: UITextField!
     @IBOutlet weak var dueDateTextField: UITextField!
@@ -244,6 +245,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 if self.isActiveUserParent {
                     self.getRunningTotalParent()
                 } else {
+                    self.userNameView.isHidden = true
                     self.getRunningTotal()
                 }
             }
@@ -617,7 +619,13 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)
                 }
                 
-                let cID = children[selectedRow].key
+                var cID = ""
+                
+                if children.count != 0 {
+                    cID = children[selectedRow].key
+                } else {
+                    cID = userID!
+                }
                 
                 ref?.child("chores/\(currentChoreId)/assigned_child_id").setValue(cID)
                 

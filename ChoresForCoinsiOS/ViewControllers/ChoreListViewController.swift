@@ -238,11 +238,11 @@ class ChoreListViewController: UIViewController {
         
     }
     
-    //    func disableAddChoreTabItem(){
-    //        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-    //            tabBarItem.isEnabled = isActiveUserParent
-    //        }
-    //    }
+//    func disableAddChoreTabItem(){
+//        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+//            tabBarItem.isEnabled = isActiveUserParent
+//        }
+//    }
     
     //gets the parent generated id from the user's node in the database
     func getParentId(){

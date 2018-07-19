@@ -13,6 +13,8 @@ import MobileCoreServices
 
 class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -27,6 +29,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: - Properties
     
     private var imagePicker: UIImagePickerController!
     
@@ -52,6 +57,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var processSegue = true
     
     var coinConversion: Double = 1
+    
+    // MARK: - View Controller Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +105,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Custom methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -488,6 +497,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     
                     if let imageUrl = value?["image_url"] as? String {
                         self.choreImageUIButton.loadImagesUsingCacheWithUrlString(urlString: imageUrl, inViewController: self)
+                    } else if self.imageHeightConstraint != nil {
+                        self.imageHeightConstraint.isActive = false
+                        self.choreImageUIButton.isHidden = true
+                        let heightConstraint = NSLayoutConstraint(item: self.choreImageUIButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.00000001, constant: 0)
+                        heightConstraint.isActive = true
                     }
                 }
             })
@@ -597,7 +611,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
-    //MARK: UIPickerView Functions
+    //MARK: - UIPickerView Functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -652,6 +666,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
+    // MARK: - Actions
     
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
