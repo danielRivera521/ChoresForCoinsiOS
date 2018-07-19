@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 
 class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate {
-
+    
     
     // MARK: Outlets
     
@@ -52,6 +52,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var startDateTime: Date?
     var dueDateTime: Date?
     
+    var coinConversion: Double = 1
+    var selectedRow = 0
     
     var processSegue = true
     // MARK: View Controller functions
@@ -59,6 +61,20 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //        if !isFirstLoad {
+        //            isUserParent()
+        //            getPhoto()
+        //        }
+        
+        loadPage()
+        isUserParent()
+    }
+    
+    func loadPage(){
         // set textfield delegates
         choreNameTextField.delegate = self
         usernameTextField.delegate = self
@@ -106,13 +122,6 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         choreNoteTextView.isHidden = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        if !isFirstLoad {
-            isUserParent()
-            getPhoto()
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -139,9 +148,10 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if let nameString = children[row].username{
-        
+            
             let compoundString = "Assigned to: \(nameString)"
-        
+            selectedRow = row
+            
             usernameTextField.text = compoundString
         }
     }
@@ -159,10 +169,20 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         usernameTextField.inputAccessoryView = toolbar
         usernameTextField.inputView = childPicker
-    
+        
     }
     
     @objc func donePressedChild() {
+        
+        if (usernameTextField.text?.isEmpty)! {
+            if let nameString = children[0].username{
+                
+                let compoundString = "Assigned to: \(nameString)"
+                selectedRow = 0
+                
+                usernameTextField.text = compoundString
+            }
+        }
         //dismiss picker
         self.view.endEditing(true)
         
@@ -259,10 +279,15 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
             
             for key in Array(dictUsers.keys) {
-                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-                self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent == false})
                 
+                let results = self.children.filter { $0.key == key }
+                let exists = results.isEmpty == false
+                
+                if !exists {
+                    self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                    self.children = self.children.filter({$0.parentid == self.parentID})
+                    self.children = self.children.filter({$0.userparent == false})
+                }
             }
             
             self.checkRedeem(children: self.children)
@@ -344,9 +369,9 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         dueDateTextField.isEnabled = true
         
         if checkDateValid(){
-        
-        startDateTextField.text = "\(dateString)"
-        self.view.endEditing(true)
+            
+            startDateTextField.text = "\(dateString)"
+            self.view.endEditing(true)
         } else {
             AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
         }
@@ -361,8 +386,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //checks the due date against the start date.
         if checkDateValid(){
-        dueDateTextField.text = "\(dateString)"
-        self.view.endEditing(true)
+            dueDateTextField.text = "\(dateString)"
+            self.view.endEditing(true)
         } else {
             AlertController.showAlert(self, title: "Date Error", message: "The start date must be older than the due date.")
         }
@@ -468,6 +493,22 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     func checkRedeem(children: [ChildUser]) {
         self.redDot.isHidden = true
         for child in children {
@@ -517,7 +558,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             if verifyChoreNameCharacters(choreName: nameString){
                 processSegue = true
             } else {
-            choreValueTextField.becomeFirstResponder()
+                choreValueTextField.becomeFirstResponder()
                 processSegue = false
             }
         }
@@ -531,7 +572,14 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 processSegue = false
             }
         } else {
+            //  AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+            
+            processSegue = false
+        }
+        
+        if (choreValueTextField.text?.isEmpty)!{
             AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+            processSegue = false
         }
         
         //checks if the text within both the startDateTextField and dueDate TextField are valid dates.
@@ -568,7 +616,12 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 if let pID = self.parentID{
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)
                 }
-               // createAssignmentID(choreID: currentChoreId)
+                
+                let cID = children[selectedRow].key
+                
+                ref?.child("chores/\(currentChoreId)/assigned_child_id").setValue(cID)
+                
+                // createAssignmentID(choreID: currentChoreId)
                 
             }
             
@@ -596,12 +649,33 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        if let uid = userID {
-            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
             
-            childRedeemView.isHidden = true
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
             
-            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     

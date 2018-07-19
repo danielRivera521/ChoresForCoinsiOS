@@ -40,6 +40,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     var isParent = true
     var firstRun = true
     var isRedeem = false
+    var redeemedTotal = 0
     
     
     // MARK: View Controller Methods
@@ -90,6 +91,9 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         
         // get photo for profile button
         getPhoto()
+        
+        // get the redeem total amount for the selected child user.
+        getRedeemTotal()
         
         // makes it so tapping anywhere will dismiss keyboard
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
@@ -310,6 +314,18 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func getRedeemTotal(){
+        
+        if let userID = self.childId{
+            Database.database().reference().child("running_total").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                if let redeemedCoins = value?["redeemed_coins"] as? Int {
+                    self.redeemedTotal = redeemedCoins
+                }
+            })
+        }
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         coinTotalTextField.text = ""
     }
@@ -362,12 +378,18 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     
         let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
             
+            let redeemedAmt = self.coinValue!
             self.coinValue = 0
             self.coinTotalTextField.text = "\(self.coinValue!)"
             
             if let uid = self.childId {
                 Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
             }
+            
+            
+            self.redeemedTotal += redeemedAmt
+            Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
+            
             
             // update new coin value on database
             self.updateTotalCoins()

@@ -32,6 +32,8 @@ class ChoreListViewController: UIViewController {
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     
+    var coinConversion: Double = 1
+    
     // MARK: - ViewController methods
     
     override func viewDidLoad() {
@@ -156,9 +158,14 @@ class ChoreListViewController: UIViewController {
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
             
             for key in Array(dictUsers.keys) {
-                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-                self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent == false})
+                let results = self.children.filter { $0.key == key }
+                let exists = results.isEmpty == false
+                
+                if !exists {
+                    self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                    self.children = self.children.filter({$0.parentid == self.parentID})
+                    self.children = self.children.filter({$0.userparent == false})
+                }
                 
             }
             
@@ -231,11 +238,11 @@ class ChoreListViewController: UIViewController {
         
     }
     
-//    func disableAddChoreTabItem(){
-//        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
-//            tabBarItem.isEnabled = isActiveUserParent
-//        }
-//    }
+    //    func disableAddChoreTabItem(){
+    //        if let arrayOfTabBarItems = tabBarController?.tabBar.items as AnyObject as? NSArray,let tabBarItem = arrayOfTabBarItems[1] as? UITabBarItem {
+    //            tabBarItem.isEnabled = isActiveUserParent
+    //        }
+    //    }
     
     //gets the parent generated id from the user's node in the database
     func getParentId(){
@@ -303,8 +310,8 @@ class ChoreListViewController: UIViewController {
         
         self.redDot.isHidden = true
         for child in children {
-                
-                if let childuid = child.userid {
+            
+            if let childuid = child.userid {
                 Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
@@ -318,20 +325,34 @@ class ChoreListViewController: UIViewController {
     }
     
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "goToChoreDetail"{
-//
-//            let index = self.choreListTV.indexPathForSelectedRow
-//            choreIDNum = chores[(index?.row)!].key
-//            if segue.identifier == "goToChoreDetail"{
-//                let choreDetailVC = segue.destination as? ChoreDetailsViewController
-//                if choreIDNum != nil {
-//                    choreDetailVC?.choreId = choreIDNum!
-//                }
-//            }
-//        }
-//    }
-    
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        if segue.identifier == "goToChoreDetail"{
+    //
+    //            let index = self.choreListTV.indexPathForSelectedRow
+    //            choreIDNum = chores[(index?.row)!].key
+    //            if segue.identifier == "goToChoreDetail"{
+    //                let choreDetailVC = segue.destination as? ChoreDetailsViewController
+    //                if choreIDNum != nil {
+    //                    choreDetailVC?.choreId = choreIDNum!
+    //                }
+    //            }
+    //        }
+    //    }
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
     
     // MARK: - Actions
     
@@ -349,12 +370,33 @@ class ChoreListViewController: UIViewController {
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        if let uid = userID {
-            ref?.child("user/\(uid)/isRedeem").setValue(true)
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
             
-            childRedeemView.isHidden = true
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
             
-            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     
