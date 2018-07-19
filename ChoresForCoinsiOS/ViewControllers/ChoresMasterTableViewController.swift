@@ -28,8 +28,8 @@ class ChoresMasterTableViewController: UITableViewController {
     var children = [ChildUser] ()
     var masterViewController: ChoresMasterTableViewController?
     var detailViewController: ChoresDetailSplitViewController?
-
     
+    var bgImage: UIImage?
     // MARK: - ViewController methods
     
     override func viewDidLoad() {
@@ -60,6 +60,9 @@ class ChoresMasterTableViewController: UITableViewController {
         
         //gets the custom parent id created in the registration
         getParentId()
+        
+        // set background color to the table
+        getBackground()
         
         //cresates chore list
         createChores()
@@ -117,6 +120,32 @@ class ChoresMasterTableViewController: UITableViewController {
             
             return
         }
+    }
+    
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+        
+        let imageView = UIImageView(image: self.bgImage)
+        self.tableView.backgroundView = imageView
     }
     
     // gets all children with same parent id as user
@@ -215,7 +244,10 @@ class ChoresMasterTableViewController: UITableViewController {
                     dateFormatterGet.dateStyle = .medium
                     if let dueDate = dateFormatterGet.date(from: dueDateString){
                         let dateNow = Date()
-                        if dueDate <= dateNow {
+                        
+                        let dateCheck = Calendar.current.date(byAdding: .day, value: 1, to: dueDate)
+                        
+                        if dateCheck! < dateNow {
                             markChoreAsPastDue(key: choreItem.key)
                             if isActiveUserParent{
                                 if let parentNotified = choreItem.choreParentNotified{
@@ -275,6 +307,8 @@ class ChoresMasterTableViewController: UITableViewController {
         } else {
             cell.imageCellImageView.image = nil
         }
+        
+         cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
 
         return cell
     }

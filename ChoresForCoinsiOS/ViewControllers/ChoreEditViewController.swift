@@ -11,7 +11,7 @@ import Firebase
 import FirebaseUI
 import MobileCoreServices
 
-class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
@@ -43,11 +43,15 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var isActiveUserParent = false
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
+    let childPicker = UIPickerView()
     
     var startDateTime: Date?
     var dueDateTime: Date?
     
+    var selectedRow = 0
     var processSegue = true
+    
+    var coinConversion: Double = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +84,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
         //pre populate choe information from exisitng chore.
         displayChoreInfo()
+        
+        // set up child picker
+        createChildPicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -157,6 +164,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             
             
         }
+        
+        let cID = children[selectedRow].key
+        
+        ref?.child("chores/\(id)/assigned_child_id").setValue(cID)
+        
         if let userName = usernameTextField.text{
             
             
@@ -553,6 +565,22 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     func checkRedeem(children: [ChildUser]) {
         for child in children {
             if let childuid = child.userid {
@@ -567,6 +595,61 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                 }
             }
         }
+    }
+    
+    //MARK: UIPickerView Functions
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return children.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return children[row].username
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if let nameString = children[row].username{
+            
+            let compoundString = "Assigned to: \(nameString)"
+            selectedRow = row
+            
+            usernameTextField.text = compoundString
+        }
+    }
+    
+    func createChildPicker() {
+        // create toolbar for done button
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        childPicker.delegate = self
+        childPicker.dataSource = self
+        // done button
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressedChild))
+        toolbar.setItems([done], animated: false)
+        
+        usernameTextField.inputAccessoryView = toolbar
+        usernameTextField.inputView = childPicker
+        
+    }
+    
+    @objc func donePressedChild() {
+        
+        if (usernameTextField.text?.isEmpty)! {
+            if let nameString = children[0].username{
+                
+                let compoundString = "Assigned to: \(nameString)"
+                selectedRow = 0
+                
+                usernameTextField.text = compoundString
+            }
+        }
+        //dismiss picker
+        self.view.endEditing(true)
+        
     }
     
     
@@ -687,12 +770,33 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     @IBAction func childRedeem(_ sender: UIButton) {
-        if let uid = userID {
-            Database.database().reference().child("user/\(uid)/isRedeem").setValue(true)
+        if coinValue <= 0 {
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+        } else {
+            getConversionRate()
+            let convertedValue = coinConversion * Double(coinValue)
+            let dollarValueString = String(format: "$%.02f", convertedValue)
             
-            childRedeemView.isHidden = true
+            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+                
+                if let uid = self.userID {
+                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                    
+                    self.childRedeemView.isHidden = true
+                    
+                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                self.childRedeemView.isHidden = true
+            }
             
-            AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+            alert.addAction(action)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
         }
     }
     

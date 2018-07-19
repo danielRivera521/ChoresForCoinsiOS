@@ -46,6 +46,8 @@ class ChoresDetailSplitViewController: UIViewController {
     var coinTotals = [RunningTotal] ()
     var isPastDue = false
     
+    var coinConversion: Double = 1
+    
     private var imagePicker: UIImagePickerController!
     
     
@@ -236,6 +238,21 @@ class ChoresDetailSplitViewController: UIViewController {
                 self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
             }
         }
+    }
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            Database.database().reference().child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
     }
     
     func getBackground() {
