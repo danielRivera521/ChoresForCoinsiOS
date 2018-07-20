@@ -67,6 +67,7 @@ class ChoresDetailSplitViewController: UIViewController {
         
         //gets the custom parent id created in the registration
         getParentId()
+        getBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -256,24 +257,45 @@ class ChoresDetailSplitViewController: UIViewController {
     }
     
     func getBackground() {
-        if UIDevice.current.orientation == .portrait {
-            if let uid = Auth.auth().currentUser?.uid {
-                Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
-                    if let value = snapshot.value as? Int {
-                        switch value {
-                        case 0:
-                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
-                        case 1:
-                            self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
-                        case 2:
-                            self.bgImage.image = #imageLiteral(resourceName: "greenBG")
-                        case 3:
-                            self.bgImage.image = #imageLiteral(resourceName: "redBG")
-                        case 4:
-                            self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
-                        default:
-                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
-                        }
+//        if UIDevice.current.orientation == .portrait {
+//            if let uid = Auth.auth().currentUser?.uid {
+//                Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+//                    if let value = snapshot.value as? Int {
+//                        switch value {
+//                        case 0:
+//                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+//                        case 1:
+//                            self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+//                        case 2:
+//                            self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+//                        case 3:
+//                            self.bgImage.image = #imageLiteral(resourceName: "redBG")
+//                        case 4:
+//                            self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+//                        default:
+//                            self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
                     }
                 }
             }
@@ -312,6 +334,8 @@ extension ChoresDetailSplitViewController:
 ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
         choreId = choreID
+        
+        choreImageImageView.image = nil
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!

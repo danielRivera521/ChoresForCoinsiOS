@@ -54,15 +54,17 @@ class ChoresMasterTableViewController: UITableViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // set background color to the table
+        getBackground()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
         //gets the custom parent id created in the registration
         getParentId()
-        
-        // set background color to the table
-        getBackground()
         
         //cresates chore list
         createChores()
@@ -129,16 +131,34 @@ class ChoresMasterTableViewController: UITableViewController {
                     switch value {
                     case 0:
                         self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 1:
                         self.bgImage = #imageLiteral(resourceName: "orangeBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 2:
                         self.bgImage = #imageLiteral(resourceName: "greenBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 3:
                         self.bgImage = #imageLiteral(resourceName: "redBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 4:
                         self.bgImage = #imageLiteral(resourceName: "purpleBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     default:
                         self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     }
                 }
             }
@@ -293,7 +313,7 @@ class ChoresMasterTableViewController: UITableViewController {
         
         //gets the image URL from the chores array
         if let choreImageURL =  chores[indexPath.row].choreURL{
-            
+            cell.imageCellImageView.isHidden = false
             
             let url = URL(string: choreImageURL)
             ImageService.getImage(withURL: url!, completion: { (image) in
@@ -306,6 +326,7 @@ class ChoresMasterTableViewController: UITableViewController {
             
         } else {
             cell.imageCellImageView.image = nil
+            cell.imageCellImageView.isHidden = true
         }
         
          cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
