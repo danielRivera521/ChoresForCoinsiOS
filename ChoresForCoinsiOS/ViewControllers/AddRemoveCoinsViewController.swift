@@ -327,17 +327,17 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func getRedeemTotal(){
-        
-        if let userID = self.childId{
-            Database.database().reference().child("running_total").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-                let value = snapshot.value as? NSDictionary
-                if let redeemedCoins = value?["redeemed_coins"] as? Int {
-                    self.redeemedTotal = redeemedCoins
-                }
-            })
-        }
-    }
+//    func getRedeemTotal(){
+//        
+//        if let userID = self.childId{
+//            Database.database().reference().child("running_total").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+//                let value = snapshot.value as? NSDictionary
+//                if let redeemedCoins = value?["redeemed_coins"] as? Int {
+//                    self.redeemedTotal = redeemedCoins
+//                }
+//            })
+//        }
+//    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         coinTotalTextField.text = ""

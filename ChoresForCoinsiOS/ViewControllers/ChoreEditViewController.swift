@@ -592,21 +592,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    func getConversionRate(){
-        if let unwrappedParentID = parentID{
-            
-            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
-                }
-                
-            })
-        }
-        
-    }
     
     func checkRedeem(children: [ChildUser]) {
         self.redDot.isHidden = true
