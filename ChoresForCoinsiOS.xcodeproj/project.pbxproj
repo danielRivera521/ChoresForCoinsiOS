@@ -32,6 +32,9 @@
 		B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111D20DE49D7000453C3 /* ChildUser.swift */; };
 		B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111F20DE4A0F000453C3 /* RunningTotal.swift */; };
 		B04CD87220F07A9500A336F2 /* CustomAuthUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */; };
+		B052D6B620FDC8A1004C25C8 /* ChoresMasterTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052D6B520FDC8A1004C25C8 /* ChoresMasterTableViewController.swift */; };
+		B052D6B820FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052D6B720FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift */; };
+		B052D6BC20FDD340004C25C8 /* ChoresDetailSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */; };
 		B077B56B20DB777200F42BB2 /* ChoreCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */; };
 		B07F2F6E20F089690076F065 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07F2F6D20F089690076F065 /* MessageUI.framework */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
@@ -74,6 +77,9 @@
 		B044111D20DE49D7000453C3 /* ChildUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildUser.swift; sourceTree = "<group>"; };
 		B044111F20DE4A0F000453C3 /* RunningTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTotal.swift; sourceTree = "<group>"; };
 		B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAuthUI.swift; sourceTree = "<group>"; };
+		B052D6B520FDC8A1004C25C8 /* ChoresMasterTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresMasterTableViewController.swift; sourceTree = "<group>"; };
+		B052D6B720FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresMasterTableViewCell.swift; sourceTree = "<group>"; };
+		B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresDetailSplitViewController.swift; sourceTree = "<group>"; };
 		B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreCellTableViewCell.swift; sourceTree = "<group>"; };
 		B07F2F6D20F089690076F065 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
@@ -149,8 +155,11 @@
 				B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */,
 				B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */,
 				B0CC653820D5259800E86D41 /* ChoreDetailsViewController.swift */,
+				B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */,
 				B0CC653A20D525AF00E86D41 /* ChoreEditViewController.swift */,
 				B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */,
+				B052D6B520FDC8A1004C25C8 /* ChoresMasterTableViewController.swift */,
+				B052D6B720FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift */,
 				B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */,
 				B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */,
 				B0CC653420D50D4B00E86D41 /* OverviewViewController.swift */,
@@ -280,7 +289,6 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChoresForCoinsiOS/Pods-ChoresForCoinsiOS-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/ChartsRealm/ChartsRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -288,8 +296,6 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -297,7 +303,6 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChartsRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -305,8 +310,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -366,12 +369,14 @@
 			files = (
 				65EF0C8320D405C900DD9A3F /* AppDelegate+GoogleSignIncopy.swift in Sources */,
 				B0004B7B20D5D4B6008C7376 /* ProfileEditViewController.swift in Sources */,
+				B052D6BC20FDD340004C25C8 /* ChoresDetailSplitViewController.swift in Sources */,
 				65F3219F20EADC0C00070635 /* ImageService.swift in Sources */,
 				B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */,
 				B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
 				B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */,
 				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
+				B052D6B820FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift in Sources */,
 				B04CD87220F07A9500A336F2 /* CustomAuthUI.swift in Sources */,
 				B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */,
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
@@ -393,6 +398,7 @@
 				6576491020DA09BA002DE1AC /* Chore.swift in Sources */,
 				B0CC653B20D525AF00E86D41 /* ChoreEditViewController.swift in Sources */,
 				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
+				B052D6B620FDC8A1004C25C8 /* ChoresMasterTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

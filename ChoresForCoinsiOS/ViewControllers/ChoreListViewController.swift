@@ -9,24 +9,24 @@
 import UIKit
 import Firebase
 
-class ChoreListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ChoreListViewController: UIViewController {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
-    @IBOutlet weak var choreListTV: UITableView!
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
-    @IBOutlet weak var detailContainer: UIView!
-    @IBOutlet weak var editContainer: UIView!
+    @IBOutlet weak var bgImage: UIImageView!
     
-    var chores: [Chore] = [Chore]()
+    // MARK: - Properties
+    
     var coinValue = 11
     var idFound = false
     var ref: DatabaseReference?
     var userID: String?
     var parentID: String?
-    var choreIDNum: String?
     var firstView = true
     var isActiveUserParent = false
     var children = [ChildUser] ()
@@ -36,6 +36,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     
     var bgImage: UIImage?
     
+    var coinConversion: Double = 1
+    
+    // MARK: - ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +48,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         getBackground()
         
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -68,14 +70,9 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
     }
     
-    func loadPage(){
-        // check if device is landscape
-        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
-            isLandscape = true
-        } else {
-            detailContainer.removeFromSuperview()
-            editContainer.removeFromSuperview()
-        }
+    // MARK: - Custom Methods
+    
+    func loadPage() {
         
         childRedeemView.isHidden = true
         
@@ -92,9 +89,6 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         
         //gets the custom parent id created in the registration
         getParentId()
-        
-        //cresates chore list
-        createChores()
         
         //check if user is a parent. if the account is a child account the add chore tab will be disabled.
         isUserParent()
@@ -179,9 +173,14 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
             
             for key in Array(dictUsers.keys) {
-                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-                self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent == false})
+                let results = self.children.filter { $0.key == key }
+                let exists = results.isEmpty == false
+                
+                if !exists {
+                    self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                    self.children = self.children.filter({$0.parentid == self.parentID})
+                    self.children = self.children.filter({$0.userparent == false})
+                }
                 
             }
             
@@ -295,7 +294,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
             if let val = snapshot.value as? Bool {
                 self.isActiveUserParent = val
-                self.disableAddChoreTabItem()
+                //self.disableAddChoreTabItem()
                 
                 if self.isActiveUserParent {
                     self.getRunningTotalParent()
@@ -352,6 +351,29 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    func getBackground() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Int {
+                    switch value {
+                    case 0:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    case 1:
+                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                    case 2:
+                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                    case 3:
+                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                    case 4:
+                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                    default:
+                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                    }
+                }
+            }
+        }
+    }
+    
     func checkRedeem(children: [ChildUser]) {
         
         self.redDot.isHidden = true
@@ -387,42 +409,27 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToChoreDetail"{
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        if segue.identifier == "goToChoreDetail"{
+    //
+    //            let index = self.choreListTV.indexPathForSelectedRow
+    //            choreIDNum = chores[(index?.row)!].key
+    //            if segue.identifier == "goToChoreDetail"{
+    //                let choreDetailVC = segue.destination as? ChoreDetailsViewController
+    //                if choreIDNum != nil {
+    //                    choreDetailVC?.choreId = choreIDNum!
+    //                }
+    //            }
+    //        }
+    //    }
+    
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
             
-            let index = self.choreListTV.indexPathForSelectedRow
-            choreIDNum = chores[(index?.row)!].key
-            if segue.identifier == "goToChoreDetail"{
-                let choreDetailVC = segue.destination as? ChoreDetailsViewController
-                if choreIDNum != nil {
-                    choreDetailVC?.choreId = choreIDNum!
-                }
-            }
-        }
-    }
-    
-    
-    //MARK: TableView set up
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chores.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChoreCellTableViewCell
-        
-        let choreItem = chores[indexPath.row]
-        
-        cell.choreNameCellLabel.text = choreItem.name
-        
-        if let completed = choreItem.completed {
-            if completed {
-                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
-                if isActiveUserParent{
-                    alertCompletedAddNote(chore: choreItem)
-                    choreItem.choreCompletedNotified = "yes"
-                }
-            } else {
-                if let dueDateString = choreItem.dueDate{
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
                     
                     let dateFormatterGet = DateFormatter()
                     dateFormatterGet.dateFormat = "MM/dd/yyyy"
@@ -487,27 +494,7 @@ class ChoreListViewController: UIViewController, UITableViewDataSource, UITableV
                 cell.imageCellImageView.image = image
                 cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
             })
-            
-            
-            
-        } else {
-            cell.imageCellImageView.image = nil
         }
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100.0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
-    func markChoreAsPastDue(key: String){
-        ref?.child("chores/\(key)/past_due").setValue("yes")
-        ref?.child("chores/\(key)/user_name").setValue("Failed to Complete")
         
     }
     

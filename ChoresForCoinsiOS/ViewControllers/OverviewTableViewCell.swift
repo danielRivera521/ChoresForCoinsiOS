@@ -17,6 +17,7 @@ class OverviewTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameCellHeader: UILabel!
     @IBOutlet weak var coinsPieChart: PieChartView!
     @IBOutlet weak var choresPieChart: PieChartView!
+    @IBOutlet weak var weeklyChart: LineChartView!
     
     
     // MARK: UIViewController methods

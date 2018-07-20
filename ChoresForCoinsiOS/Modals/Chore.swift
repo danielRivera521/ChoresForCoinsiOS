@@ -21,6 +21,8 @@ class Chore{
     var choreParentNotified: String?
     var choreCompletedNotified: String?
     var choreValue: Int?
+    var childID: String?
+    var choreCompletedDate: String?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -66,6 +68,14 @@ class Chore{
         
         if let choreVal = dictionary["number_coins"] as? String {
             self.choreValue = Int(choreVal)
+        }
+        
+        if let childID = dictionary["assigned_child_id"] as? String {
+            self.childID = childID
+        }
+        
+        if let choreCompletedDate = dictionary["date_completed"] as? String{
+            self.choreCompletedDate = choreCompletedDate
         }
     }
 }

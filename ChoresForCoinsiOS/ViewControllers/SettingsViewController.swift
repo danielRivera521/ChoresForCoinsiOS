@@ -255,6 +255,8 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    
     func getPhoto() {
         
         let DatabaseRef = Database.database().reference()
@@ -294,6 +296,23 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
+    
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            Database.database().reference().child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     
     func checkRedeem(children: [ChildUser]) {
         self.redDot.isHidden = true

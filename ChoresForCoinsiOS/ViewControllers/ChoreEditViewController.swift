@@ -11,7 +11,9 @@ import Firebase
 import FirebaseUI
 import MobileCoreServices
 
-class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
@@ -27,6 +29,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: - Properties
     
     private var imagePicker: UIImagePickerController!
     
@@ -43,10 +48,12 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var isActiveUserParent = false
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
+    let childPicker = UIPickerView()
     
     var startDateTime: Date?
     var dueDateTime: Date?
     
+    var selectedRow = 0
     var processSegue = true
     
     var coinConversion: Double = 1
@@ -82,6 +89,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
         //pre populate choe information from exisitng chore.
         displayChoreInfo()
+        
+        // set up child picker
+        createChildPicker()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,6 +103,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: - Custom methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -159,6 +171,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             
             
         }
+        
+        let cID = children[selectedRow].key
+        
+        ref?.child("chores/\(id)/assigned_child_id").setValue(cID)
+        
         if let userName = usernameTextField.text{
             
             
@@ -478,6 +495,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     
                     if let imageUrl = value?["image_url"] as? String {
                         self.choreImageUIButton.loadImagesUsingCacheWithUrlString(urlString: imageUrl, inViewController: self)
+                    } else if self.imageHeightConstraint != nil {
+                        self.imageHeightConstraint.isActive = false
+                        self.choreImageUIButton.isHidden = true
+                        let heightConstraint = NSLayoutConstraint(item: self.choreImageUIButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.00000001, constant: 0)
+                        heightConstraint.isActive = true
                     }
                 }
             })
@@ -570,6 +592,22 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     func checkRedeem(children: [ChildUser]) {
         self.redDot.isHidden = true
         for child in children {
@@ -585,6 +623,62 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    //MARK: - UIPickerView Functions
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return children.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return children[row].username
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if let nameString = children[row].username{
+            
+            let compoundString = "Assigned to: \(nameString)"
+            selectedRow = row
+            
+            usernameTextField.text = compoundString
+        }
+    }
+    
+    func createChildPicker() {
+        // create toolbar for done button
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        childPicker.delegate = self
+        childPicker.dataSource = self
+        // done button
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(donePressedChild))
+        toolbar.setItems([done], animated: false)
+        
+        usernameTextField.inputAccessoryView = toolbar
+        usernameTextField.inputView = childPicker
+        
+    }
+    
+    @objc func donePressedChild() {
+        
+        if (usernameTextField.text?.isEmpty)! {
+            if let nameString = children[0].username{
+                
+                let compoundString = "Assigned to: \(nameString)"
+                selectedRow = 0
+                
+                usernameTextField.text = compoundString
+            }
+        }
+        //dismiss picker
+        self.view.endEditing(true)
+        
+    }
+    
+    // MARK: - Actions
     
     @IBAction func doGoBack(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

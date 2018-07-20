@@ -239,11 +239,17 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         if mediaType == (kUTTypeImage as String){
             
             
-            // a photo was taken
+            // a photo was taken. create teh database reference and get the date time stamp
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM//dd/yyyy"
+            dateFormatter.dateStyle = .medium
+            let dateString = dateFormatter.string(from: currentDate)
             let ref = Database.database().reference().child("chores")
             
             // updates the chore completed from false to true
             ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
+            ref.child("\(choreId!)/date_completed").setValue(dateString)
             if let displayName = Auth.auth().currentUser?.displayName{
                 let displayText = "Completed by \(displayName)"
                 ref.child("\(choreId!)/chore_username").setValue(displayText)
@@ -402,6 +408,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         //if the camera is not available, use the photo library
         if UIImagePickerController.isSourceTypeAvailable(.camera){
             imagePicker.sourceType = .camera
+            imagePicker.cameraCaptureMode = .photo
         } else {
             
             //may remove this option if current image from camera is necessary.
@@ -410,7 +417,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         
         //image can be edited and sets the mediatype to the source type which is the camera
         imagePicker.allowsEditing = true
-        imagePicker.cameraCaptureMode = .photo
+        
         //imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)
         
         

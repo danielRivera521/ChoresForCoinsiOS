@@ -17,6 +17,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var userNameView: UIView!
     @IBOutlet weak var choreDescriptionTextView: UITextView!
     @IBOutlet weak var startDateTextField: UITextField!
     @IBOutlet weak var dueDateTextField: UITextField!
@@ -244,6 +245,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 if self.isActiveUserParent {
                     self.getRunningTotalParent()
                 } else {
+                    self.userNameView.isHidden = true
                     self.getRunningTotal()
                 }
             }
@@ -279,10 +281,15 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let dictUsers = dictRoot["user"] as? [String:AnyObject] ?? [:]
             
             for key in Array(dictUsers.keys) {
-                self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
-                self.children = self.children.filter({$0.parentid == self.parentID})
-                self.children = self.children.filter({$0.userparent == false})
                 
+                let results = self.children.filter { $0.key == key }
+                let exists = results.isEmpty == false
+                
+                if !exists {
+                    self.children.append(ChildUser(dictionary: (dictUsers[key] as? [String:AnyObject])!, key: key))
+                    self.children = self.children.filter({$0.parentid == self.parentID})
+                    self.children = self.children.filter({$0.userparent == false})
+                }
             }
             
             self.checkRedeem(children: self.children)
@@ -487,6 +494,22 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
     }
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     func getConversionRate(){
         if let unwrappedParentID = parentID{
             
