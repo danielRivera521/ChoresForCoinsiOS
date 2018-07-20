@@ -13,7 +13,7 @@ protocol ChoreSelectionDelegate: class {
     func choreSelected(_ choreID: String)
 }
 
-class ChoresMasterTableViewController: UITableViewController {
+class ChoresMasterTableViewController: UITableViewController, UISplitViewControllerDelegate {
     
     // MARK: - Properties
     
@@ -34,10 +34,15 @@ class ChoresMasterTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        splitViewController?.delegate = self
         if UIDevice.current.userInterfaceIdiom == .pad {
             splitViewController?.preferredDisplayMode = .allVisible
         }
+        
+        if UIDevice.current.userInterfaceIdiom == .phone{
+            splitViewController?.preferredDisplayMode = .automatic
+        }
+    
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -52,6 +57,13 @@ class ChoresMasterTableViewController: UITableViewController {
             
             masterViewController?.delegate = detailViewController!
         }
+        
+        
+        
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -330,4 +342,7 @@ class ChoresMasterTableViewController: UITableViewController {
             splitViewController?.showDetailViewController(detailViewController, sender: nil)
         }
     }
+    
+    
+    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
 }

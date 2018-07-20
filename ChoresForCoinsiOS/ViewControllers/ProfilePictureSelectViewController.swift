@@ -124,6 +124,7 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         // if not, use photo library instead
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePicker.sourceType = .camera
+            imagePicker.cameraCaptureMode = .photo
         } else {
             imagePicker.sourceType = .photoLibrary
         }
@@ -131,7 +132,7 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         // lets user edit photos taken with camera or in photo library
         imagePicker.allowsEditing = true
         // sets the media type to the same as the camera or photo library
-        imagePicker.cameraCaptureMode = .photo
+        
         
         // present the image picker
         self.present(imagePicker, animated: true, completion: nil)

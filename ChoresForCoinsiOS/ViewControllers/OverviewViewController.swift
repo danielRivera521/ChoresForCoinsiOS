@@ -36,7 +36,6 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var childrenCompletedChores = PieChartDataEntry ()
     var childrenToDoChores = PieChartDataEntry ()
     var childrenWeeklyChores = [[Double]] ()
-    let weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8"]
     var monthName: String = ""
     
     var coinValue = 0
@@ -46,7 +45,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var isActiveUserParent = false
     var coinTotals = [RunningTotal] ()
     var coinConversion: Double = 1
-    
+    var bgImg: UIImage?
     
     // MARK: ViewController methods
     
@@ -107,21 +106,24 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 if let value = snapshot.value as? Int {
                     switch value {
                     case 0:
-                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                        self.bgImg = #imageLiteral(resourceName: "whiteBG")
                     case 1:
-                        self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                        self.bgImg = #imageLiteral(resourceName: "orangeBG")
                     case 2:
-                        self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                        self.bgImg = #imageLiteral(resourceName: "greenBG")
                     case 3:
-                        self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                        self.bgImg = #imageLiteral(resourceName: "redBG")
                     case 4:
-                        self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                        self.bgImg = #imageLiteral(resourceName: "purpleBG")
                     default:
-                        self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                        self.bgImg = #imageLiteral(resourceName: "whiteBG")
                     }
                 }
             }
         }
+        
+        let imageView = UIImageView(image: self.bgImg)
+        self.overviewTableView.backgroundView = imageView
     }
     
     func getPhoto() {
@@ -308,22 +310,6 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             }
             
             self.overviewTableView.reloadData()
-            
-            // set data for coins and chores piechart and week chart
-            //            for _ in self.children {
-            //                let currentCoins = PieChartDataEntry(value: 10)
-            //                let totalCoins = PieChartDataEntry(value: 25)
-            //                let completedChores = PieChartDataEntry(value: 5)
-            //                let toDoChores = PieChartDataEntry(value: 7)
-            //
-            //                self.childrenCoinsTotal.append(currentCoins)
-            //                self.childrenCoinsAllTimeTotal.append(totalCoins)
-            //                self.childrenCompletedChores.append(completedChores)
-            //                self.childrenToDoChores.append(toDoChores)
-            //
-            //                self.childrenWeeklyChores.append([5,8,4,7,5,50,4,6])
-            //
-            //            }
         }
     }
     
@@ -445,18 +431,6 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    //    struct ChildCoins {
-    //        var userId: String
-    //        var currentTotal: Int
-    //        var totalTotal: Int
-    //    }
-    //
-    //    struct ChildChores {
-    //        var userId: String
-    //        var completedChores: Int
-    //        var toDoChores: Int
-    //    }
-    
     func updateCoinsChartData(index: Int) -> PieChartData {
         
         let uid = children[index].key
@@ -491,17 +465,21 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     
     func updateWeeklyChart(index: Int, values: [Double]) -> LineChartData {
         var lineChartEntry = [ChartDataEntry] ()
-        
+        let xVal: [String] = ["Week 1","Week 2","Week 3","Week 4","Week 5"]
         for i in 0..<values.count {
-            let value = ChartDataEntry(x: Double(i + 1), y: values[i])
+            
+            let value = ChartDataEntry(x: Double(i + 1), y: values[i], data: xVal[i] as AnyObject)
             
             lineChartEntry.append(value)
         }
         
-        let line1 = LineChartDataSet(values: lineChartEntry, label: "Chores Completed for \(monthName)")
         
+        
+        
+        let line1 = LineChartDataSet(values: lineChartEntry, label: "Chores Completed for \(monthName)")
         let data = LineChartData()
         data.addDataSet(line1)
+        
         
         return data
     }
@@ -533,8 +511,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             cell.weeklyChart.chartDescription?.text = ""
             getChorePerWeekData(uid: children[indexPath.row].key)
             cell.weeklyChart.data = updateWeeklyChart(index: indexPath.row, values: childrenWeeklyChores[indexPath.row])
+    
         }
-        
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         return cell
     }
     

@@ -95,6 +95,7 @@ class ChoresDetailSplitViewController: UIViewController {
             let chorComplete = value?["chore_completed"] as? Bool
             let chorePastDue = value?["past_due"] as? String
             let choreUserName = value?["user_name"] as? String
+            let completedName = value?["chore_username"] as? String
             
             if let choreName = chorName{
                 self.choreNameLabel.text = choreName
@@ -121,10 +122,14 @@ class ChoresDetailSplitViewController: UIViewController {
                 }
                 self.choreValueLabel.text = choreValue
             }
-            if let userNameString = choreUserName{
-                self.usernameLabel.text = userNameString
+            if let completedChoreName = completedName {
+                self.usernameLabel.text = completedChoreName
             } else {
-                self.usernameLabel.text = ""
+                if let userNameString = choreUserName{
+                    self.usernameLabel.text = userNameString
+                } else {
+                    self.usernameLabel.text = ""
+                }
             }
             
             if let choreComplete = chorComplete {
@@ -200,6 +205,7 @@ class ChoresDetailSplitViewController: UIViewController {
     }
     
     func addCoins () {
+        getCoinTotal()
         let databaseRef = Database.database().reference()
         
         var bonusOn = false
@@ -238,6 +244,21 @@ class ChoresDetailSplitViewController: UIViewController {
                 self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
             }
         }
+    }
+    
+    func getCoinTotal(){
+        
+        let databaseRef = Database.database().reference()
+        
+        if let uid = Auth.auth().currentUser?.uid {
+            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
+                print(snapshot)
+                self.coinValue = snapshot.value as? Int ?? 0
+                
+            }
+        }
+        
+        
     }
     func getConversionRate(){
         if let unwrappedParentID = parentID{
