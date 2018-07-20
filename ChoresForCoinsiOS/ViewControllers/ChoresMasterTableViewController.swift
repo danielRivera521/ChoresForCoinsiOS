@@ -73,11 +73,14 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         //gets the custom parent id created in the registration
         getParentId()
         
-        // set background color to the table
-        getBackground()
         
         //cresates chore list
         createChores()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // set background color to the table
+        getBackground()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -240,7 +243,8 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         let choreItem = chores[indexPath.row]
         
         cell.choreNameCellLabel.text = choreItem.name
-        
+        cell.imageCellImageView.isHidden = true
+    
         if let completed = choreItem.completed {
             if completed {
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
@@ -305,7 +309,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
         //gets the image URL from the chores array
         if let choreImageURL =  chores[indexPath.row].choreURL{
-            
+            cell.imageCellImageView.isHidden = false
             
             let url = URL(string: choreImageURL)
             ImageService.getImage(withURL: url!, completion: { (image) in
@@ -313,8 +317,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                 
                 cell.imageCellImageView.image = image
             })
-            
-            
             
         } else {
             cell.imageCellImageView.image = nil
