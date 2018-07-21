@@ -89,7 +89,7 @@ class ChoreListViewController: UIViewController {
         getParentId()
         
         //check if user is a parent. if the account is a child account the add chore tab will be disabled.
-        isUserParent()
+       // isUserParent()
         
         //checks if the user has an account in the database
         checkDatabase()
@@ -202,21 +202,19 @@ class ChoreListViewController: UIViewController {
                     }
                 }
             }
-            
+      
             var sumTotal = 0
-            
             for coinTotal in self.coinTotals {
-                for child in self.children {
-                    if coinTotal.key == child.userid {
-                        if let total = coinTotal.cointotal {
-                            sumTotal += total
-                        }
-                    }
+                if let total = coinTotal.cointotal{
+                    sumTotal += total
                 }
             }
-            
             self.coinAmtLabel.text = String(sumTotal)
+            print("Count of Children: \(self.children.count)")
+            print("Count of CoinTotals: \(self.coinTotals.count)")
+       
         }
+       
     }
     
     func displayHeaderName(){
@@ -234,59 +232,6 @@ class ChoreListViewController: UIViewController {
         }
     }
     
-//    func getBackground() {
-//        if let uid = Auth.auth().currentUser?.uid {
-//            Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
-//                if let value = snapshot.value as? Int {
-//                    switch value {
-//                    case 0:
-//                        self.bgImg = #imageLiteral(resourceName: "whiteBG")
-//                    case 1:
-//                        self.bgImage = #imageLiteral(resourceName: "orangeBG")
-//                    case 2:
-//                        self.bgImage = #imageLiteral(resourceName: "greenBG")
-//                    case 3:
-//                        self.bgImage = #imageLiteral(resourceName: "redBG")
-//                    case 4:
-//                        self.bgImage = #imageLiteral(resourceName: "purpleBG")
-//                    default:
-//                        self.bgImage = #imageLiteral(resourceName: "whiteBG")
-//                    }
-//                }
-//            }
-//        }
-//
-//        let imageView = UIImageView(image: self.bgImage)
-//        self.choreListTV.backgroundView = imageView
-//    }
-    
-//    func createChores(){
-//        //database reference
-//        ref = Database.database().reference()
-//
-//        self.ref?.observe(.value) { (snapshot) in
-//            self.chores.removeAll()
-//
-//            let dictRoot = snapshot.value as? [String : AnyObject] ?? [:]
-//            let dictChores = dictRoot["chores"] as? [String : AnyObject] ?? [:]
-//
-//            for key in Array(dictChores.keys){
-//
-//                self.chores.append(Chore(dictionary: (dictChores[key] as? [String : AnyObject])!, key: key))
-//
-//                self.chores = self.chores.filter({$0.parentID == self.parentID })
-//
-//
-//            }
-//
-//            self.chores.sort(by: { $0.dueDate! < $1.dueDate!})
-//            self.choreListTV.reloadData()
-//
-//            return
-//        }
-//
-//    }
-//
     func isUserParent(){
         
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
@@ -389,112 +334,6 @@ class ChoreListViewController: UIViewController {
             }
         }
     }
-    
-//    func getConversionRate(){
-//        if let unwrappedParentID = parentID{
-//
-//            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-//
-//                let value = snapshot.value as? NSDictionary
-//                if let conversionValue = value?["coin_dollar_value"] as? Double{
-//
-//                    self.coinConversion = conversionValue
-//                }
-//
-//            })
-//        }
-//
-//    }
-    
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if segue.identifier == "goToChoreDetail"{
-    //
-    //            let index = self.choreListTV.indexPathForSelectedRow
-    //            choreIDNum = chores[(index?.row)!].key
-    //            if segue.identifier == "goToChoreDetail"{
-    //                let choreDetailVC = segue.destination as? ChoreDetailsViewController
-    //                if choreIDNum != nil {
-    //                    choreDetailVC?.choreId = choreIDNum!
-    //                }
-    //            }
-    //        }
-    //    }
-    
-//    func getConversionRate(){
-//        if let unwrappedParentID = parentID{
-//            
-//            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-//                
-//                let value = snapshot.value as? NSDictionary
-//                if let conversionValue = value?["coin_dollar_value"] as? Double{
-//                    
-//                    let dateFormatterGet = DateFormatter()
-//                    dateFormatterGet.dateFormat = "MM/dd/yyyy"
-//                    dateFormatterGet.dateStyle = .medium
-//                    if let dueDate = dateFormatterGet.date(from: dueDateString){
-//                        let dateNow = Date()
-//                        
-//                        let dateCheck = Calendar.current.date(byAdding: .day, value: 1, to: dueDate)
-//                        
-//                        if dateCheck! < dateNow {
-//                            markChoreAsPastDue(key: choreItem.key)
-//                            if isActiveUserParent{
-//                                if let parentNotified = choreItem.choreParentNotified{
-//                                    if parentNotified == "yes"{
-//                                        //parent notified
-//                                    } else {
-//                                        
-//                                        AlertController.showAlert(self, title: "Chore Past Due", message: "The chore named \(choreItem.name!) is now past due.")
-//                                        ref?.child("chores/\(choreItem.key)/past_due_notified").setValue("yes")
-//                                        choreItem.choreParentNotified = "yes"
-//                                    }
-//                                } else {
-//                                    AlertController.showAlert(self, title: "Chore Past Due", message: "The chore named \(choreItem.name!) is now past due.")
-//                                    ref?.child("chores/\(choreItem.key)/past_due_notified").setValue("yes")
-//                                    choreItem.choreParentNotified = "yes"
-//                                }
-//                            }
-//                            if let _ = choreItem.choreUsername {
-//                                
-//                                //choreItem has a username else
-//                            } else {
-//                                //set the username for the choreItem Object
-//                                choreItem.choreUsername = "Failed to Complete"
-//                            }
-//                            
-//                        }
-//                        
-//                    }
-//                }
-//                
-//                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
-//            }
-//        }
-//        
-//        cell.usernameCellLabel.text = choreItem.choreUsername
-//        cell.dueDateCellLabel.text = choreItem.dueDate
-//        
-//        if let choreVal = choreItem.choreValue {
-//            cell.choreValueCellLabel.text = "Chore Value: \(choreVal)"
-//        } else {
-//            cell.choreValueCellLabel.text = "Chore Value: 0"
-//        }
-//        
-//        //gets the image URL from the chores array
-//        if let choreImageURL =  chores[indexPath.row].choreURL{
-//            
-//            
-//            let url = URL(string: choreImageURL)
-//            ImageService.getImage(withURL: url!, completion: { (image) in
-//                
-//                
-//                cell.imageCellImageView.image = image
-//                cell.backgroundColor = UIColor(white: 1, alpha: 0.5)
-//            })
-//        }
-//        
-//    }
     
     func alertCompletedAddNote(chore: Chore){
         if let completedNotifyString = chore.choreCompletedNotified {

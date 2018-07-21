@@ -31,9 +31,9 @@ extension UIButton {
         let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
             
             //if there is an error
-            if let error = error {
+            if error != nil {
                 //print(error.localizedDescription)
-                AlertController.showAlert(inViewController, title: "Download Image Error", message: error.localizedDescription)
+                AlertController.showAlert(inViewController, title: "Download Image Error", message: "Unable to download the image.")
                 return
             } else {
                 //if there isn't a respons the image value is set from the data to the imageView within the custom cell
@@ -56,7 +56,7 @@ extension UIButton {
 }
 
 extension UIImageView {
-    func loadImagesUsingCacheWithUrlString(urlString: String, inViewController: UIViewController){
+    func loadImagesUsingCacheWithUrlString(urlString: String, inViewController: UIViewController?){
         
         //check if the image is in the cache
         if let cachedImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage{
@@ -75,9 +75,11 @@ extension UIImageView {
         let getImageFromURL = session.dataTask(with: url, completionHandler: { (data, response, error) in
             
             //if there is an error
-            if let error = error {
+            if error != nil {
                // print(error.localizedDescription)
-                AlertController.showAlert(inViewController, title: "Download Image Error", message: error.localizedDescription)
+                if let vcInfo = inViewController{
+                AlertController.showAlert(vcInfo, title: "Download Image Error", message: "Unable to download image.")
+                }
                 return
             } else {
                 //if there isn't a respons the image value is set from the data to the imageView within the custom cell
