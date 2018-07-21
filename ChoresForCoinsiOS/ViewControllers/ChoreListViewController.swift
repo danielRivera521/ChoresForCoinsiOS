@@ -35,11 +35,15 @@ class ChoreListViewController: UIViewController {
     var coinConversion: Double = 1
     
     var bgImg: UIImage?
+    var animView: UIImageView?
     
     // MARK: - ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // get animation ready
+        animView = AnimationHelper.createRedeemAnim(vc: self)
         
         //gets the background color
         
@@ -408,7 +412,11 @@ class ChoreListViewController: UIViewController {
                     
                     self.childRedeemView.isHidden = true
                     
-                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                    if let animView = self.animView {
+                        AnimationHelper.startAnimation(vc: self, animView: animView)
+                    }
+                    
+                    // AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
