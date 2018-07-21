@@ -140,12 +140,14 @@ class ChoresDetailSplitViewController: UIViewController {
             }
             
             if let choreImageURL = imageLocale {
-                
+                print(choreImageURL)
                 self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
-            } else if self.detailImageHeightConstraint != nil {
-                self.detailImageHeightConstraint.isActive = false
-                let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
-                heightConstraint.isActive = true
+            } else {
+                if self.detailImageHeightConstraint != nil {
+                    self.detailImageHeightConstraint.isActive = false
+                    let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
+                    heightConstraint.isActive = true
+                }
             }
             
             if let choreDueString = chorePastDue {
@@ -354,7 +356,7 @@ ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
         choreId = choreID
         
-        choreImageImageView = nil
+        //choreImageImageView = nil
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!

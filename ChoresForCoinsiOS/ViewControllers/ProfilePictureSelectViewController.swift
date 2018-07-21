@@ -110,9 +110,7 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
                 })
             }
             
-            dismiss(animated: true) {
-                self.dismiss(animated: true, completion: nil)
-            }
+            infoAlert()
         }
     }
     
@@ -174,9 +172,10 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
                 }
             }
             
-            dismiss(animated: true) {
-                self.dismiss(animated: true, completion: nil)
-            }
+            dismiss(animated: true, completion: nil)
+            infoAlert()
+            
+    
         }
     }
     
@@ -228,6 +227,19 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
         print("user cancelled choosing picture")
+    }
+    
+    func infoAlert(){
+        let alertUI = UIAlertController(title: "Profile Image Update", message: "Your profile image has been saved.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.dismiss(animated: true) {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        alertUI.addAction(action)
+        
+        present(alertUI, animated: true, completion: nil)
     }
     
     

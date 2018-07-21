@@ -73,6 +73,8 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         //gets the custom parent id created in the registration
         getParentId()
         
+        isUserParent()
+        
         
         //cresates chore list
         createChores()
@@ -187,49 +189,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
     }
     
-    func alertCompletedAddNote(chore: Chore){
-        if let completedNotifyString = chore.choreCompletedNotified {
-            if completedNotifyString == "yes" {
-                //parent was already notified
-                return
-            }
-            // if completedNotify String does not exist
-        } else {
-            let key = chore.key
-            if let childName = chore.choreUsername{
-                let addNoteAlert = UIAlertController(title: "Chore Completed", message: "The chore named \(chore.name!) was completed by \(childName). Please write a note regarding the completion of this chore.", preferredStyle: UIAlertControllerStyle.alert)
-                let saveNote = UIAlertAction(title: "Save", style: .default) { (saveAction) in
-                    //read text from the alert box
-                    let noteTextField = addNoteAlert.textFields![0] as UITextField
-                    if let noteString = noteTextField.text {
-                        //save text to the chore.
-                        self.ref?.child("chores/\(key)/chore_note").setValue(noteString)
-                        self.ref?.child("chores/\(key)/chore_completed_notified").setValue("yes")
-                        
-                        addNoteAlert.dismiss(animated: true, completion: nil)
-                        
-                    } else {
-                        
-                        AlertController.showAlert(self, title: "Missing Text", message: "Please type in text into the note box.")
-                        
-                    }
-                    
-                }
-                
-                addNoteAlert.addTextField { (textField) in
-                    textField.placeholder = "Enter chore note"
-                }
-                addNoteAlert.addAction(saveNote)
-                
-                present(addNoteAlert, animated: true, completion: nil)
-                
-                chore.choreCompletedNotified = "yes"
-                
-            }
-        }
-    }
-    
-
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -249,7 +208,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
             if completed {
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
                 if isActiveUserParent{
-                    alertCompletedAddNote(chore: choreItem)
+                    alertCompletedAndAddNote(chore: choreItem)
                     choreItem.choreCompletedNotified = "yes"
                 }
             } else {
@@ -345,6 +304,47 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         }
     }
     
+    func alertCompletedAndAddNote(chore: Chore){
+        if let completedNotifyString = chore.choreCompletedNotified {
+            if completedNotifyString == "yes" {
+                //parent was already notified
+                return
+            }
+            // if completedNotify String does not exist
+        } else {
+            let key = chore.key
+            if let childName = chore.choreUsername{
+                let addNoteAlert = UIAlertController(title: "Chore Completed", message: "The chore named \(chore.name!) was completed by \(childName). Please write a note regarding the completion of this chore.", preferredStyle: UIAlertControllerStyle.alert)
+                let saveNote = UIAlertAction(title: "Save", style: .default) { (saveAction) in
+                    //read text from the alert box
+                    let noteTextField = addNoteAlert.textFields![0] as UITextField
+                    if let noteString = noteTextField.text {
+                        //save text to the chore.
+                        self.ref?.child("chores/\(key)/chore_note").setValue(noteString)
+                        self.ref?.child("chores/\(key)/chore_completed_notified").setValue("yes")
+                        
+                        addNoteAlert.dismiss(animated: true, completion: nil)
+                        
+                    } else {
+                        
+                        AlertController.showAlert(self, title: "Missing Text", message: "Please type in text into the note box.")
+                        
+                    }
+                    
+                }
+                
+                addNoteAlert.addTextField { (textField) in
+                    textField.placeholder = "Enter chore note"
+                }
+                addNoteAlert.addAction(saveNote)
+                
+                present(addNoteAlert, animated: true, completion: nil)
+                
+                chore.choreCompletedNotified = "yes"
+                
+            }
+        }
+    }
     
     @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
 }
