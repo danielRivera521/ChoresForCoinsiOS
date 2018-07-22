@@ -33,9 +33,13 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     
     private var imagePicker: UIImagePickerController!
     
+    var animCoinView: UIImageView?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        animCoinView = AnimationHelper.createCoinsEarnedAnim(vc: self)
         
         getBackground()
         
@@ -398,7 +402,9 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        if let anCoinView = animCoinView {
+            AnimationHelper.startAnimation(vc: self, animView: anCoinView, anim: 1)
+        }
     }
     
     @IBAction func takePictureBtn(_ sender: UIButton) {

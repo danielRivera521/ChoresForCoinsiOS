@@ -46,12 +46,16 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var coinTotals = [RunningTotal] ()
     var coinConversion: Double = 1
     var bgImg: UIImage?
+    var animRedeemView: UIImageView?
     
     // MARK: ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // get animation ready
+        animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
         
         // get userid
         if let uid = Auth.auth().currentUser?.uid {
@@ -557,7 +561,11 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     
                     self.childRedeemView.isHidden = true
                     
-                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                    if let animRedeemView = self.animRedeemView {
+                        AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
+                    }
+                    
+                    // AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in

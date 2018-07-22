@@ -46,12 +46,11 @@ class ChoreDetailsViewController: UIViewController {
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
     var isPastDue = false
-    
     var coinConversion: Double = 1
-    
-    
     private var imagePicker: UIImagePickerController!
     
+    
+    // MARK: ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()

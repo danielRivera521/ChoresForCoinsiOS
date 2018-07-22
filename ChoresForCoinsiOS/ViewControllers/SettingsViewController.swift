@@ -35,12 +35,15 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var isActiveUserParent = false
     var children = [ChildUser] ()
     var coinTotals = [RunningTotal] ()
-    
-    var coinConversion: Double = 1    
+    var coinConversion: Double = 1
+    var animRedeemView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // get animation ready
+        animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
         
         coinValueTextField.delegate = self
         multiplierValueTextField.delegate = self
@@ -439,7 +442,11 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                     
                     self.childRedeemView.isHidden = true
                     
-                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                    if let animRedeemView = self.animRedeemView {
+                        AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
+                    }
+                    
+                    // AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in

@@ -1681,9 +1681,6 @@
                                 <exclude reference="AeW-1e-ZWh"/>
                                 <exclude reference="eC3-j5-6yp"/>
                                 <exclude reference="rLc-u4-TA7"/>
-                                <exclude reference="GbO-9i-wNb"/>
-                                <exclude reference="Ne8-0l-bd0"/>
-                                <exclude reference="iEi-Sc-ruO"/>
                                 <exclude reference="NzU-JJ-u60"/>
                                 <exclude reference="iOi-dc-ZsD"/>
                                 <exclude reference="j7b-qe-L9a"/>
@@ -1692,6 +1689,9 @@
                                 <exclude reference="LR4-Vv-Uke"/>
                                 <exclude reference="NGD-re-xMV"/>
                                 <exclude reference="rDg-u3-wRn"/>
+                                <exclude reference="GbO-9i-wNb"/>
+                                <exclude reference="Ne8-0l-bd0"/>
+                                <exclude reference="iEi-Sc-ruO"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -1717,12 +1717,6 @@
                                 <exclude reference="FPs-Dh-qvb"/>
                                 <include reference="eC3-j5-6yp"/>
                                 <include reference="rLc-u4-TA7"/>
-                                <include reference="GbO-9i-wNb"/>
-                                <exclude reference="Kfn-UI-2WL"/>
-                                <include reference="Ne8-0l-bd0"/>
-                                <include reference="iEi-Sc-ruO"/>
-                                <exclude reference="jX9-6J-9ss"/>
-                                <exclude reference="vFm-vv-pgZ"/>
                                 <exclude reference="3Uk-7y-5o0"/>
                                 <exclude reference="EIw-z6-PRy"/>
                                 <include reference="NzU-JJ-u60"/>
@@ -1736,6 +1730,12 @@
                                 <include reference="LR4-Vv-Uke"/>
                                 <include reference="NGD-re-xMV"/>
                                 <include reference="rDg-u3-wRn"/>
+                                <include reference="GbO-9i-wNb"/>
+                                <exclude reference="Kfn-UI-2WL"/>
+                                <include reference="Ne8-0l-bd0"/>
+                                <include reference="iEi-Sc-ruO"/>
+                                <exclude reference="jX9-6J-9ss"/>
+                                <exclude reference="vFm-vv-pgZ"/>
                             </mask>
                         </variation>
                     </view>
@@ -2655,19 +2655,16 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="JXL-k5-tgj"/>
                                                 <exclude reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="dsT-mW-hAA"/>
+                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="TWB-0y-qYb"/>
                                                 <exclude reference="a5G-pE-1kj"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <mask key="constraints">
-                                                <include reference="MQH-bB-Cnj"/>
-                                                <exclude reference="jkH-pT-CWf"/>
-                                                <exclude reference="uI4-rL-lGA"/>
                                                 <include reference="JXL-k5-tgj"/>
                                                 <include reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="On3-tD-4ds"/>
@@ -2676,6 +2673,9 @@
                                                 <exclude reference="jGO-dm-8Tl"/>
                                                 <exclude reference="xiz-on-NI6"/>
                                                 <exclude reference="xpJ-e3-8ja"/>
+                                                <include reference="MQH-bB-Cnj"/>
+                                                <exclude reference="jkH-pT-CWf"/>
+                                                <exclude reference="uI4-rL-lGA"/>
                                                 <exclude reference="2FX-HX-B1R"/>
                                                 <exclude reference="7e7-L4-zLl"/>
                                                 <include reference="TWB-0y-qYb"/>
@@ -3662,14 +3662,14 @@
             <objects>
                 <viewController id="YPH-HZ-alo" customClass="ChoresDetailSplitViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QD0-tx-aRf">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="645"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703.5" height="645"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteBG" translatesAutoresizingMaskIntoConstraints="NO" id="OBJ-Pl-dDb">
-                                <rect key="frame" x="0.0" y="20" width="1024" height="625"/>
+                                <rect key="frame" x="0.0" y="20" width="703.5" height="625"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hoe-hW-lgU">
-                                <rect key="frame" x="986" y="20" width="30" height="30"/>
+                                <rect key="frame" x="665.5" y="20" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
                                 <connections>
                                     <action selector="editChoreBtn:" destination="YPH-HZ-alo" eventType="touchUpInside" id="Xqg-VN-LJA"/>
@@ -3677,10 +3677,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jeo-Zb-uzp" userLabel="ChoreNameView">
-                                <rect key="frame" x="0.0" y="50" width="1024" height="51.5"/>
+                                <rect key="frame" x="0.0" y="50" width="703.5" height="51.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kRu-Y7-VSz">
-                                        <rect key="frame" x="439.5" y="11" width="145" height="30"/>
+                                        <rect key="frame" x="279.5" y="11" width="145" height="30"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -3693,13 +3693,13 @@
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fIv-eO-o4G">
-                                <rect key="frame" x="0.0" y="101.5" width="1024" height="142"/>
+                                <rect key="frame" x="0.0" y="101.5" width="703.5" height="142"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lXH-d6-gG5" userLabel="UsernameView">
-                                <rect key="frame" x="0.0" y="243.5" width="1024" height="45"/>
+                                <rect key="frame" x="0.0" y="243.5" width="703.5" height="45"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1rd-JA-QZP">
-                                        <rect key="frame" x="512.5" y="22" width="0.0" height="0.0"/>
+                                        <rect key="frame" x="352.5" y="22" width="0.0" height="0.0"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -3712,10 +3712,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLQ-rG-n2b" userLabel="DescriptionView">
-                                <rect key="frame" x="0.0" y="288.5" width="1024" height="84"/>
+                                <rect key="frame" x="0.0" y="288.5" width="703.5" height="84"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3dN-cM-P81">
-                                        <rect key="frame" x="51.5" y="4" width="921" height="75"/>
+                                        <rect key="frame" x="35.5" y="4" width="632.5" height="75"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -3730,19 +3730,19 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sy9-06-ydx" userLabel="DatesView">
-                                <rect key="frame" x="0.0" y="372.5" width="1024" height="77.5"/>
+                                <rect key="frame" x="0.0" y="372.5" width="703.5" height="77.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AvL-sR-t5N">
-                                        <rect key="frame" x="0.0" y="0.5" width="338" height="77.5"/>
+                                        <rect key="frame" x="0.0" y="0.5" width="232" height="77.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ0-E4-Ci4">
-                                                <rect key="frame" x="124" y="30" width="89" height="17"/>
+                                                <rect key="frame" x="71" y="30" width="89" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RZ8-R1-6dH">
-                                                <rect key="frame" x="124" y="5" width="89" height="17"/>
+                                                <rect key="frame" x="71" y="5" width="89" height="17"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3758,16 +3758,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HNH-qr-wCh">
-                                        <rect key="frame" x="338" y="0.5" width="348" height="77.5"/>
+                                        <rect key="frame" x="232" y="0.5" width="239.5" height="77.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MM/DD/YYYY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bC4-CY-AZm">
-                                                <rect key="frame" x="130" y="30" width="89" height="17"/>
+                                                <rect key="frame" x="76" y="30" width="89" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TDM-yK-SPs">
-                                                <rect key="frame" x="130" y="5" width="89" height="17"/>
+                                                <rect key="frame" x="76" y="5" width="89" height="17"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3783,16 +3783,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nh-Zn-NI5">
-                                        <rect key="frame" x="686" y="0.5" width="338" height="77.5"/>
+                                        <rect key="frame" x="471.5" y="0.5" width="232" height="77.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore Value" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2qC-nf-8TQ">
-                                                <rect key="frame" x="127.5" y="1.5" width="84" height="17"/>
+                                                <rect key="frame" x="74.5" y="1.5" width="84" height="17"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JZC-9z-9qp">
-                                                <rect key="frame" x="127.5" y="26.5" width="84" height="24"/>
+                                                <rect key="frame" x="74.5" y="26.5" width="84" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -3827,10 +3827,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oRN-lT-fMQ" userLabel="NotesView">
-                                <rect key="frame" x="0.0" y="450" width="1024" height="130.5"/>
+                                <rect key="frame" x="0.0" y="450" width="703.5" height="130.5"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TqE-sJ-AaN">
-                                        <rect key="frame" x="51.5" y="6.5" width="921" height="118"/>
+                                        <rect key="frame" x="35.5" y="6.5" width="632.5" height="118"/>
                                         <color key="backgroundColor" white="1" alpha="0.5" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -3845,10 +3845,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P6f-QJ-9aY" userLabel="MarkCompleteView">
-                                <rect key="frame" x="0.0" y="580.5" width="1024" height="64.5"/>
+                                <rect key="frame" x="0.0" y="580.5" width="703.5" height="64.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EM1-IY-mUr">
-                                        <rect key="frame" x="102" y="10.5" width="819" height="44.5"/>
+                                        <rect key="frame" x="70" y="10.5" width="562.5" height="44.5"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <state key="normal" title="MARK AS COMPLETE" backgroundImage="btnGreen_L">
                                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
