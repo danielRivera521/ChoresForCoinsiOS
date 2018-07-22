@@ -356,7 +356,7 @@ ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
         choreId = choreID
         
-        //choreImageImageView = nil
+        choreImageImageView.image = nil
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
