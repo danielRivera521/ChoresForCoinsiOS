@@ -58,11 +58,16 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     
     var processSegue = true
+    var animRedeemView: UIImageView?
+    
+    
     // MARK: View Controller functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // get animation ready
+        animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -635,7 +640,13 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)
                 }
                 
-                let cID = children[selectedRow].key
+                var cID = ""
+                
+                if children.count != 0 {
+                    cID = children[selectedRow].key
+                } else {
+                    cID = userID!
+                }
             
                 ref?.child("chores/\(currentChoreId)/assigned_child_id").setValue(cID)
                 
@@ -682,7 +693,11 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     
                     self.childRedeemView.isHidden = true
                     
-                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
+                    if let animRedeemView = self.animRedeemView {
+                        AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
+                    }
+                    
+                    // AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in

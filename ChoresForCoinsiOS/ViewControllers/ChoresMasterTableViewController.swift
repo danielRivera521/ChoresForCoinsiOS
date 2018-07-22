@@ -146,16 +146,34 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                     switch value {
                     case 0:
                         self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 1:
                         self.bgImage = #imageLiteral(resourceName: "orangeBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 2:
                         self.bgImage = #imageLiteral(resourceName: "greenBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 3:
                         self.bgImage = #imageLiteral(resourceName: "redBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     case 4:
                         self.bgImage = #imageLiteral(resourceName: "purpleBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     default:
                         self.bgImage = #imageLiteral(resourceName: "whiteBG")
+                        
+                        let imageView = UIImageView(image: self.bgImage)
+                        self.tableView.backgroundView = imageView
                     }
                 }
             }

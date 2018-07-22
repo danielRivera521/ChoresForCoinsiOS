@@ -26,6 +26,8 @@
 		B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */; };
 		B0004B8120D5E687008C7376 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8020D5E687008C7376 /* SettingsViewController.swift */; };
 		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
+		B008CDB62103D60A00855CDA /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B008CDB52103D60A00855CDA /* AnimationHelper.swift */; };
+		B008CDB82103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B008CDB72103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift */; };
 		B00DCA3B20FC653E00EED0E7 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */; };
 		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
@@ -71,6 +73,8 @@
 		B0004B7E20D5E28D008C7376 /* ChoreListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreListViewController.swift; sourceTree = "<group>"; };
 		B0004B8020D5E687008C7376 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
+		B008CDB52103D60A00855CDA /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
+		B008CDB72103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewAnimationCompletionBlock.swift; sourceTree = "<group>"; };
 		B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 				B044111F20DE4A0F000453C3 /* RunningTotal.swift */,
 				65EF0C9220D4D49100DD9A3F /* UserModel.swift */,
 				B04CD87120F07A9500A336F2 /* CustomAuthUI.swift */,
+				B008CDB72103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift */,
+				B008CDB52103D60A00855CDA /* AnimationHelper.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -384,6 +390,7 @@
 				65EF0C8720D409E800DD9A3F /* ProtectedViewController.swift in Sources */,
 				B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */,
 				65EF0C9520D5D05E00DD9A3F /* AlertController.swift in Sources */,
+				B008CDB62103D60A00855CDA /* AnimationHelper.swift in Sources */,
 				B0CC653520D50D4B00E86D41 /* OverviewViewController.swift in Sources */,
 				B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */,
 				B077B56B20DB777200F42BB2 /* ChoreCellTableViewCell.swift in Sources */,
@@ -395,6 +402,7 @@
 				65EF0C9320D4D49100DD9A3F /* UserModel.swift in Sources */,
 				65F81F6C20E59627005405F9 /* Extensions.swift in Sources */,
 				B0CC653D20D525EA00E86D41 /* TakePictureViewController.swift in Sources */,
+				B008CDB82103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift in Sources */,
 				6576491020DA09BA002DE1AC /* Chore.swift in Sources */,
 				B0CC653B20D525AF00E86D41 /* ChoreEditViewController.swift in Sources */,
 				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
