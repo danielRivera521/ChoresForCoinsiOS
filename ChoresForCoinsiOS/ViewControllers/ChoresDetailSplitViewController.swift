@@ -354,6 +354,7 @@ class ChoresDetailSplitViewController: UIViewController {
 extension ChoresDetailSplitViewController:
 ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
+        
         choreId = choreID
         
         choreImageImageView.image = nil

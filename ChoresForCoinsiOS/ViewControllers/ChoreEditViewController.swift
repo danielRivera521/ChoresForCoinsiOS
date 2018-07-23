@@ -61,6 +61,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        choreImageUIButton.imageView?.contentMode = .scaleAspectFit
+        
         choreValueTextField.delegate = self
         choreNameTextField.delegate = self
         usernameTextField.delegate = self
