@@ -23,11 +23,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var dueDateTextField: UITextField!
     @IBOutlet weak var choreValueTextField: UITextField!
     @IBOutlet weak var choreNoteTextView: UITextView!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var coinAmtLabel: UILabel!
-    @IBOutlet weak var profileButton: UIButton!
-    @IBOutlet weak var childRedeemView: UIView!
-    @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     
@@ -57,17 +52,18 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var processSegue = true
     
     var coinConversion: Double = 1
+    var didDelete = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        choreImageUIButton.imageView?.contentMode = .scaleAspectFit
         
         choreValueTextField.delegate = self
         choreNameTextField.delegate = self
         usernameTextField.delegate = self
         
         getBackground()
-        
-        childRedeemView.isHidden = true
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
@@ -84,11 +80,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         //gets the custom parent id created in the registration
         getParentId()
         
-        // get photo for profile button
-        getPhoto()
-        
-        //pre populate choe information from exisitng chore.
-        displayChoreInfo()
+//        //pre populate choe information from exisitng chore.
+//        displayChoreInfo()
         
         // set up child picker
         createChildPicker()
@@ -96,7 +89,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
-        getPhoto()
     }
     
     override func didReceiveMemoryWarning() {
@@ -133,7 +125,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                                 if userID == uid {
                                     // user is in database
                                     self.idFound = true
-                                    self.displayHeaderName()
                                     return
                                 }
                                 
@@ -172,7 +163,15 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             
         }
         
-        let cID = children[selectedRow].key
+        var cID = ""
+        
+        if children.count > 0 {
+            cID = children[selectedRow].key
+        } else if choreId != nil {
+            cID = choreId!
+        } else {
+            return
+        }
         
         ref?.child("chores/\(id)/assigned_child_id").setValue(cID)
         
@@ -212,14 +211,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             
         }
         
-        
-        // TODO: Add alert that says the chore was saved
         if processSegue{
-            dismiss(animated: true) {
-                
-                AlertController.showAlert(self, title: "Chore Updated", message: "Any values that have been entered for the current Chore have been updated on the current chore.")
-                
-            }
+            let alert = UIAlertController(title: "Chore Updated", message: "Any values that have been entered for the current Chore have been updated on the current chore.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.performSegue(withIdentifier: "unwindToDetails", sender: self)
+            }))
         }
         
         
@@ -319,21 +315,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    func displayHeaderName(){
-        let databaseRef = Database.database().reference()
-        
-        if let uid = Auth.auth().currentUser?.uid {
-            
-            databaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let name = value?["user_name"] as? String{
-                    self.usernameLabel.text = name
-                }
-            }
-        }
-    }
-    
     //gets the parent generated id from the user's node in the database
     func getParentId(){
         if let actualUID = userID{
@@ -353,34 +334,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
             if let val = snapshot.value as? Bool {
                 self.isActiveUserParent = val
-                
-                if self.isActiveUserParent {
-                    self.getRunningTotalParent()
-                } else {
-                    self.getRunningTotal()
-                }
             }
         }
-    }
-    
-    func getRunningTotal(){
-        
-        let databaseRef = Database.database().reference()
-        
-        if let uid = Auth.auth().currentUser?.uid {
-            
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
-                print(snapshot)
-                self.coinValue = snapshot.value as? Int ?? 0
-                self.coinAmtLabel.text = "\(self.coinValue)"
-            }
-        }
-        
-    }
-    
-    func getRunningTotalParent(){
-        getChildren()
-        getCoinTotals()
     }
     
     // gets all children with same parent id as user
@@ -397,61 +352,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                 self.children = self.children.filter({$0.userparent == false})
                 
             }
-            
-            self.checkRedeem(children: self.children)
-        }
-        
-        
-    }
-    
-    func getCoinTotals() {
-        coinTotals.removeAll()
-        
-        _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
-            let dictRoot = snapshot.value as? [String:AnyObject] ?? [:]
-            let dictRunningTotal = dictRoot["running_total"] as? [String:AnyObject] ?? [:]
-            
-            for key in Array(dictRunningTotal.keys) {
-                for child in self.children {
-                    if key == child.userid {
-                        self.coinTotals.append(RunningTotal(dictionary: (dictRunningTotal[key] as? [String:AnyObject])!, key: key))
-                    }
-                }
-            }
-            
-            var sumTotal = 0
-            
-            for coinTotal in self.coinTotals {
-                for child in self.children {
-                    if coinTotal.key == child.userid {
-                        if let total = coinTotal.cointotal {
-                            sumTotal += total
-                        }
-                    }
-                }
-            }
-            
-            self.coinAmtLabel.text = String(sumTotal)
-        }
-    }
-    
-    func getPhoto() {
-        
-        let DatabaseRef = Database.database().reference()
-        if let uid = userID{
-            DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                //gets the image URL from the user database
-                if let profileURL = value?["profile_image_url"] as? String{
-                    
-                    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
-                    //turn button into a circle
-                    self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
-                    self.profileButton.layer.masksToBounds = true
-                }
-            }
-            
         }
     }
     
@@ -592,22 +492,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         
     }
     
-    
-    func checkRedeem(children: [ChildUser]) {
-        self.redDot.isHidden = true
-        for child in children {
-            if let childuid = child.userid {
-                Database.database().reference().child("user/\(childuid)/isRedeem").observeSingleEvent(of: .value) { (snapshot) in
-                    if let isRedeem = snapshot.value as? Bool {
-                        if isRedeem && self.isActiveUserParent {
-                            self.redDot.isHidden = false
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
     //MARK: - UIPickerView Functions
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -664,10 +548,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     // MARK: - Actions
-    
-    @IBAction func doGoBack(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
-    }
     
     @IBAction func changeChorePicture(_ sender: UIButton) {
         
@@ -768,51 +648,6 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
-    @IBAction func toCoinView(_ sender: UIButton) {
-        // checks if user is parent. If yes, go to parent coin view, else show redeem view
-        Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
-            if let isParent = snapshot.value as? Bool {
-                if isParent {
-                    self.performSegue(withIdentifier: "toCoinFromChoreEdit", sender: nil)
-                } else {
-                    self.childRedeemView.isHidden = false
-                }
-            }
-        })
-    }
-    
-    @IBAction func childRedeem(_ sender: UIButton) {
-        if coinValue <= 0 {
-            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
-        } else {
-            getConversionRate()
-            let convertedValue = coinConversion * Double(coinValue)
-            let dollarValueString = String(format: "$%.02f", convertedValue)
-            
-            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                
-                if let uid = self.userID {
-                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
-                    
-                    self.childRedeemView.isHidden = true
-                    
-                    AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
-                }
-            }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                self.childRedeemView.isHidden = true
-            }
-            
-            alert.addAction(action)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
-            
-        }
-
-    }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
         dismiss(animated: true, completion: nil)
@@ -824,7 +659,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             let deleteAction = UIAlertAction(title: "Delete", style: .default) { (action) in
                 if let id = self.choreId {
                     self.removeChildNode(child: id)
-                    self.performSegue(withIdentifier: "segueToList", sender: self)
+                    // self.performSegue(withIdentifier: "segueToList", sender: self)
+                    self.didDelete = true
+                    self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -867,9 +704,24 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             }
             
             if processSegue{
-                performSegue(withIdentifier: "segueToList", sender: self)
+                didDelete = true
+                performSegue(withIdentifier: "unwindToDetails", sender: self)
             }
         }
     }
     
+}
+
+extension ChoreEditViewController: ChoreEditDelegate {
+    func choreEdit(_ choreID: String) {
+        self.view.isHidden = false
+        
+        choreId = choreID
+        
+        //gets the custom parent id created in the registration
+        getParentId()
+        
+        //pre populate choe information from exisitng chore.
+        displayChoreInfo()
+    }
 }

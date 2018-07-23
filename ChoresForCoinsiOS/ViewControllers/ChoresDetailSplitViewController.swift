@@ -11,6 +11,10 @@ import Firebase
 import FirebaseUI
 import MobileCoreServices
 
+protocol ChoreEditDelegate: class {
+    func choreEdit(_ choreID: String)
+}
+
 class ChoresDetailSplitViewController: UIViewController {
     
     // MARK: - Outlets
@@ -27,9 +31,12 @@ class ChoresDetailSplitViewController: UIViewController {
     @IBOutlet weak var completedBtn: UIButton!
     @IBOutlet weak var detailImageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var editContainerView: UIView!
     
     
     // MARK: - Properties
+    
+    weak var delegate: ChoreEditDelegate?
     
     //coinValue and choreCoinValue variables set to 0
     var coinValue: Int = 0
@@ -55,6 +62,8 @@ class ChoresDetailSplitViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        editContainerView.isHidden = true
         
         // this is here so the app doesn't crash on first run. choreId get set at a differnt time in the app.
         choreId = "NotCorrect"
@@ -330,11 +339,9 @@ class ChoresDetailSplitViewController: UIViewController {
             }
         }
         
-        if segue.identifier == "editChoreSegue"{
-            if let editChoreVC = segue.destination as? ChoreEditViewController {
-                if let id = choreId{
-                    editChoreVC.choreId = id
-                }
+        if segue.identifier == "editEmbedSegue" {
+            if let destination = segue.destination as? ChoreEditViewController {
+                self.delegate = destination
             }
         }
     }
@@ -347,16 +354,49 @@ class ChoresDetailSplitViewController: UIViewController {
     }
     
     @IBAction func editChoreBtn(_ sender: UIButton) {
-        performSegue(withIdentifier: "editChoreSegue", sender: nil)
+        if let choreID = choreId {
+            editContainerView.isHidden = false
+            
+            delegate?.choreEdit(choreID)
+        }
+    }
+    
+    @IBAction func unwindToDetails(segue:UIStoryboardSegue) {
+        editContainerView.isHidden = true
+        
+        choreImageImageView.image = nil
+        
+        if segue.source is ChoreEditViewController {
+            if let senderVC = segue.source as? ChoreEditViewController {
+                if senderVC.didDelete {
+                    choreNameLabel.text = "Chore Name"
+                    usernameLabel.text = ""
+                    startDateLabel.text = "MM/DD/YYYY"
+                    dueDateLabel.text = "MM/DD/YYYY"
+                    choreValueLabel.text = "0"
+                    completedBtn.isEnabled = false
+                } else {
+                    //gets the firebase generated id
+                    userID = (Auth.auth().currentUser?.uid)!
+                    getChoreData()
+                    
+                    //gets the custom parent id created in the registration
+                    getParentId()
+                }
+            }
+        }
     }
 }
 
 extension ChoresDetailSplitViewController:
 ChoreSelectionDelegate {
     func choreSelected(_ choreID: String) {
+        
         choreId = choreID
         
         choreImageImageView.image = nil
+        
+        completedBtn.isEnabled = true
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
