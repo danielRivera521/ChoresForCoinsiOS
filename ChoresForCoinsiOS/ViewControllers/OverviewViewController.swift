@@ -447,7 +447,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         let colors = [UIColor(named: "CFCBlue"), UIColor(named: "CFCDarkBlue")]
         chartDataSet.colors = colors as! [NSUIColor]
         chartDataSet.selectionShift = 0
-        
+
+        print("Coins Current for \(children[index].username!): \(coinData.0)")
+        print("Coins All-Time for \(children[index].username!): \(coinData.1)")
         return chartData
     }
     
@@ -463,7 +465,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         let colors = [UIColor(named: "CFCOrange"), UIColor(named: "CFCDarkOrange")]
         chartDataSet.colors = colors as! [NSUIColor]
         chartDataSet.selectionShift = 0
-        
+        print("Chores completed for \(children[index].username!): \(choreData.0)")
+        print("Chores incomplete for \(children[index].username!): \(choreData.1)")
         return chartData
     }
     
