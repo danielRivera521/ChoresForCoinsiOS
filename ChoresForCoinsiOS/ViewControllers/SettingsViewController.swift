@@ -23,8 +23,10 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var coinValView: UIView!
     @IBOutlet weak var bonusDayView: UIView!
     @IBOutlet weak var BonusMultView: UIView!
-    @IBOutlet weak var coinValHeight: NSLayoutConstraint!
-    @IBOutlet weak var coinValHeightiPad: NSLayoutConstraint!
+    @IBOutlet weak var backgroundWidthSafeiPad: NSLayoutConstraint!
+    @IBOutlet weak var backgroundWidthSuperiPad: NSLayoutConstraint!
+    @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet var settingsSuperView: UIView!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -371,7 +373,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                     self.coinValView.isHidden = true
                     self.bonusDayView.isHidden = true
                     self.BonusMultView.isHidden = true
-                    
                 }
             }
         })

@@ -351,6 +351,7 @@ class ChoresDetailSplitViewController: UIViewController {
     
     @IBAction func markComplete(_ sender: UIButton) {
         addCoins()
+        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
     }
     
     @IBAction func editChoreBtn(_ sender: UIButton) {
@@ -378,6 +379,7 @@ class ChoresDetailSplitViewController: UIViewController {
                 } else {
                     //gets the firebase generated id
                     userID = (Auth.auth().currentUser?.uid)!
+                    choreId = senderVC.choreId
                     getChoreData()
                     
                     //gets the custom parent id created in the registration
