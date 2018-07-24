@@ -183,6 +183,7 @@
             <objects>
                 <viewController id="QRy-ch-Cyl" customClass="ProfileEditViewController" customModule="ChoresForCoinsiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jGO-P4-ICA">
+
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -197,6 +198,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HsM-2G-TSf" userLabel="UpdateProfilePicView">
+
                                 <rect key="frame" x="0.0" y="50" width="768" height="389"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XP8-Hg-WXt">
@@ -223,6 +225,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBx-dk-ZAg" userLabel="updateFormView">
+
                                 <rect key="frame" x="0.0" y="439" width="768" height="319"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fvp-4L-aBR">
@@ -232,13 +235,16 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRS-Tp-gT1">
+
                                         <rect key="frame" x="192" y="119" width="384.5" height="17"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GxR-fO-VoJ">
+
                                         <rect key="frame" x="192" y="50" width="384.5" height="30"/>
+
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -299,6 +305,7 @@
                                 </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Aw-hO-q0u" userLabel="UpdateSaveButtonView">
+
                                 <rect key="frame" x="0.0" y="860" width="768" height="87"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sq5-8C-hxB">
@@ -1986,6 +1993,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteBG" translatesAutoresizingMaskIntoConstraints="NO" id="L9c-rq-7lY">
+
                                 <rect key="frame" x="0.0" y="10" width="768" height="1024"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rv-C9-vng" userLabel="CalcTopBarView">
@@ -2121,6 +2129,7 @@
                                 <rect key="frame" x="0.0" y="870.5" width="768" height="153.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpR-F0-FE5">
+
                                         <rect key="frame" x="39" y="46" width="322" height="62"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <state key="normal" title="REDEEM" backgroundImage="btnOrange_L">
@@ -2680,6 +2689,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XA-bb-e6z">
+
                                                 <rect key="frame" x="38" y="186" width="187.5" height="187.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4XA-bb-e6z" secondAttribute="height" id="fw2-Di-Bla"/>
@@ -2690,6 +2700,7 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wat-T0-XIs" userLabel="Spacer">
+
                                                 <rect key="frame" x="0.0" y="0.0" width="38" height="819"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
@@ -2745,6 +2756,7 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUk-yO-6Cn" userLabel="Button5_6View">
+
                                         <rect key="frame" x="470" y="0.0" width="282" height="819"/>
                                         <subviews>
                                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ha-R6-uJI">
@@ -2758,6 +2770,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KIk-a7-ROT">
+
                                                 <rect key="frame" x="47" y="186" width="187.5" height="187.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="KIk-a7-ROT" secondAttribute="height" id="7vh-q3-Tk2"/>
@@ -2768,6 +2781,7 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dpv-lR-ZBx" userLabel="Spacer">
+
                                                 <rect key="frame" x="234.5" y="0.0" width="47.5" height="819"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
@@ -2820,6 +2834,7 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0E2-HG-l4w" userLabel="Button3_4View">
+
                                         <rect key="frame" x="282" y="0.0" width="188" height="819"/>
                                         <subviews>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW3-dW-wPO">
@@ -2833,6 +2848,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ro-X4-hdc">
+
                                                 <rect key="frame" x="0.0" y="405.5" width="188" height="187.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4Ro-X4-hdc" secondAttribute="height" id="82h-8P-Q3p"/>
@@ -2843,7 +2859,9 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8J-X3-cP0" userLabel="Spacer">
+
                                                 <rect key="frame" x="0.0" y="389.5" width="188" height="41"/>
+
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -3219,6 +3237,7 @@
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="BAb-Up-N4G" secondAttribute="trailing" constant="20" symbolic="YES" id="xLt-dk-8Lv"/>
                                 </constraints>
                             </view>
+
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WkB-KB-mbN">
                                 <rect key="frame" x="8" y="82" width="48" height="30"/>
                                 <state key="normal" title="&lt; Back"/>
@@ -4155,6 +4174,7 @@
         <segue reference="Gxm-IN-KRx"/>
         <segue reference="bm7-WQ-ArU"/>
         <segue reference="q0e-xW-FaS"/>
+
         <segue reference="TW0-XL-iud"/>
         <segue reference="OXB-qQ-rBy"/>
     </inferredMetricsTieBreakers>
