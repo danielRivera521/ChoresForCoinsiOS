@@ -381,6 +381,18 @@ class ChoreListViewController: UIViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toCoinFromChoresList" {
+            if let destination = segue.destination as? ParentCoinChildViewController {
+                destination.fromDetailsOrEdit = true
+                destination.children = self.children
+                destination.coinTotals = self.coinTotals
+            }
+        }
+    }
+    
+    
     // MARK: Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {

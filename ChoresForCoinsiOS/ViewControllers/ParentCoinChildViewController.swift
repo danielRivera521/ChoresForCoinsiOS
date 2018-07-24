@@ -19,6 +19,7 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var bgImage: UIImageView!
     
     var ref: DatabaseReference?
+    var fromDetailsOrEdit: Bool? = false
     var coinValue = 11
     var idFound = false
     var firstRun = true
@@ -50,11 +51,27 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
         
         getParentId()
         
-        // gets all children with same parent id as user
-        getChildren()
-        
-        // gets coin totals for all children
-        getCoinTotals()
+        if fromDetailsOrEdit! {
+            childrenTableView.reloadData()
+            
+            var sumTotal = 0
+            
+            for coinAmt in coinTotals{
+                if let total = coinAmt.cointotal{
+                    sumTotal += total
+                }
+            }
+            coinAmtLabel.text = String(sumTotal)
+            
+            fromDetailsOrEdit = false
+            
+        } else {
+            // gets all children with same parent id as user
+            getChildren()
+            
+            // gets coin totals for all children
+            getCoinTotals()
+        }
         
         // get photo for profile button
         getPhoto()
@@ -77,8 +94,26 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     
     override func viewWillAppear(_ animated: Bool) {
         if !firstRun {
-            coinValue = 0
-            getRunningTotalParent()
+            
+            if fromDetailsOrEdit! {
+                childrenTableView.reloadData()
+                
+                var sumTotal = 0
+                
+                for coinAmt in coinTotals{
+                    if let total = coinAmt.cointotal{
+                        sumTotal += total
+                    }
+                }
+                coinAmtLabel.text = String(sumTotal)
+                
+                fromDetailsOrEdit = false
+                
+            } else {
+                coinValue = 0
+                getRunningTotalParent()
+            }
+            
             // get photo for profile button
             getPhoto()
             
@@ -262,6 +297,10 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedCellIndex = indexPath.row
         performSegue(withIdentifier: "goToCalc", sender: self)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100.0
     }
     
     @IBAction func dismissView(_ sender: Any) {
