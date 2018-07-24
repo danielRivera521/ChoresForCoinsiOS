@@ -45,6 +45,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     var coinTotals = [RunningTotal] ()
     let childPicker = UIPickerView()
     
+    var url: String?
     var startDateTime: Date?
     var dueDateTime: Date?
     
@@ -394,7 +395,10 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     }
                     
                     if let imageUrl = value?["image_url"] as? String {
-                        self.choreImageUIButton.loadImagesUsingCacheWithUrlString(urlString: imageUrl, inViewController: self)
+                    self.choreImageUIButton.loadImagesUsingCacheWithUrlString(urlString: imageUrl, inViewController: self)
+                        
+                        self.url = imageUrl
+                        
                     } else if self.imageHeightConstraint != nil {
                         self.imageHeightConstraint.isActive = false
                         self.choreImageUIButton.isHidden = true
@@ -408,18 +412,21 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     
     func removeChildNode(child: String){
+    
         if let dbRef = ref?.child("chores").child(child){
-            
+           
             dbRef.removeValue()
         }
-        
-        let storRef = Storage.storage().reference()
-        
-        storRef.child(child).delete { (error) in
-            if let _ = error {
-                AlertController.showAlert(self, title: "Delete Image from Storage Error", message: "Unable to find or delete image associated with this chore.")
-            } else {
-                AlertController.showAlert(self, title: "Delete Success", message: "Chore and chore image deleted.")
+        if let unwrappedURL = url{
+            let storRef = Storage.storage()
+            let deleteRef = storRef.reference(forURL: unwrappedURL)
+            
+            deleteRef.delete { (error) in
+                if let _ = error {
+                    AlertController.showAlert(self, title: "Delete Image from Storage Error", message: "Unable to find or delete image associated with this chore.")
+                } else {
+                    AlertController.showAlert(self, title: "Delete Success", message: "Chore and chore image deleted.")
+                }
             }
         }
         
@@ -661,7 +668,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     self.removeChildNode(child: id)
                     // self.performSegue(withIdentifier: "segueToList", sender: self)
                     self.didDelete = true
-                    self.performSegue(withIdentifier: "unwindToDetails", sender: self)
+                    self.performSegue(withIdentifier: "segueToList", sender: self)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
