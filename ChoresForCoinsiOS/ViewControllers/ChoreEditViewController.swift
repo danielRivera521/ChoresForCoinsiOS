@@ -16,6 +16,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     // MARK: - Outlets
     
     @IBOutlet weak var choreImageUIButton: UIButton!
+    @IBOutlet weak var choreImageView: UIImageView!
     @IBOutlet weak var choreNameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var choreDescriptionTextView: UITextView!
@@ -58,13 +59,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        choreImageUIButton.imageView?.contentMode = .scaleAspectFit
-        
         choreValueTextField.delegate = self
         choreNameTextField.delegate = self
         usernameTextField.delegate = self
-        
-        getBackground()
         
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
@@ -90,6 +87,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
+        getBackground()
     }
     
     override func didReceiveMemoryWarning() {
@@ -395,12 +393,15 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     }
                     
                     if let imageUrl = value?["image_url"] as? String {
+
                     self.choreImageUIButton.loadImagesUsingCacheWithUrlString(urlString: imageUrl, inViewController: self)
                         
                         self.url = imageUrl
                         
+
                     } else if self.imageHeightConstraint != nil {
                         self.imageHeightConstraint.isActive = false
+                        self.choreImageView.isHidden = true
                         self.choreImageUIButton.isHidden = true
                         let heightConstraint = NSLayoutConstraint(item: self.choreImageUIButton, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.00000001, constant: 0)
                         heightConstraint.isActive = true
