@@ -25,6 +25,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var BonusMultView: UIView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet var settingsSuperView: UIView!
+    @IBOutlet weak var redeemAlertImageView: UIImageView!
     
     var isFirstLoad = true
     var coinValue = 0
@@ -37,10 +38,13 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     var coinTotals = [RunningTotal] ()
     var coinConversion: Double = 1
     var animRedeemView: UIImageView?
+    var animRedeemAlertContainer = [UIImage] ()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        redeemAlertImageView.isHidden = true
         
         // get animation ready
         animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
@@ -309,6 +313,24 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
+                            
+                            self.redeemAlertImageView.isHidden = false
+                            
+                            // set up alert animation
+                            for i in 0...29 {
+                                if i < 10 {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_00\(i)")!)
+                                } else {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_0\(i)")!)
+                                }
+                            }
+                            
+                            self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
+                            
+                            self.redeemAlertImageView.startAnimating()
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
                         }
                     }
                 }

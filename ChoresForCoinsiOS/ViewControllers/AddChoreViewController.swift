@@ -29,6 +29,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var redeemAlertImageView: UIImageView!
     
     
     // MARK: Properties
@@ -61,12 +62,15 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var processSegue = true
     var animRedeemView: UIImageView?
+    var animRedeemAlertContainer = [UIImage] ()
     
     
     // MARK: View Controller functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        redeemAlertImageView.isHidden = true
         
         // get animation ready
         animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
@@ -526,7 +530,25 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
-                        } 
+                            
+                            self.redeemAlertImageView.isHidden = false
+                            
+                            // set up alert animation
+                            for i in 0...29 {
+                                if i < 10 {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_00\(i)")!)
+                                } else {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_0\(i)")!)
+                                }
+                            }
+                            
+                            self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
+                            
+                            self.redeemAlertImageView.startAnimating()
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
+                        }
                     }
                 }
             }

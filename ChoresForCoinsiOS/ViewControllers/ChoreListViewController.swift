@@ -44,6 +44,8 @@ class ChoreListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        redeemAlertImageView.isHidden = true
+        
         // get animation ready
         animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
         
@@ -348,8 +350,9 @@ class ChoreListViewController: UIViewController {
                             self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
                             
                             self.redeemAlertImageView.startAnimating()
-                            
-                            return
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
                         }
                     }
                 }

@@ -20,6 +20,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var childRedeemView: UIView!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var redeemAlertImageView: UIImageView!
     
     var userID: String?
     var parentID: String?
@@ -34,10 +35,13 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     private var imagePicker: UIImagePickerController!
     
     var animCoinView: UIImageView?
+    var animRedeemAlertContainer = [UIImage] ()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        redeemAlertImageView.isHidden = true
         
         animCoinView = AnimationHelper.createCoinsEarnedAnim(vc: self)
         
@@ -349,6 +353,24 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
+                            
+                            self.redeemAlertImageView.isHidden = false
+                            
+                            // set up alert animation
+                            for i in 0...29 {
+                                if i < 10 {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_00\(i)")!)
+                                } else {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_0\(i)")!)
+                                }
+                            }
+                            
+                            self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
+                            
+                            self.redeemAlertImageView.startAnimating()
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
                         }
                     }
                 }
