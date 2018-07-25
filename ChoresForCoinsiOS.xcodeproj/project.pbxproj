@@ -39,6 +39,7 @@
 		B052D6BC20FDD340004C25C8 /* ChoresDetailSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */; };
 		B077B56B20DB777200F42BB2 /* ChoreCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */; };
 		B07F2F6E20F089690076F065 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B07F2F6D20F089690076F065 /* MessageUI.framework */; };
+		B08B83E42108522C0082D1B1 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B08B83E32108522C0082D1B1 /* OnboardingViewController.swift */; };
 		B0CC652920D5026D00E86D41 /* SignUpParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */; };
 		B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */; };
 		B0CC653120D5038700E86D41 /* ProfilePictureSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */; };
@@ -86,6 +87,7 @@
 		B052D6BB20FDD340004C25C8 /* ChoresDetailSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoresDetailSplitViewController.swift; sourceTree = "<group>"; };
 		B077B56A20DB777200F42BB2 /* ChoreCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoreCellTableViewCell.swift; sourceTree = "<group>"; };
 		B07F2F6D20F089690076F065 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		B08B83E32108522C0082D1B1 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpParentChildViewController.swift; sourceTree = "<group>"; };
 		B0CC652A20D5028B00E86D41 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		B0CC653020D5038700E86D41 /* ProfilePictureSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureSelectViewController.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				B0004B8020D5E687008C7376 /* SettingsViewController.swift */,
 				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
 				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
+				B08B83E32108522C0082D1B1 /* OnboardingViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				B008CDB82103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift in Sources */,
 				6576491020DA09BA002DE1AC /* Chore.swift in Sources */,
 				B0CC653B20D525AF00E86D41 /* ChoreEditViewController.swift in Sources */,
+				B08B83E42108522C0082D1B1 /* OnboardingViewController.swift in Sources */,
 				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
 				B052D6B620FDC8A1004C25C8 /* ChoresMasterTableViewController.swift in Sources */,
 			);

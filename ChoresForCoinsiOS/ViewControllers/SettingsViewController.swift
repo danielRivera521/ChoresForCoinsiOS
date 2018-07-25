@@ -23,8 +23,6 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var coinValView: UIView!
     @IBOutlet weak var bonusDayView: UIView!
     @IBOutlet weak var BonusMultView: UIView!
-    @IBOutlet weak var backgroundWidthSafeiPad: NSLayoutConstraint!
-    @IBOutlet weak var backgroundWidthSuperiPad: NSLayoutConstraint!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet var settingsSuperView: UIView!
     

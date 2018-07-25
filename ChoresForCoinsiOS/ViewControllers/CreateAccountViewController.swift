@@ -91,7 +91,7 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         
         createAccount()
        
-        self.performSegue(withIdentifier: "goToChoreList", sender: nil)
+        self.performSegue(withIdentifier: "goToOnboarding", sender: nil)
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
@@ -129,6 +129,8 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // dismiss keyboard when user touches outside of keyboard
         self.view.endEditing(true)
