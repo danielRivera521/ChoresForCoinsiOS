@@ -37,7 +37,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBar_L" translatesAutoresizingMaskIntoConstraints="NO" id="xgm-C1-b2L">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="51.666666666666664"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="yI7-Hk-fDK" userLabel="redeemAlert">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="yI7-Hk-fDK" userLabel="redeemAlert">
                                         <rect key="frame" x="298" y="0.0" width="116" height="107.66666666666667"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yI7-Hk-fDK" secondAttribute="height" multiplier="467:432" id="riZ-fF-MYn"/>
@@ -632,7 +632,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBar_L" translatesAutoresizingMaskIntoConstraints="NO" id="Upn-VF-ECv">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="51.666666666666664"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="OBh-u2-OJT" userLabel="redeemAlert">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="OBh-u2-OJT" userLabel="redeemAlert">
                                         <rect key="frame" x="298" y="0.0" width="116" height="107.66666666666667"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWJ-hv-vM4">
@@ -751,16 +751,16 @@
                         <viewLayoutGuide key="safeArea" id="qnb-AD-Rqv"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="guH-Ya-64q"/>
                                 <exclude reference="njw-V1-m59"/>
+                                <exclude reference="guH-Ya-64q"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="guH-Ya-64q"/>
-                                <exclude reference="vmN-Fb-Ozd"/>
                                 <exclude reference="0Ga-wI-T2z"/>
                                 <include reference="njw-V1-m59"/>
+                                <include reference="guH-Ya-64q"/>
+                                <exclude reference="vmN-Fb-Ozd"/>
                             </mask>
                         </variation>
                     </view>
@@ -1010,7 +1010,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBar_L" translatesAutoresizingMaskIntoConstraints="NO" id="rHR-Mc-Ztb">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="51.666666666666664"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-qd-aVw" userLabel="redeemAlert">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="qNS-qd-aVw" userLabel="redeemAlert">
                                         <rect key="frame" x="298" y="0.0" width="116" height="108"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ITP-Cg-ahr">
@@ -1173,16 +1173,16 @@
                         <viewLayoutGuide key="safeArea" id="zIt-le-Adg"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="ayy-BI-WjL"/>
                                 <exclude reference="H0W-MI-BnX"/>
+                                <exclude reference="ayy-BI-WjL"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="ayy-BI-WjL"/>
-                                <exclude reference="htS-VO-FPq"/>
                                 <exclude reference="BqR-3H-6DC"/>
                                 <include reference="H0W-MI-BnX"/>
+                                <include reference="ayy-BI-WjL"/>
+                                <exclude reference="htS-VO-FPq"/>
                             </mask>
                         </variation>
                     </view>
@@ -1622,7 +1622,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBar_L" translatesAutoresizingMaskIntoConstraints="NO" id="vMq-Q1-bDA">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="51.666666666666664"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="ZQx-Np-fGL" userLabel="redeemAlert">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="ZQx-Np-fGL" userLabel="redeemAlert">
                                         <rect key="frame" x="298" y="0.0" width="116" height="108"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5FP-4v-sSN">
@@ -1775,7 +1775,6 @@
                         <viewLayoutGuide key="safeArea" id="p7V-lx-juA"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="BxM-sf-urO"/>
                                 <exclude reference="0fc-uc-2PV"/>
                                 <exclude reference="C3T-KG-G9E"/>
                                 <exclude reference="RaF-Ne-RHt"/>
@@ -1796,6 +1795,7 @@
                                 <exclude reference="XLb-gf-say"/>
                                 <exclude reference="mE2-OZ-vcK"/>
                                 <exclude reference="xGr-bz-zwj"/>
+                                <exclude reference="BxM-sf-urO"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -1805,8 +1805,6 @@
                                 <exclude reference="N7W-KE-DJa"/>
                                 <exclude reference="SwM-Cd-3is"/>
                                 <exclude reference="qX2-4X-kxE"/>
-                                <include reference="BxM-sf-urO"/>
-                                <exclude reference="JcN-hj-aHR"/>
                                 <include reference="0fc-uc-2PV"/>
                                 <include reference="C3T-KG-G9E"/>
                                 <include reference="RaF-Ne-RHt"/>
@@ -1842,6 +1840,8 @@
                                 <include reference="Gz9-BI-YzP"/>
                                 <include reference="mE2-OZ-vcK"/>
                                 <include reference="xGr-bz-zwj"/>
+                                <include reference="BxM-sf-urO"/>
+                                <exclude reference="JcN-hj-aHR"/>
                             </mask>
                         </variation>
                     </view>
@@ -1906,7 +1906,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVM-2r-Tl5">
-                                        <rect key="frame" x="352.33333333333331" y="11.66666666666667" width="11.333333333333314" height="20.333333333333329"/>
+                                        <rect key="frame" x="352.66666666666669" y="11.66666666666667" width="11.333333333333314" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1915,7 +1915,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HKB-qb-kkX">
-                                        <rect key="frame" x="371.66666666666669" y="4.6666666666666679" width="34.333333333333314" height="34.333333333333329"/>
+                                        <rect key="frame" x="372" y="4.6666666666666679" width="34" height="34.333333333333329"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="HKB-qb-kkX" secondAttribute="height" id="Ck3-PJ-M6q"/>
                                         </constraints>
@@ -2061,7 +2061,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fny-wj-t1c">
-                                        <rect key="frame" x="352.66666666666669" y="10.66666666666667" width="11.333333333333314" height="20.333333333333329"/>
+                                        <rect key="frame" x="353" y="10.66666666666667" width="11.333333333333314" height="20.333333333333329"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2070,7 +2070,7 @@
                                         </variation>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsF-QA-LAY">
-                                        <rect key="frame" x="372" y="3.6666666666666679" width="34" height="34.333333333333329"/>
+                                        <rect key="frame" x="372.33333333333331" y="3.6666666666666679" width="33.666666666666686" height="34.333333333333329"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BsF-QA-LAY" secondAttribute="height" id="FdZ-ZF-QPr"/>
                                         </constraints>
@@ -2108,7 +2108,7 @@
                                 <rect key="frame" x="0.0" y="112.33333333333331" width="414" height="123"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sId-TV-pES">
-                                        <rect key="frame" x="15" y="41.000000000000014" width="41" height="41"/>
+                                        <rect key="frame" x="15" y="41.333333333333329" width="41" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="sId-TV-pES" secondAttribute="height" id="uEc-lu-XBj"/>
                                         </constraints>
@@ -2118,7 +2118,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BB1-53-g0D">
-                                        <rect key="frame" x="358" y="41.000000000000014" width="41" height="41"/>
+                                        <rect key="frame" x="358" y="41.333333333333329" width="41" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="BB1-53-g0D" secondAttribute="height" id="Lg4-2n-zsD"/>
                                         </constraints>
@@ -3551,10 +3551,10 @@
                                 <rect key="frame" x="8" y="114.99999999999997" width="398" height="492.33333333333326"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PxT-4M-s71" userLabel="Button1_2View">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="147"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="147.66666666666666"/>
                                         <subviews>
                                             <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YdZ-aJ-6gx">
-                                                <rect key="frame" x="209" y="7.3333333333333286" width="133" height="133"/>
+                                                <rect key="frame" x="209" y="8" width="133" height="132.66666666666666"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="YdZ-aJ-6gx" secondAttribute="height" id="cTH-QD-WoZ"/>
                                                 </constraints>
@@ -3564,7 +3564,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4XA-bb-e6z">
-                                                <rect key="frame" x="56" y="7.3333333333333286" width="133" height="133"/>
+                                                <rect key="frame" x="56" y="8" width="133" height="132.66666666666666"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4XA-bb-e6z" secondAttribute="height" id="fw2-Di-Bla"/>
                                                 </constraints>
@@ -3574,7 +3574,7 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wat-T0-XIs" userLabel="Spacer">
-                                                <rect key="frame" x="189" y="0.0" width="20" height="147"/>
+                                                <rect key="frame" x="189" y="0.0" width="20" height="147.66666666666666"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -3629,7 +3629,7 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OUk-yO-6Cn" userLabel="Button5_6View">
-                                        <rect key="frame" x="0.0" y="295.33333333333331" width="398" height="147.66666666666669"/>
+                                        <rect key="frame" x="0.0" y="296.33333333333331" width="398" height="147.66666666666669"/>
                                         <subviews>
                                             <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ha-R6-uJI">
                                                 <rect key="frame" x="209" y="7.3333333333333712" width="133.33333333333337" height="133"/>
@@ -3704,10 +3704,10 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0E2-HG-l4w" userLabel="Button3_4View">
-                                        <rect key="frame" x="0.0" y="147" width="398" height="148.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="147.66666666666669" width="398" height="148.66666666666669"/>
                                         <subviews>
                                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nW3-dW-wPO">
-                                                <rect key="frame" x="54.666666666666671" y="8" width="134.33333333333331" height="134"/>
+                                                <rect key="frame" x="54.666666666666671" y="8.3333333333333144" width="134.33333333333331" height="134"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="nW3-dW-wPO" secondAttribute="height" id="PJe-eA-3S7"/>
                                                 </constraints>
@@ -3717,7 +3717,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ro-X4-hdc">
-                                                <rect key="frame" x="209" y="8" width="134.33333333333337" height="134"/>
+                                                <rect key="frame" x="209" y="8.3333333333333144" width="134.33333333333337" height="134"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="4Ro-X4-hdc" secondAttribute="height" id="82h-8P-Q3p"/>
                                                 </constraints>
@@ -3727,7 +3727,7 @@
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8J-X3-cP0" userLabel="Spacer">
-                                                <rect key="frame" x="189" y="0.33333333333331439" width="20" height="148.66666666666666"/>
+                                                <rect key="frame" x="189" y="0.33333333333331439" width="20" height="149"/>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                         </subviews>
@@ -4044,7 +4044,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topBar_L" translatesAutoresizingMaskIntoConstraints="NO" id="uxn-js-JMJ">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="43"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="SET-8F-pJh" userLabel="redeemAlert">
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="anim_redeemAlert_000" translatesAutoresizingMaskIntoConstraints="NO" id="SET-8F-pJh" userLabel="redeemAlert">
                                         <rect key="frame" x="298" y="0.0" width="116" height="108"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="be6-Zc-DSa">
@@ -4175,16 +4175,16 @@
                         <viewLayoutGuide key="safeArea" id="SND-6o-v3F"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="Smu-JT-EhN"/>
                                 <exclude reference="EcH-0w-sin"/>
+                                <exclude reference="Smu-JT-EhN"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="Smu-JT-EhN"/>
-                                <exclude reference="zzF-TT-VeK"/>
                                 <include reference="EcH-0w-sin"/>
                                 <exclude reference="iqv-Sv-HpA"/>
+                                <include reference="Smu-JT-EhN"/>
+                                <exclude reference="zzF-TT-VeK"/>
                             </mask>
                         </variation>
                     </view>
