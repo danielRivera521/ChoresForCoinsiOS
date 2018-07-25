@@ -350,8 +350,19 @@ class ChoresDetailSplitViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func markComplete(_ sender: UIButton) {
-        addCoins()
-        self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
+        
+        //ensure that the completion button was not pressed accidentally.
+        let completeAlert = UIAlertController(title: "Complete Chore", message: "Are you ready to complete the chore? If so click ok to complete the chore and add a picture.", preferredStyle: .alert)
+       //processes the ok action and marks teh chore complete and send the user to the takepicture view controller.
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.addCoins()
+            self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
+        }
+        let cancelAction = UIAlertAction(title: "CANCEL", style: .cancel, handler: nil)
+        completeAlert.addAction(okAction)
+        completeAlert.addAction(cancelAction)
+        
+        present(completeAlert, animated: true, completion: nil)
     }
     
     @IBAction func editChoreBtn(_ sender: UIButton) {

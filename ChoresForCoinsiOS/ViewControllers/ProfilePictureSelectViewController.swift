@@ -120,20 +120,43 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
         
         // if the device's camera is functioning and available, set imagePickers source as the camera
         // if not, use photo library instead
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            imagePicker.sourceType = .camera
-            imagePicker.cameraCaptureMode = .photo
-        } else {
-            imagePicker.sourceType = .photoLibrary
+        
+        let photoOptionAlert = UIAlertController(title: "Profile Photo", message: "Select an Option", preferredStyle: .actionSheet)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                self.imagePicker.sourceType = .camera
+                self.imagePicker.cameraCaptureMode = .photo
+                
+                // lets user edit photos taken with camera or in photo library
+                self.imagePicker.allowsEditing = true
+                // sets the media type to the same as the camera or photo library
+                
+                
+                // present the image picker
+                self.present(self.imagePicker, animated: true, completion: nil)
+            } else {
+                AlertController.showAlert(self, title: "Error", message: "Camera is not Available")
+            }
+        }
+        let photoLibAction = UIAlertAction(title: "Photo Library", style: .default) { (photoAction) in
+            self.imagePicker.sourceType = .photoLibrary
+            
+            // lets user edit photos taken with camera or in photo library
+            self.imagePicker.allowsEditing = true
+            // sets the media type to the same as the camera or photo library
+            
+            
+            // present the image picker
+            self.present(self.imagePicker, animated: true, completion: nil)
         }
         
-        // lets user edit photos taken with camera or in photo library
-        imagePicker.allowsEditing = true
-        // sets the media type to the same as the camera or photo library
+        photoOptionAlert.addAction(cameraAction)
+        photoOptionAlert.addAction(photoLibAction)
+        
+        present(photoOptionAlert, animated: true, completion: nil)
         
         
-        // present the image picker
-        self.present(imagePicker, animated: true, completion: nil)
+        
     }
     
     
