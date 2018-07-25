@@ -402,11 +402,6 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
             self.redeemedTotal += redeemedAmt
             Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
             
-            
-            self.redeemedTotal += redeemedAmt
-            Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
-            
-            
             // update new coin value on database
             self.updateTotalCoins()
             
