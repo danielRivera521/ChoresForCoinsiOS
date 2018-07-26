@@ -293,6 +293,10 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                 
                 
                 cell.imageCellImageView.image = image
+                
+                if let cid = self.choreIDNum {
+                    self.delegate?.choreSelected(cid)
+                }
             })
             
         } else {

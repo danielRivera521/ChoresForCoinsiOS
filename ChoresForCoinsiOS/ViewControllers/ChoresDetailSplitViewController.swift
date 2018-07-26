@@ -85,7 +85,7 @@ class ChoresDetailSplitViewController: UIViewController {
         isUserParent()
         getBackground()
         
-        editUIButton.isHidden = false
+        emptyBGCover.isHidden = false
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -378,7 +378,7 @@ class ChoresDetailSplitViewController: UIViewController {
         if let choreID = choreId {
             editContainerView.isHidden = false
             
-            editUIButton.isHidden = true
+            emptyBGCover.isHidden = false
             
             delegate?.choreEdit(choreID)
         }
@@ -387,16 +387,13 @@ class ChoresDetailSplitViewController: UIViewController {
     @IBAction func unwindToDetails(segue:UIStoryboardSegue) {
         editContainerView.isHidden = true
         
-        emptyBGCover.isHidden = false
-        selectChoreLabel.isHidden = false
-        
-        editUIButton.isHidden = false
-        
         choreImageImageView.image = #imageLiteral(resourceName: "placeholderImg")
         
         if segue.source is ChoreEditViewController {
             if let senderVC = segue.source as? ChoreEditViewController {
                 if senderVC.didDelete {
+                    emptyBGCover.isHidden = false
+                    selectChoreLabel.isHidden = false
                     choreNameLabel.text = "Chore Name"
                     usernameLabel.text = ""
                     startDateLabel.text = "MM/DD/YYYY"
