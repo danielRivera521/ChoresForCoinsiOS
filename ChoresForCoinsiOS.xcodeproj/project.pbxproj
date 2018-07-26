@@ -28,6 +28,8 @@
 		B0004B8320D62AB9008C7376 /* AddRemoveCoinsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */; };
 		B008CDB62103D60A00855CDA /* AnimationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B008CDB52103D60A00855CDA /* AnimationHelper.swift */; };
 		B008CDB82103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B008CDB72103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift */; };
+		B00A5EBD21098750000B813B /* ChildSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00A5EBB21098750000B813B /* ChildSettingsViewController.swift */; };
+		B00A5EBE21098750000B813B /* ParentSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00A5EBC21098750000B813B /* ParentSettingsViewController.swift */; };
 		B00DCA3B20FC653E00EED0E7 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */; };
 		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
@@ -76,6 +78,8 @@
 		B0004B8220D62AB9008C7376 /* AddRemoveCoinsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRemoveCoinsViewController.swift; sourceTree = "<group>"; };
 		B008CDB52103D60A00855CDA /* AnimationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelper.swift; sourceTree = "<group>"; };
 		B008CDB72103FAB400855CDA /* UIImageViewAnimationCompletionBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewAnimationCompletionBlock.swift; sourceTree = "<group>"; };
+		B00A5EBB21098750000B813B /* ChildSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildSettingsViewController.swift; sourceTree = "<group>"; };
+		B00A5EBC21098750000B813B /* ParentSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentSettingsViewController.swift; sourceTree = "<group>"; };
 		B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +182,8 @@
 				B0CC652820D5026D00E86D41 /* SignUpParentChildViewController.swift */,
 				B0CC653C20D525EA00E86D41 /* TakePictureViewController.swift */,
 				B08B83E32108522C0082D1B1 /* OnboardingViewController.swift */,
+				B00A5EBB21098750000B813B /* ChildSettingsViewController.swift */,
+				B00A5EBC21098750000B813B /* ParentSettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -384,9 +390,11 @@
 				B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */,
 				B0CC653920D5259800E86D41 /* ChoreDetailsViewController.swift in Sources */,
 				B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */,
+				B00A5EBD21098750000B813B /* ChildSettingsViewController.swift in Sources */,
 				B0004B7F20D5E28D008C7376 /* ChoreListViewController.swift in Sources */,
 				B052D6B820FDCCA3004C25C8 /* ChoresMasterTableViewCell.swift in Sources */,
 				B04CD87220F07A9500A336F2 /* CustomAuthUI.swift in Sources */,
+				B00A5EBE21098750000B813B /* ParentSettingsViewController.swift in Sources */,
 				B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */,
 				B0CC653720D5249000E86D41 /* AddChoreViewController.swift in Sources */,
 				B0CC652B20D5028B00E86D41 /* CreateAccountViewController.swift in Sources */,
