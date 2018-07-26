@@ -669,7 +669,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     self.removeChildNode(child: id)
                     // self.performSegue(withIdentifier: "segueToList", sender: self)
                     self.didDelete = true
-                    self.performSegue(withIdentifier: "segueToList", sender: self)
+                    //self.performSegue(withIdentifier: "segueToList", sender: self)
+                    self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -677,7 +678,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             
-            present(deleteAlert, animated: true, completion: nil)
+            present(deleteAlert, animated: true, completion: {
+                //self.performSegue(withIdentifier: "unwindToDetails", sender: self)
+            })
         }
     }
     

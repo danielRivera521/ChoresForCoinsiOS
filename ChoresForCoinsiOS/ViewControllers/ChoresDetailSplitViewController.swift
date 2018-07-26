@@ -83,6 +83,9 @@ class ChoresDetailSplitViewController: UIViewController {
         getBackground()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        editContainerView.isHidden = true
+    }
     
     // MARK: - Custom Methods
     

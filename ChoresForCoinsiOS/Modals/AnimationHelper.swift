@@ -97,7 +97,7 @@ class AnimationHelper {
             
             // start playing the animation
             animView.startAnimatingWithCompletionBlock {
-                vc.dismiss(animated: true, completion: nil)
+                animView.removeFromSuperview()
             }
         }
     }
