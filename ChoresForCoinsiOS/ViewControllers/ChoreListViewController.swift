@@ -19,6 +19,7 @@ class ChoreListViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var redeemAlertImageView: UIImageView!
     
     // MARK: - Properties
     
@@ -36,11 +37,14 @@ class ChoreListViewController: UIViewController {
     
     var bgImg: UIImage?
     var animRedeemView: UIImageView?
+    var animRedeemAlertContainer = [UIImage] ()
     
     // MARK: - ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        redeemAlertImageView.isHidden = true
         
         // get animation ready
         animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
@@ -331,7 +335,24 @@ class ChoreListViewController: UIViewController {
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
-                            return
+                            
+                            self.redeemAlertImageView.isHidden = false
+                            
+                            // set up alert animation
+                            for i in 0...29 {
+                                if i < 10 {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_00\(i)")!)
+                                } else {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_0\(i)")!)
+                                }
+                            }
+                            
+                            self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
+                            
+                            self.redeemAlertImageView.startAnimating()
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
                         }
                     }
                 }
@@ -392,6 +413,22 @@ class ChoreListViewController: UIViewController {
         }
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     
     // MARK: Actions
     
@@ -400,6 +437,7 @@ class ChoreListViewController: UIViewController {
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
             if let isParent = snapshot.value as? Bool {
                 if isParent {
+                    self.redeemAlertImageView.stopAnimating()
                     self.performSegue(withIdentifier: "toCoinFromChoresList", sender: nil)
                 } else {
                     self.childRedeemView.isHidden = false
@@ -412,7 +450,8 @@ class ChoreListViewController: UIViewController {
         if coinValue <= 0 {
             AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
-          //  getConversionRate()
+          
+            getConversionRate()
             let convertedValue = coinConversion * Double(coinValue)
             let dollarValueString = String(format: "$%.02f", convertedValue)
             

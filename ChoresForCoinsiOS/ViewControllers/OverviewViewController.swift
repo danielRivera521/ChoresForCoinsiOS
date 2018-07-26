@@ -23,6 +23,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var coinAmtLabel: UILabel!
     @IBOutlet weak var redDot: UIImageView!
+    @IBOutlet weak var redeemAlertImageView: UIImageView!
     
     
     // MARK: Properties
@@ -47,12 +48,15 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var coinConversion: Double = 1
     var bgImg: UIImage?
     var animRedeemView: UIImageView?
+    var animRedeemAlertContainer = [UIImage] ()
     
     // MARK: ViewController methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        redeemAlertImageView.isHidden = true
         
         // get animation ready
         animRedeemView = AnimationHelper.createRedeemAnim(vc: self)
@@ -313,6 +317,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
             
+            self.checkRedeem(children: self.children)
             self.overviewTableView.reloadData()
         }
     }
@@ -428,6 +433,24 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     if let isRedeem = snapshot.value as? Bool {
                         if isRedeem && self.isActiveUserParent {
                             self.redDot.isHidden = false
+                            
+                            self.redeemAlertImageView.isHidden = false
+                            
+                            // set up alert animation
+                            for i in 0...29 {
+                                if i < 10 {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_00\(i)")!)
+                                } else {
+                                    self.animRedeemAlertContainer.append(UIImage(named: "anim_redeemAlert_0\(i)")!)
+                                }
+                            }
+                            
+                            self.redeemAlertImageView.animationImages = self.animRedeemAlertContainer
+                            
+                            self.redeemAlertImageView.startAnimating()
+                        } else {
+                            self.redeemAlertImageView.stopAnimating()
+                            self.redeemAlertImageView.isHidden = true
                         }
                     }
                 }
