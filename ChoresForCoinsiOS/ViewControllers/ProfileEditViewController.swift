@@ -22,6 +22,8 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
     var username: String?
     var isParent: Bool?
     var isFirstLoad = true
+    var currentUserID: String?
+    var isActiveUserParent = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,23 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         self.view.endEditing(true)
     }
     
+    func isUserParent(){
+        if let uid = Auth.auth().currentUser?.uid{
+            Database.database().reference().child("user/\(uid)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
+                if let val = snapshot.value as? Bool {
+                    self.isActiveUserParent = val
+                    
+                    if !self.isActiveUserParent {
+                        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.editParentKey(_:)))
+                        
+                        self.parentKeyLabel.isUserInteractionEnabled = true
+                        self.parentKeyLabel.addGestureRecognizer(gesture)
+                    }
+                }
+            }
+        }
+    }
+    
     func loadPage(){
         getBackground()
         
@@ -63,6 +82,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
             Database.database().reference().child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
                 if let val = snapshot.value as? [String:Any] {
                     if let userParent = val["user_parent"] as? Bool {
+                        self.isParent = userParent
                         if !userParent {
                             self.sentParentKeyButton.isHidden = true
                         }
@@ -77,6 +97,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
                     if let parentKeyUnwrapped = val["parent_id"] as? String {
                         self.parentKey = parentKeyUnwrapped
                         self.parentKeyLabel.text = parentKeyUnwrapped
+                        
                     }
                     
                     self.getPhoto()
@@ -87,7 +108,9 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         if let emailUnwrapped = email {
             emailTextField.text = emailUnwrapped
         }
-
+        
+        isUserParent()
+        
     }
     
     func getBackground() {
@@ -203,7 +226,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
                     AlertController.showAlert(self, title: "Error", message: "There was an error saving your new email. Please try again")
                     return
                 }
-
+                
                 
             })
             let emailAlert = UIAlertController(title: "Email Changed", message: "Email successfully changed. You will be logged out. Please log back into the application with your updated email account.", preferredStyle: UIAlertControllerStyle.alert)
@@ -223,7 +246,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
             
             emailAlert.addAction(okAction)
             present(emailAlert, animated: true, completion: nil)
-           
+            
         }
         
         return false
@@ -239,6 +262,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         let userID = Auth.auth().currentUser?.uid
         let DatabaseRef = Database.database().reference()
         if let uid = userID{
+            currentUserID = uid
             DatabaseRef.child("user").child(uid).observeSingleEvent(of: .value) { (snapshot) in
                 
                 let value = snapshot.value as? NSDictionary
@@ -250,7 +274,7 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
                         
                         self.profilePicButton.setBackgroundImage(image, for: .normal)
                     })
-
+                    
                     //turn button into a circle
                     self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.width/2
                     self.profilePicButton.layer.masksToBounds = true
@@ -268,6 +292,31 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         
         AlertController.showAlert(self, title: "Email Sent", message: "Your email will be sent!")
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func editParentKey(_ sender: UITapGestureRecognizer){
+        let keyEditAlert = UIAlertController(title: "Edit Parent Key", message: "Enter the correct parent key", preferredStyle: .alert)
+        keyEditAlert.addTextField { (textfield) in
+            textfield.text = self.parentKey
+        }
+        
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            if let stringArray = keyEditAlert.textFields{
+                if let uid = Auth.auth().currentUser?.uid{
+                    let keyInput = stringArray[0]
+                    if let keyString = keyInput.text{
+                        Database.database().reference().child("user/\(uid)/parent_id").setValue(keyString)
+                        self.parentKeyLabel.text = keyString
+                    }
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        keyEditAlert.addAction(okAction)
+        keyEditAlert.addAction(cancelAction)
+        
+        present(keyEditAlert, animated: true, completion: nil)
     }
     
     @IBAction func updatePassword(_ sender: UIButton) {

@@ -413,6 +413,22 @@ class ChoreListViewController: UIViewController {
         }
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID{
+            
+            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                let value = snapshot.value as? NSDictionary
+                if let conversionValue = value?["coin_dollar_value"] as? Double{
+                    
+                    self.coinConversion = conversionValue
+                }
+                
+            })
+        }
+        
+    }
+    
     
     // MARK: Actions
     
@@ -434,7 +450,8 @@ class ChoreListViewController: UIViewController {
         if coinValue <= 0 {
             AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
-          //  getConversionRate()
+          
+            getConversionRate()
             let convertedValue = coinConversion * Double(coinValue)
             let dollarValueString = String(format: "$%.02f", convertedValue)
             
