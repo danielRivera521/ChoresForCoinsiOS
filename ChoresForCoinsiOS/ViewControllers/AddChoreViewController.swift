@@ -40,8 +40,10 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     // create date picker
     let picker = UIDatePicker()
     let childPicker = UIPickerView()
+    
     // array to hold all users with same generatedId
     var family = [UserModel] ()
+    
     var currentUID: String?
     var userID: String?
     var parentID: String?

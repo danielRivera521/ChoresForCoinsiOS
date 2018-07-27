@@ -78,6 +78,8 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
         //cresates chore list
         createChores()
+        
+        getBackground()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,6 +183,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
         let imageView = UIImageView(image: self.bgImage)
         self.tableView.backgroundView = imageView
+        self.tableView.reloadData()
     }
     
     // gets all children with same parent id as user
