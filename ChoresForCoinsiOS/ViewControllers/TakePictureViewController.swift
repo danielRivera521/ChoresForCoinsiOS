@@ -34,7 +34,6 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     
     private var imagePicker: UIImagePickerController!
     
-    var animCoinView: UIImageView?
     var animRedeemAlertContainer = [UIImage] ()
     
     
@@ -42,8 +41,6 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         
         redeemAlertImageView.isHidden = true
-        
-        animCoinView = AnimationHelper.createCoinsEarnedAnim(vc: self)
         
         getBackground()
         
@@ -424,9 +421,6 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
-        if let anCoinView = animCoinView {
-            AnimationHelper.startAnimation(vc: self, animView: anCoinView, anim: 1)
-        }
     }
     
     @IBAction func takePictureBtn(_ sender: UIButton) {

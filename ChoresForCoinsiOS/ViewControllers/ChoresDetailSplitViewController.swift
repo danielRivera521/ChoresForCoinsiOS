@@ -32,6 +32,8 @@ class ChoresDetailSplitViewController: UIViewController {
     @IBOutlet weak var detailImageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var editContainerView: UIView!
+    @IBOutlet weak var emptyBGCover: UIImageView!
+    @IBOutlet weak var selectChoreLabel: UILabel!
     
     
     // MARK: - Properties
@@ -63,9 +65,10 @@ class ChoresDetailSplitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         editContainerView.isHidden = true
         
-        // this is here so the app doesn't crash on first run. choreId get set at a differnt time in the app.
+        // this is here so the app doesn't crash on first run. choreId gets set at a differnt time in the app.
         choreId = "NotCorrect"
         
         //gets the firebase generated id
@@ -81,12 +84,23 @@ class ChoresDetailSplitViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
         getBackground()
+        emptyBGCover.isHidden = true
+        if let unwrappedChoreId = choreId{
+            if unwrappedChoreId == "NotCorrect"{
+                emptyBGCover.isHidden = false
+            }
+        }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        editContainerView.isHidden = true
+    }
     
     // MARK: - Custom Methods
     
     func getChoreData(){
+        
+        emptyBGCover.isHidden = true
         
         let ref = Database.database().reference()
         
@@ -152,11 +166,12 @@ class ChoresDetailSplitViewController: UIViewController {
                 print(choreImageURL)
                 self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
             } else {
-                if self.detailImageHeightConstraint != nil {
-                    self.detailImageHeightConstraint.isActive = false
-                    let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
-                    heightConstraint.isActive = true
-                }
+//                if self.detailImageHeightConstraint != nil {
+//                    self.detailImageHeightConstraint.isActive = false
+//                    let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
+//                    heightConstraint.isActive = true
+//                }
+                
             }
             
             if let choreDueString = chorePastDue {
@@ -369,6 +384,8 @@ class ChoresDetailSplitViewController: UIViewController {
         if let choreID = choreId {
             editContainerView.isHidden = false
             
+            emptyBGCover.isHidden = false
+            
             delegate?.choreEdit(choreID)
         }
     }
@@ -376,11 +393,13 @@ class ChoresDetailSplitViewController: UIViewController {
     @IBAction func unwindToDetails(segue:UIStoryboardSegue) {
         editContainerView.isHidden = true
         
-        choreImageImageView.image = nil
+        choreImageImageView.image = #imageLiteral(resourceName: "placeholderImg")
         
         if segue.source is ChoreEditViewController {
             if let senderVC = segue.source as? ChoreEditViewController {
                 if senderVC.didDelete {
+                    emptyBGCover.isHidden = false
+                    selectChoreLabel.isHidden = false
                     choreNameLabel.text = "Chore Name"
                     usernameLabel.text = ""
                     startDateLabel.text = "MM/DD/YYYY"
@@ -407,7 +426,10 @@ ChoreSelectionDelegate {
         
         choreId = choreID
         
-        choreImageImageView.image = nil
+        emptyBGCover.isHidden = true
+        selectChoreLabel.isHidden = true
+        
+        choreImageImageView.image = #imageLiteral(resourceName: "placeholderImg")
         
         completedBtn.isEnabled = true
         

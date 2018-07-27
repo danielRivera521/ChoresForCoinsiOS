@@ -82,12 +82,14 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
 //        displayChoreInfo()
         
         // set up child picker
+        getChildren()
         createChildPicker()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
-        getBackground()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -356,7 +358,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     func displayChoreInfo(){
         
-        
+        getBackground()
         if let cid = choreId{
             ref?.child("chores").child(cid).observeSingleEvent(of: .value, with: { (snapshot) in
                 
@@ -669,7 +671,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                     self.removeChildNode(child: id)
                     // self.performSegue(withIdentifier: "segueToList", sender: self)
                     self.didDelete = true
-                    self.performSegue(withIdentifier: "segueToList", sender: self)
+                    //self.performSegue(withIdentifier: "segueToList", sender: self)
+                    self.performSegue(withIdentifier: "unwindToDetails", sender: self)
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -677,7 +680,9 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             
-            present(deleteAlert, animated: true, completion: nil)
+            present(deleteAlert, animated: true, completion: {
+                //self.performSegue(withIdentifier: "unwindToDetails", sender: self)
+            })
         }
     }
     

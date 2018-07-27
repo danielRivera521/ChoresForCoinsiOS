@@ -492,11 +492,11 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     
     func updateWeeklyChart(index: Int, values: [Double]) -> LineChartData {
         var lineChartEntry = [ChartDataEntry] ()
-        let xVal: [String] = ["Week 1","Week 2","Week 3","Week 4","Week 5"]
+       
         for i in 0..<values.count {
             
-            let value = ChartDataEntry(x: Double(i + 1), y: values[i], data: xVal[i] as AnyObject)
-            
+            let value = ChartDataEntry(x: Double(i + 1), y: values[i])
+        
             lineChartEntry.append(value)
         }
         
@@ -538,11 +538,15 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             cell.weeklyChart.chartDescription?.text = ""
             getChorePerWeekData(uid: children[indexPath.row].key)
             cell.weeklyChart.data = updateWeeklyChart(index: indexPath.row, values: childrenWeeklyChores[indexPath.row])
+            cell.weeklyChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: ["","Week 1","Week 2","Week 3","Week 4","Week 5"])
+            cell.weeklyChart.xAxis.labelPosition = .bottom
+            cell.weeklyChart.xAxis.setLabelCount(5, force: true)
     
         }
         cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if UIDevice.current.orientation == .landscapeLeft || UIDevice.current.orientation == .landscapeRight {

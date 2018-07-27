@@ -482,7 +482,9 @@ class ChoreListViewController: UIViewController {
         }
     }
     
-    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
+    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {
+        print("UnwindToChoreList method")
+    }
     
 }
 
