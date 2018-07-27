@@ -310,16 +310,22 @@ class ChoresDetailSplitViewController: UIViewController {
                         switch value {
                         case 0:
                             self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "whiteBG")
                         case 1:
                             self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "orangeBG")
                         case 2:
                             self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "greenBG")
                         case 3:
                             self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "redBG")
                         case 4:
                             self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "purpleBG")
                         default:
                             self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                            self.emptyBGCover.image = #imageLiteral(resourceName: "whiteBG")
                         }
                     }
                 }
@@ -330,17 +336,23 @@ class ChoresDetailSplitViewController: UIViewController {
                                 if let value = snapshot.value as? Int {
                                         switch value {
                                             case 0:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "whiteBG")
                                             case 1:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "orangeBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "orangeBG")
                                             case 2:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "greenBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "greenBG")
                                             case 3:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "redBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "redBG")
                                             case 4:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "purpleBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "purpleBG")
                                             default:
-                                                    self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                                                self.bgImage.image = #imageLiteral(resourceName: "whiteBG")
+                                                self.emptyBGCover.image = #imageLiteral(resourceName: "whiteBG")
                                     }
                         }
             }
@@ -428,6 +440,8 @@ ChoreSelectionDelegate {
         
         emptyBGCover.isHidden = true
         selectChoreLabel.isHidden = true
+        
+        editContainerView.isHidden = true
         
         choreImageImageView.image = #imageLiteral(resourceName: "placeholderImg")
         
