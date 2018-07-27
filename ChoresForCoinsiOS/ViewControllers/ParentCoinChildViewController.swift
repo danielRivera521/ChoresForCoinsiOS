@@ -252,8 +252,6 @@ class ParentCoinChildViewController: UIViewController, UITableViewDataSource, UI
                         self.profileButton.setBackgroundImage(image, for: .normal)
                     })
                     
-                //    self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
-                    //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
                 }

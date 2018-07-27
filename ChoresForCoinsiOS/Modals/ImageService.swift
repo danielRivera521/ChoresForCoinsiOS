@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class ImageService{
-    
+    //service used to get images from URL locations
     static let cache = NSCache<NSString, UIImage>()
     
     static func downloadImage(withURL url: URL,  completion: @escaping (_ image: UIImage?)-> ()){

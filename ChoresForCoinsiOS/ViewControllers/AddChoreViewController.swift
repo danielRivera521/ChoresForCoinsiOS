@@ -79,10 +79,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        if !isFirstLoad {
-//            isUserParent()
-//            getPhoto()
-//        }
+
         loadPage()
     }
     
@@ -94,7 +91,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         usernameTextField.delegate = self
         choreValueTextField.delegate = self
         
-        
+        //sets the background color for the view controller based on the user's settings
         getBackground()
         
         childRedeemView.isHidden = true
@@ -149,6 +146,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     //MARK: UIPickerView Functions
+    //Picker item lists the children of the parent to be selected to assign
+    //the chore.
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -187,6 +186,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
+    //when doneis pressed if the field is empty, the picker will selected the first child.
     @objc func donePressedChild() {
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
@@ -209,6 +209,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         self.view.endEditing(true)
     }
     
+    //function will check the user's setting the set the background of the view controller.
     func getBackground() {
         if let uid = Auth.auth().currentUser?.uid {
             Database.database().reference().child("user/\(uid)/bg_image").observeSingleEvent(of: .value) { (snapshot) in
@@ -234,6 +235,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
+    //sets the user's name on the header bar
     func displayHeaderName(){
         let databaseRef = Database.database().reference()
         
@@ -249,6 +251,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
     }
+    
+    //checks if the user is a parent
     
     func isUserParent(){
         
@@ -266,6 +270,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    //gets the running total of the child and displays it on the header.
     func getRunningTotal(){
         
         let databaseRef = Database.database().reference()
@@ -280,6 +285,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         
     }
+    
     
     func getRunningTotalParent(){
         getChildren()
@@ -441,6 +447,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return false
     }
     
+    //checks if the string date is a valid date.
+    
     func isValidDate(dateString: String) -> Bool {
         let dateFormatterGet = DateFormatter()
         dateFormatterGet.dateFormat = "MM/dd/yyyy"
@@ -499,7 +507,6 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         self.profileButton.setBackgroundImage(image, for: .normal)
                     })
                     
-                    //     self.profileButton.loadImagesUsingCacheWithUrlString(urlString: profileURL, inViewController: self)
                     //turn button into a circle
                     self.profileButton.layer.cornerRadius = self.profileButton.frame.width/2
                     self.profileButton.layer.masksToBounds = true
@@ -508,6 +515,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
     }
+    
+    //gets the conversion rate set by the parent in their settings
     func getConversionRate(){
         if let unwrappedParentID = parentID{
             
@@ -605,7 +614,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 processSegue = false
             }
         } else {
-     //       AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+    
             processSegue = false
         }
         

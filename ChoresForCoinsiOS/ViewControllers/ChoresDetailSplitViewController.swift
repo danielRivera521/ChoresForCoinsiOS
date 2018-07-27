@@ -166,11 +166,7 @@ class ChoresDetailSplitViewController: UIViewController {
                 print(choreImageURL)
                 self.choreImageImageView.loadImagesUsingCacheWithUrlString(urlString: choreImageURL, inViewController: self)
             } else {
-//                if self.detailImageHeightConstraint != nil {
-//                    self.detailImageHeightConstraint.isActive = false
-//                    let heightConstraint = NSLayoutConstraint(item: self.choreImageImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 0.000001, constant: 100)
-//                    heightConstraint.isActive = true
-//                }
+
                 
             }
             

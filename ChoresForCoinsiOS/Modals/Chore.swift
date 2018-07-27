@@ -8,6 +8,9 @@
 
 import Foundation
 
+//Chore class will be used to access the data from the firebase database and put it into an array of chores. This will help with accessing individual portions of data for each chore.
+
+
 class Chore{
     
     var key: String

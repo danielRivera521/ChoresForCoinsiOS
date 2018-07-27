@@ -198,15 +198,6 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     func getCoinGraphData(uid: String) -> (Double, Double){
         var unwrappedTotalCoins: Double = 0
         var unwrappedCurrentCoins: Double = 0
-//        ref?.child("running_total").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-//            let value = snapshot.value as? NSDictionary
-//            if let totalCoins = value?["redeemed_coins"] as? Double {
-//                unwrappedTotalCoins = totalCoins
-//            }
-//            if let currentCoins = value?["coin_total"] as? Double {
-//                unwrappedCurrentCoins = currentCoins
-//            }
-//        })
 
         for coinAmt in coinTotals{
             if coinAmt.key == uid {
@@ -228,10 +219,6 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         
         for chore in chores{
             
-//            if let _ = chore.chorePastDue{
-//                incompleteChores += 1
-//            }
-            
             if let cID = chore.childID{
                 if cID == uid {
                     
@@ -251,7 +238,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getChorePerWeekData(uid: String){
-        
+        //sets the values for each each at 0
         let calendar = Calendar.current
         var week1: Int = 0
         var week2: Int = 0
@@ -263,6 +250,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         for chore in chores {
             if let cID = chore.childID {
                 if cID == uid {
+                    //for each child it will check the completed dates and if completed adds one to the appropriate variable.
                     if let completedDate = chore.choreCompletedDate{
                         let dateFormatter = DateFormatter()
                         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -302,6 +290,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     
     // gets all children with same parent id as user
     func getChildren() {
+        //wipes teh children array and then rebuilds it so that it's up to date.
         children.removeAll()
         
         Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
@@ -341,6 +330,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     
     func isUserParent(){
         
+        //checks if the user is a parent.
+        
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value) { (snapshot) in
             if let val = snapshot.value as? Bool {
                 self.isActiveUserParent = val
@@ -371,13 +362,12 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getRunningTotalParent(){
-        //getChildren()
         getCoinTotals()
     }
     
     func getCoinTotals() {
         coinTotals.removeAll()
-        
+        //gets the list of children then gets the coin totals for each child and adds them together to be displayed in teh corner ifthe user is a parent.
         self.getChildren()
         
         _ = Database.database().reference().observeSingleEvent(of: .value) { (snapshot) in
