@@ -7,6 +7,7 @@
 //
 
 import Foundation
+//childUser class will be used to access the data from the firebase database and put it into an array of childUsers. This will help with accessing individual portions of data for each child.
 
 class ChildUser {
     var key: String

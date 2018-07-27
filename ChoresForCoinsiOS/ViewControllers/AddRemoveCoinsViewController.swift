@@ -386,6 +386,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    //calls an alert window to ensure that the parent is redeeming the coins for the selected child.
     @IBAction func redeemCoins(_ sender: UIButton) {
         let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem the coins for \(childName!)", preferredStyle: .alert)
         
