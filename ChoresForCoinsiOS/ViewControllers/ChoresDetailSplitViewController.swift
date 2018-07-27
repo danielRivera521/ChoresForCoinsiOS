@@ -84,8 +84,12 @@ class ChoresDetailSplitViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
         getBackground()
-        
-        emptyBGCover.isHidden = false
+        emptyBGCover.isHidden = true
+        if let unwrappedChoreId = choreId{
+            if unwrappedChoreId == "NotCorrect"{
+                emptyBGCover.isHidden = false
+            }
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,6 +99,8 @@ class ChoresDetailSplitViewController: UIViewController {
     // MARK: - Custom Methods
     
     func getChoreData(){
+        
+        emptyBGCover.isHidden = true
         
         let ref = Database.database().reference()
         

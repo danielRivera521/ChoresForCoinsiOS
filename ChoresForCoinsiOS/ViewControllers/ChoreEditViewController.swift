@@ -82,12 +82,14 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
 //        displayChoreInfo()
         
         // set up child picker
+        getChildren()
         createChildPicker()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
-        getBackground()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -356,7 +358,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     func displayChoreInfo(){
         
-        
+        getBackground()
         if let cid = choreId{
             ref?.child("chores").child(cid).observeSingleEvent(of: .value, with: { (snapshot) in
                 
