@@ -18,8 +18,6 @@
 
 #import "FUIAuthBaseViewController.h"
 
-@class FUIPrivacyAndTermsOfServiceView;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /** @class FUIPasswordSignUpViewController
@@ -28,9 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FUIPasswordSignUpViewController : FUIAuthBaseViewController
 
 /** @property footerTextView
-    @brief The view in the footer of the table that displays Privacy and Terms of Service.
+    @brief The text view in the footer of the table.
  */
-@property(nonatomic, strong) IBOutlet FUIPrivacyAndTermsOfServiceView *footerView;
+@property(nonatomic, strong) IBOutlet UITextView *footerTextView;
 
 /** @fn initWithNibName:bundle:authUI:
     @brief Please use @c initWithAuthUI:email:.

@@ -31,6 +31,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     var notifyString = "no"
     
     var bgImage: UIImage?
+    
     // MARK: - ViewController methods
     
     override func viewDidLoad() {
@@ -283,9 +284,9 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         cell.dueDateCellLabel.text = choreItem.dueDate
         
         if let choreVal = choreItem.choreValue {
-            cell.choreValueCellLabel.text = "Chore Value: \(choreVal)"
+            cell.choreValueCellLabel.text = "\(choreVal)"
         } else {
-            cell.choreValueCellLabel.text = "Chore Value: 0"
+            cell.choreValueCellLabel.text = "0"
         }
         
         //gets the image URL from the chores array
