@@ -21,7 +21,6 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        setRootViewController()
         
         // sets up firebase pre-made auth UI
         authUI = FUIAuth.defaultAuthUI()
@@ -56,15 +55,6 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
         let customAuthUI = CustomAuthUI(authUI: authUI)
 
         return customAuthUI
-    }
-    
-    // persistent login check
-    func setRootViewController() {
-        // if someone is logged in, go to the overview page
-        if Auth.auth().currentUser != nil {
-            // go to overview page
-            performSegue(withIdentifier: "goToOverview", sender: self)
-        }
     }
     
     func getBackground() {
