@@ -28,6 +28,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     var children = [ChildUser] ()
     var masterViewController: ChoresMasterTableViewController?
     var detailViewController: ChoresDetailSplitViewController?
+    var notifyString = "no"
     
     var bgImage: UIImage?
     // MARK: - ViewController methods
@@ -330,13 +331,16 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     }
     
     func alertCompletedAndAddNote(chore: Chore){
+        notifyString = "no"
         if let completedNotifyString = chore.choreCompletedNotified {
-            if completedNotifyString == "yes" {
+            notifyString = completedNotifyString
+            if notifyString == "yes" {
                 //parent was already notified
                 return
             }
-            // if completedNotify String does not exist
-        } else {
+        }
+        // if notifyString is "no"
+        if notifyString == "no" {
             let key = chore.key
             if let childName = chore.choreUsername{
                 let addNoteAlert = UIAlertController(title: "Chore Completed", message: "The chore named \(chore.name!) was completed by \(childName). Please write a note regarding the completion of this chore.", preferredStyle: UIAlertControllerStyle.alert)
@@ -366,6 +370,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                 present(addNoteAlert, animated: true, completion: nil)
                 
                 chore.choreCompletedNotified = "yes"
+                notifyString = "yes"
                 
             }
         }

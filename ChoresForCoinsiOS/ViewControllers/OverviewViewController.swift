@@ -38,6 +38,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var childrenToDoChores = PieChartDataEntry ()
     var childrenWeeklyChores = [[Double]] ()
     var monthName: String = ""
+    var requestRedeem = false
     
     var coinValue = 0
     var ref: DatabaseReference?
@@ -352,9 +353,14 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         
         if let uid = Auth.auth().currentUser?.uid {
             
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
-                print(snapshot)
-                self.coinValue = snapshot.value as? Int ?? 0
+            databaseRef.child("running_total").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                if let coins = value?["coin_total"] as? Int{
+                    self.coinValue = coins
+                }
+                if let redeemedCheck = value?["isRedeem"] as? Bool {
+                    self.requestRedeem = redeemedCheck
+                }
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
@@ -532,6 +538,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             cell.weeklyChart.xAxis.labelPosition = .bottom
             cell.weeklyChart.xAxis.setLabelCount(5, force: true)
     
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                cell.weeklyChart.keepPositionOnRotation = true
+            }
         }
         cell.backgroundColor = UIColor(white: 1, alpha: 0.7)
         return cell
@@ -566,6 +575,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         if coinValue <= 0 {
             AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
+            if !requestRedeem{
             getConversionRate()
             let convertedValue = coinConversion * Double(coinValue)
             let dollarValueString = String(format: "$%.02f", convertedValue)
@@ -575,8 +585,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 if let uid = self.userID {
                     self.ref?.child("user/\(uid)/isRedeem").setValue(true)
-                    
+                    self.ref?.child("running_total/\(uid)/isRedeem").setValue(true)
                     self.childRedeemView.isHidden = true
+                    self.requestRedeem = true
                     
                     if let animRedeemView = self.animRedeemView {
                         AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
@@ -594,6 +605,9 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             
             present(alert, animated: true, completion: nil)
             
+            } else {
+                AlertController.showAlert(self, title: "Redeem Request", message: "You have already requested your coins to be redeemed. Your parent must complete this to access this feature again.")
+            }
         }
     }
 }

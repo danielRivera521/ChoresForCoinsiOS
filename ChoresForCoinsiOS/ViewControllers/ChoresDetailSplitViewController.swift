@@ -261,6 +261,7 @@ class ChoresDetailSplitViewController: UIViewController {
                 
                 if let uid = Auth.auth().currentUser?.uid{
                     databaseRef.child("running_total").child(uid).updateChildValues(["coin_total": self.coinValue])
+                    databaseRef.child("chores").child(self.choreId!).updateChildValues(["number_coins": "\(self.choreCoinValue)"])
                 }
                 
                 self.performSegue(withIdentifier: "takePictureSegue", sender: nil)
