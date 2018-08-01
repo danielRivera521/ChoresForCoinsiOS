@@ -13,6 +13,7 @@ class RunningTotal {
     var userid: String?
     var cointotal: Int?
     var redeemedTotal: Int?
+    var isRedeem: Bool?
     
     init(dictionary: [String:AnyObject], key: String) {
         self.key = key
@@ -24,6 +25,10 @@ class RunningTotal {
         }
         if let redeemedTotalAmt  = dictionary["redeemed_coins"] as? Int {
             self.redeemedTotal = redeemedTotalAmt
+        }
+        
+        if let requestRedeem = dictionary["isRedeem"] as? Bool {
+            self.isRedeem = requestRedeem
         }
     }
 }

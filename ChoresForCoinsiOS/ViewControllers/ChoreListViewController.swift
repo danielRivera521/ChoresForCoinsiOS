@@ -38,6 +38,9 @@ class ChoreListViewController: UIViewController {
     var bgImg: UIImage?
     var animRedeemView: UIImageView?
     var animRedeemAlertContainer = [UIImage] ()
+    var requestRedeem = false
+    
+    var runningProfile: RunningTotal?
     
     // MARK: - ViewController methods
     
@@ -156,14 +159,29 @@ class ChoreListViewController: UIViewController {
         
         if let uid = Auth.auth().currentUser?.uid {
             
-            databaseRef.child("running_total").child(uid).child("coin_total").observeSingleEvent(of: .value) { (snapshot) in
-                print(snapshot)
-                self.coinValue = snapshot.value as? Int ?? 0
+            databaseRef.child("running_total").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+                let value = snapshot.value as? NSDictionary
+                if let coins = value?["coin_total"] as? Int{
+                    self.coinValue = coins
+                }
+                if let redeemedCheck = value?["isRedeem"] as? Bool {
+                    self.requestRedeem = redeemedCheck
+                }
                 self.coinAmtLabel.text = "\(self.coinValue)"
             }
         }
         
     }
+    
+    func checkRedeemRequest(){
+        
+            if let userCoinProfile = self.coinTotals.first{
+                if let unwrappedBool = userCoinProfile.isRedeem{
+                    self.requestRedeem = unwrappedBool
+                }
+            }
+    }
+    
     
     func getRunningTotalParent(){
         getChildren()
@@ -450,35 +468,40 @@ class ChoreListViewController: UIViewController {
         if coinValue <= 0 {
             AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
-          
-            getConversionRate()
-            let convertedValue = coinConversion * Double(coinValue)
-            let dollarValueString = String(format: "$%.02f", convertedValue)
-            
-            let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            if !requestRedeem {
+                getConversionRate()
+                let convertedValue = coinConversion * Double(coinValue)
+                let dollarValueString = String(format: "$%.02f", convertedValue)
                 
-                if let uid = self.userID {
-                    self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                let alert = UIAlertController(title: "Coin Redemption Requested", message: "You are currently requesting to have your coins redeemed. At the current rate you will receive \(dollarValueString) for the coins you have acquired.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default) { (action) in
                     
-                    self.childRedeemView.isHidden = true
-                    
-                    if let animRedeemView = self.animRedeemView {
-                        AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
+                    if let uid = self.userID {
+                        self.ref?.child("user/\(uid)/isRedeem").setValue(true)
+                        self.ref?.child("running_total/\(uid)/isRedeem").setValue(true)
+                        self.requestRedeem = true
+                        
+                        self.childRedeemView.isHidden = true
+                        
+                        if let animRedeemView = self.animRedeemView {
+                            AnimationHelper.startAnimation(vc: self, animView: animRedeemView, anim: 0)
+                        }
+                        
                     }
-                    
-                    // AlertController.showAlert(self, title: "Redeemed", message: "Your coin redeem has been requested. We'll let your parent know!")
                 }
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+                    self.childRedeemView.isHidden = true
+                }
+                
+                alert.addAction(action)
+                alert.addAction(cancelAction)
+                
+                present(alert, animated: true, completion: nil)
+                
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-                self.childRedeemView.isHidden = true
+            else {
+                AlertController.showAlert(self, title: "Redeem Request", message: "You have already requested your coins to be redeemed. Your parent must complete this to access this feature again.")
             }
-            
-            alert.addAction(action)
-            alert.addAction(cancelAction)
-            
-            present(alert, animated: true, completion: nil)
-    
         }
     }
     

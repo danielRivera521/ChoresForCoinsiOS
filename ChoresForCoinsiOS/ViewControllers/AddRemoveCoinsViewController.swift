@@ -41,6 +41,10 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     var firstRun = true
     var isRedeem = false
     var redeemedTotal = 0
+    var requestRedeem = false
+    var tempCoinValue = 0
+    var storedCoinValue = 0
+    
     
     
     // MARK: View Controller Methods
@@ -69,6 +73,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         if let coinvalue = coinValue {
             coinTotalTextField.text = String(coinvalue)
             coinValue = coinvalue
+            storedCoinValue = coinvalue
         }
         
         if let uid = Auth.auth().currentUser?.uid {
@@ -319,6 +324,8 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         
         if let coinvalue = self.coinValue {
             coinValue = coinvalue
+            storedCoinValue = coinvalue
+            tempCoinValue = coinvalue
         }
         
         if let uid = childId {
@@ -327,17 +334,6 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-//    func getRedeemTotal(){
-//        
-//        if let userID = self.childId{
-//            Database.database().reference().child("running_total").child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
-//                let value = snapshot.value as? NSDictionary
-//                if let redeemedCoins = value?["redeemed_coins"] as? Int {
-//                    self.redeemedTotal = redeemedCoins
-//                }
-//            })
-//        }
-//    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         coinTotalTextField.text = ""
@@ -348,11 +344,13 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func removeOneCoin(_ sender: UIButton) {
         if let coinValue = coinValue {
-            var newCoinValue = coinValue
+            tempCoinValue = coinValue
             // subtract 1 from coin value, unles value is 0
-            if newCoinValue > 0 {
-                newCoinValue -= 1
-                self.coinValue = newCoinValue
+            if self.tempCoinValue > 0 {
+                self.tempCoinValue -= 1
+        
+                self.coinValue = self.tempCoinValue
+    
                 coinTotalTextField.text = "\(self.coinValue!)"
             }
         }
@@ -360,10 +358,10 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func addOneCoin(_ sender: UIButton) {
         if let coinvalue = coinValue {
-            var newCoinValue = coinvalue
+            tempCoinValue = coinvalue
             // add 1 to coin value
-            newCoinValue += 1
-            self.coinValue = newCoinValue
+            tempCoinValue += 1
+            self.coinValue = tempCoinValue
             coinTotalTextField.text = "\(self.coinValue!)"
         }
     }
@@ -372,6 +370,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         if let newCoinValue = coinTotalTextField.text {
             if !newCoinValue.trimmingCharacters(in: .whitespaces).isEmpty {
                 coinValue = Int(newCoinValue)
+                
             } else {
                 AlertController.showAlert(self, title: "Warning", message: "Please enter a coin value.")
                 return
@@ -388,26 +387,30 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     
     //calls an alert window to ensure that the parent is redeeming the coins for the selected child.
     @IBAction func redeemCoins(_ sender: UIButton) {
-        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem the coins for \(childName!)", preferredStyle: .alert)
+        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem \(tempCoinValue) coins for \(childName!)", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
             
-            let redeemedAmt = self.coinValue!
-            self.coinValue = 0
-            self.coinTotalTextField.text = "\(self.coinValue!)"
-            
-            if let uid = self.childId {
-                Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+            if self.tempCoinValue <= self.storedCoinValue{
+                let redeemedAmt = self.tempCoinValue
+                self.coinValue = self.storedCoinValue - self.tempCoinValue
+                self.coinTotalTextField.text = "\(self.coinValue!)"
                 
+                if let uid = self.childId {
+                    Database.database().reference().child("user/\(uid)/isRedeem").setValue(false)
+                    Database.database().reference().child("running_total/\(uid)/isRedeem").setValue(false)
+                    
+                }
+                self.redeemedTotal += redeemedAmt
+                Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
+                
+                // update new coin value on database
+                self.updateTotalCoins()
+                
+                // dismiss view
+                self.dismiss(animated: true, completion: nil)
             }
-            self.redeemedTotal += redeemedAmt
-            Database.database().reference().child("running_total/\(self.childId!)/redeemed_coins").setValue(self.redeemedTotal)
             
-            // update new coin value on database
-            self.updateTotalCoins()
-            
-            // dismiss view
-            self.dismiss(animated: true, completion: nil)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

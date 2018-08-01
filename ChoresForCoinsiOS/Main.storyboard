@@ -538,7 +538,7 @@ Andrew Harrington</string>
                                 <rect key="frame" x="0.0" y="71.666666666666686" width="414" height="615.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="493" id="cpW-Qp-FtB" customClass="OverviewTableViewCell" customModule="ChoresForCoinsiOS" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="493" id="cpW-Qp-FtB" customClass="OverviewTableViewCell" customModule="ChoresForCoinsiOS" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="493"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cpW-Qp-FtB" id="hx6-Kl-s94">
@@ -941,7 +941,7 @@ Andrew Harrington</string>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JaL-6P-NFh">
+                                            <textField opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JaL-6P-NFh">
                                                 <rect key="frame" x="14.666666666666664" y="40.333333333333371" width="108.33333333333334" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -973,7 +973,7 @@ Andrew Harrington</string>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 </variation>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="meV-cH-eqE">
+                                            <textField opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="meV-cH-eqE">
                                                 <rect key="frame" x="14.333333333333343" y="40.333333333333371" width="112" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1566,7 +1566,7 @@ Andrew Harrington</string>
                                 <rect key="frame" x="0.0" y="101.66666666666669" width="414" height="634.33333333333326"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="leP-16-6Qr" detailTextLabel="Kyi-vo-c9U" style="IBUITableViewCellStyleValue1" id="Saf-ke-Dy6">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="leP-16-6Qr" detailTextLabel="Kyi-vo-c9U" style="IBUITableViewCellStyleValue1" id="Saf-ke-Dy6">
                                         <rect key="frame" x="0.0" y="28" width="414" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Saf-ke-Dy6" id="gau-3L-vRk">
@@ -3214,16 +3214,19 @@ Andrew Harrington</string>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="JXL-k5-tgj"/>
                                                 <exclude reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="dsT-mW-hAA"/>
-                                                <exclude reference="MQH-bB-Cnj"/>
                                                 <exclude reference="TWB-0y-qYb"/>
                                                 <exclude reference="a5G-pE-1kj"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=regular">
                                             <mask key="constraints">
+                                                <include reference="MQH-bB-Cnj"/>
+                                                <exclude reference="jkH-pT-CWf"/>
+                                                <exclude reference="uI4-rL-lGA"/>
                                                 <include reference="JXL-k5-tgj"/>
                                                 <include reference="Ngx-MZ-PT4"/>
                                                 <exclude reference="On3-tD-4ds"/>
@@ -3232,9 +3235,6 @@ Andrew Harrington</string>
                                                 <exclude reference="jGO-dm-8Tl"/>
                                                 <exclude reference="xiz-on-NI6"/>
                                                 <exclude reference="xpJ-e3-8ja"/>
-                                                <include reference="MQH-bB-Cnj"/>
-                                                <exclude reference="jkH-pT-CWf"/>
-                                                <exclude reference="uI4-rL-lGA"/>
                                                 <exclude reference="2FX-HX-B1R"/>
                                                 <exclude reference="7e7-L4-zLl"/>
                                                 <include reference="TWB-0y-qYb"/>
@@ -5485,6 +5485,6 @@ Andrew Harrington</string>
         <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="4QU-Dj-v8X"/>
-        <segue reference="G4w-PA-Y6T"/>
+        <segue reference="X6b-eg-OV6"/>
     </inferredMetricsTieBreakers>
 </document>
