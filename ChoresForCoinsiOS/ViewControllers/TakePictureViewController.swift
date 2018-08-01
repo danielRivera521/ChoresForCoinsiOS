@@ -456,11 +456,11 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         // creates an array of all the frames of the animation
         for i in 0...119 {
             if i < 10 {
-                coinAnim.append(UIImage(named: "anim_coin_add_00\(i)")!)
+                coinAnim.append(UIImage(named: "anim_chore_completed_00\(i)")!)
             }  else if i < 100 {
-                coinAnim.append(UIImage(named: "anim_coin_add_0\(i)")!)
+                coinAnim.append(UIImage(named: "anim_chore_completed_0\(i)")!)
             } else {
-                coinAnim.append(UIImage(named: "anim_coin_add_\(i)")!)
+                coinAnim.append(UIImage(named: "anim_chore_completed_\(i)")!)
             }
         }
         
