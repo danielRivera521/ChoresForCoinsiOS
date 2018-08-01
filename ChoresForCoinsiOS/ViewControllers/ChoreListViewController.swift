@@ -38,6 +38,7 @@ class ChoreListViewController: UIViewController {
     var bgImg: UIImage?
     var animRedeemView: UIImageView?
     var animRedeemAlertContainer = [UIImage] ()
+    
     var requestRedeem = false
     
     var runningProfile: RunningTotal?
@@ -506,7 +507,7 @@ class ChoreListViewController: UIViewController {
     }
     
     @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {
-        print("UnwindToChoreList method")
+        
     }
     
 }

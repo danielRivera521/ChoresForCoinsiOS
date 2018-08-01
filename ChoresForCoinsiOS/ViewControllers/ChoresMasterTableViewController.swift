@@ -60,8 +60,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
             masterViewController?.delegate = detailViewController!
         }
         
-        
-        
     }
     
     func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
@@ -87,6 +85,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     override func viewWillAppear(_ animated: Bool) {
         // set background color to the table
         getBackground()
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -388,5 +387,5 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         }
     }
     
-    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) { }
+   // @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {}
 }
