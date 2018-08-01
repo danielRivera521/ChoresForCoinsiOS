@@ -91,7 +91,11 @@ class CreateAccountViewController: UIViewController, UITextFieldDelegate {
         
         createAccount()
        
-        self.performSegue(withIdentifier: "goToOnboarding", sender: nil)
+        if isParent {
+            self.performSegue(withIdentifier: "goToOnboarding", sender: nil)
+        } else {
+            self.performSegue(withIdentifier: "goToOnboardingChild", sender: nil)
+        }
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {
