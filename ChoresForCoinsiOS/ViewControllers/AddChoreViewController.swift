@@ -12,7 +12,7 @@ import Firebase
 class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
     
-    // MARK: Outlets
+    // MARK: - Outlets
     
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
@@ -33,7 +33,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var parentNotesLabel: UILabel!
     
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var isFirstLoad = true
     var coinValue = 0
@@ -69,7 +69,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var requestRedeem = false
     
     
-    // MARK: View Controller functions
+    // MARK: - View Controller functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,7 +161,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: Chore Description TextView Delegate
+    //MARK: - Chore Description TextView Delegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = nil
@@ -224,7 +224,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
-    // MARK: Custom functions
+    // MARK: - Custom functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // dismiss keyboard when user touches outside of keyboard
@@ -609,7 +609,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return true
     }
     
-    // MARK: Actions
+    // MARK: - Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
@@ -724,7 +724,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     
                 } else {
                     if let childName = displayName{
-                        ref?.child("chores/\(currentChoreId)/user_name").setValue("Assigned to: \(childName)")
+                        // ref?.child("chores/\(currentChoreId)/user_name").setValue("Assigned to: \(childName)")
+                        ref?.child("chores/\(currentChoreId)/user_name").setValue("\(childName)")
                     }
                 }
                 

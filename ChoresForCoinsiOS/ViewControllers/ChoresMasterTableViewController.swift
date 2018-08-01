@@ -268,7 +268,8 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                                 //choreItem has a username else
                             } else {
                                 //set the username for the choreItem Object
-                                choreItem.choreUsername = "Failed to Complete"
+                                // choreItem.choreUsername = "Failed to Complete"
+                                choreItem.choreUsername = "Past Due"
                             }
                             
                         }
@@ -280,7 +281,17 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
             }
         }
         
-        cell.usernameCellLabel.text = choreItem.choreUsername
+        
+        if choreItem.choreUsername == nil {
+            ref?.child("chores/\(choreItem.key)/user_name").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let val = snapshot.value as? String {
+                    cell.usernameCellLabel.text = val
+                }
+            })
+        } else {
+            cell.usernameCellLabel.text = choreItem.choreUsername
+        }
+        
         cell.dueDateCellLabel.text = choreItem.dueDate
         
         if let choreVal = choreItem.choreValue {
