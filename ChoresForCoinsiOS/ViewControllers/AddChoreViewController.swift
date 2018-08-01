@@ -30,6 +30,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var redeemAlertImageView: UIImageView!
+    @IBOutlet weak var parentNotesLabel: UILabel!
     
     
     // MARK: Properties
@@ -132,6 +133,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //set placeholder for Username and hide and disable the chore notes section
         usernameTextField.placeholder = "Click to Assign chore to a child"
         choreNoteTextView.isHidden = true
+        parentNotesLabel.isHidden = true
         
         //sets both start and end date fields with the current date.
         startDateTextField.delegate = self
