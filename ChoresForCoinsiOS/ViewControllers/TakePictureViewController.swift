@@ -86,6 +86,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    self.getConversionRate()
                 }
             }
         }
@@ -342,16 +343,12 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func getConversionRate(){
-        if let unwrappedParentID = parentID{
+        if let unwrappedParentID = parentID {
             
-            Database.database().reference().child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
+            Database.database().reference().child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
                 }
-                
             })
         }
         
