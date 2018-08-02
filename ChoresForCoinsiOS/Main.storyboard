@@ -2885,15 +2885,15 @@ Andrew Harrington</string>
                                         </constraints>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eL2-6W-Hu3">
-                                        <rect key="frame" x="8" y="116.66666666666666" width="398" height="101.66666666666666"/>
+                                        <rect key="frame" x="8" y="116.66666666666666" width="398" height="147.99999999999997"/>
                                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">As a parent, this is where you can set how much a coin is worth in dollars. A bonus day can be toggled where coins will be worth whatever the bonus multiplier value is set as.</string>
+                                        <string key="text">As a parent, this is where you can set how much a coin is worth in dollars. The coin value will be applied to the number of coins when the coins are redeemed and the total will be presented. A bonus day can be toggled where coins will be worth whatever the bonus multiplier value is set as.</string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="settings" translatesAutoresizingMaskIntoConstraints="NO" id="Ug1-Aq-VDo">
-                                        <rect key="frame" x="8" y="218.33333333333331" width="398" height="202"/>
+                                        <rect key="frame" x="8" y="264.66666666666669" width="398" height="202"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2910,7 +2910,7 @@ Andrew Harrington</string>
                                     <constraint firstAttribute="trailing" secondItem="M0Z-r8-Gu4" secondAttribute="trailing" id="Y6h-mG-ke9"/>
                                     <constraint firstItem="eL2-6W-Hu3" firstAttribute="trailing" secondItem="6eY-C0-0JA" secondAttribute="trailingMargin" id="Ytf-n4-gMs"/>
                                     <constraint firstAttribute="trailing" secondItem="Ug1-Aq-VDo" secondAttribute="trailing" constant="8" id="e7z-Cl-j6b"/>
-                                    <constraint firstItem="eL2-6W-Hu3" firstAttribute="height" secondItem="6eY-C0-0JA" secondAttribute="height" multiplier="0.15" id="et2-Ms-1Js"/>
+                                    <constraint firstItem="eL2-6W-Hu3" firstAttribute="height" secondItem="6eY-C0-0JA" secondAttribute="height" multiplier="0.22" id="et2-Ms-1Js"/>
                                     <constraint firstItem="Ug1-Aq-VDo" firstAttribute="height" secondItem="6eY-C0-0JA" secondAttribute="height" multiplier="0.3" id="icq-47-S8T"/>
                                     <constraint firstItem="khE-xk-RFG" firstAttribute="top" secondItem="6eY-C0-0JA" secondAttribute="topMargin" id="nbi-8y-oqV"/>
                                     <constraint firstAttribute="bottom" secondItem="M0Z-r8-Gu4" secondAttribute="bottom" id="ptu-WD-0OL"/>
@@ -3737,13 +3737,13 @@ Andrew Harrington</string>
                                         <exclude reference="wY4-TV-qRi"/>
                                         <exclude reference="ifx-Dr-EnB"/>
                                         <exclude reference="xf5-R1-uow"/>
-                                        <exclude reference="s52-uc-R8N"/>
                                         <exclude reference="PLb-Ai-zGM"/>
                                         <exclude reference="Yy8-M6-qFx"/>
                                         <exclude reference="dIS-cE-3yq"/>
                                         <exclude reference="e0k-f7-5zo"/>
                                         <exclude reference="prB-x9-uZT"/>
                                         <exclude reference="3Zp-Yi-1qC"/>
+                                        <exclude reference="s52-uc-R8N"/>
                                         <exclude reference="4Ky-y1-4Lg"/>
                                         <exclude reference="6PZ-vp-7le"/>
                                         <exclude reference="XU0-vx-1bh"/>
@@ -3766,7 +3766,6 @@ Andrew Harrington</string>
                                         <include reference="wY4-TV-qRi"/>
                                         <include reference="ifx-Dr-EnB"/>
                                         <include reference="xf5-R1-uow"/>
-                                        <include reference="s52-uc-R8N"/>
                                         <exclude reference="Kj5-en-0gc"/>
                                         <exclude reference="P8l-mt-1WE"/>
                                         <include reference="PLb-Ai-zGM"/>
@@ -3777,6 +3776,7 @@ Andrew Harrington</string>
                                         <include reference="prB-x9-uZT"/>
                                         <exclude reference="tnf-Es-Apu"/>
                                         <include reference="3Zp-Yi-1qC"/>
+                                        <include reference="s52-uc-R8N"/>
                                         <exclude reference="0Xl-FR-1aA"/>
                                         <include reference="4Ky-y1-4Lg"/>
                                         <include reference="6PZ-vp-7le"/>
@@ -5822,11 +5822,11 @@ Andrew Harrington</string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="K2s-up-TWH"/>
+        <segue reference="1U6-YA-Ob5"/>
         <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="TeC-CK-6Cx"/>
         <segue reference="0dr-E4-ccy"/>
-        <segue reference="X6b-eg-OV6"/>
+        <segue reference="7DE-Oe-Cje"/>
     </inferredMetricsTieBreakers>
 </document>
