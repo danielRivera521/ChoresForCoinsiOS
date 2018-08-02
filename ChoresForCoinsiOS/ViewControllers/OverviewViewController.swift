@@ -28,6 +28,8 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: Properties
     
+    var coinChartLabelText = "No Data"
+    var choreChartLabelText = "No Data"
     var userID: String?
     var parentID: String?
     var children = [ChildUser] ()
@@ -462,6 +464,12 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         childrenCoinsTotal.value = coinData.0
         childrenCoinsAllTimeTotal.value = coinData.1
         
+        if coinData.0 == 0 && coinData.1 == 0 {
+            coinChartLabelText = "No Data"
+        } else {
+            coinChartLabelText = "Coins"
+        }
+        
         let chartDataSet = PieChartDataSet(values: [childrenCoinsTotal, childrenCoinsAllTimeTotal], label: "Current/Redeemed")
         let chartData = PieChartData(dataSet: chartDataSet)
         let colors = [UIColor(named: "CFCBlue"), UIColor(named: "CFCDarkBlue")]
@@ -491,6 +499,12 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         
         childrenCompletedChores.value = choreData.0
         childrenToDoChores.value = choreData.1
+        
+        if choreData.0 == 0 && choreData.1 == 0 {
+            choreChartLabelText = "No Data"
+        } else {
+            choreChartLabelText = "Chores"
+        }
         
         let chartDataSet = PieChartDataSet(values: [childrenCompletedChores, childrenToDoChores], label: "Completed/Total")
         let chartData = PieChartData(dataSet: chartDataSet)
@@ -546,13 +560,13 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             
             // set up coins piechart
             cell.coinsPieChart.chartDescription?.text = ""
-            cell.coinsPieChart.centerText = "Coins"
             cell.coinsPieChart.data = updateCoinsChartData(index: indexPath.row)
+            cell.coinsPieChart.centerText = self.coinChartLabelText
             
             // set up chores piechart
             cell.choresPieChart.chartDescription?.text = ""
-            cell.choresPieChart.centerText = "Chores"
             cell.choresPieChart.data = updateChoresChartData(index: indexPath.row)
+            cell.choresPieChart.centerText = self.choreChartLabelText
             
             // set up weekly chore line chart
             cell.weeklyChart.chartDescription?.text = ""
