@@ -104,7 +104,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
-                    getConversionRate()
+                    self.getConversionRate()
                 }
             }
         }
@@ -232,7 +232,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     func getConversionRate(){
         if let unwrappedParentID = parentID {
             
-            ref?.child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+            Database.database().reference().child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let coinValue = snapshot.value as? Double {
                     self.coinConversion = coinValue
                 }
