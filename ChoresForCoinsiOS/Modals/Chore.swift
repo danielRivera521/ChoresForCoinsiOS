@@ -28,6 +28,7 @@ class Chore{
     var choreCompletedDate: String?
     var notifyAssigned: Bool?
     var assignChild: String?
+    var choreNote: String?
     
     init(dictionary: [String : AnyObject], key: String){
         self.key = key
@@ -89,6 +90,10 @@ class Chore{
         
         if let assigneeID = dictionary["assigned_child_id"] as? String{
             self.assignChild = assigneeID
+        }
+        
+        if let choreNote = dictionary["chore_note"] as? String {
+            self.choreNote = choreNote
         }
     }
 }
