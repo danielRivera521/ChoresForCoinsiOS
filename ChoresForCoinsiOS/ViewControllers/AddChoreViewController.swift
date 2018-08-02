@@ -213,6 +213,12 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //when doneis pressed if the field is empty, the picker will selected the first child.
     @objc func donePressedChild() {
+        if children.count == 0 {
+            // dismiss picker
+            self.view.endEditing(true)
+            return
+        }
+        
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
                 
