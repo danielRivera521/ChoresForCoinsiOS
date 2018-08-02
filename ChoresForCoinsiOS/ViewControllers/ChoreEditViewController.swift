@@ -678,7 +678,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
+            self.didDelete = false
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             
@@ -725,6 +725,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    
+    @IBAction func goToDetails(_ sender: UIButton) {
+        self.didDelete = false
+        performSegue(withIdentifier: "unwindToDetails", sender: self)
+    }
 }
 
 extension ChoreEditViewController: ChoreEditDelegate {
