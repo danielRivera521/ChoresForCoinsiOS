@@ -270,6 +270,10 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
             ref.child("\(choreId!)/date_completed").setValue(dateString)
             ref.child("\(choreId!)/assigned_child_id").setValue(userID!)
+            
+            // sets that a chore was completed, which means coins will be awarded. Back in Chores list, it will check for this value and if true, it will play coins earned anim and set this value to false
+            Database.database().reference().child("user/\(userID!)/just_completed_chore").setValue(true)
+            
             if let displayName = Auth.auth().currentUser?.displayName{
                 
                 // let displayText = "Completed by \(displayName)"
