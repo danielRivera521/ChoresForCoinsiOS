@@ -382,10 +382,17 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                 let addNoteAlert = UIAlertController(title: "Chore Completed", message: "The chore named \(chore.name!) was completed by \(childName). Please write a note regarding the completion of this chore.", preferredStyle: UIAlertControllerStyle.alert)
                 let saveNote = UIAlertAction(title: "Save", style: .default) { (saveAction) in
                     //read text from the alert box
+                    var choreNoteString: String = ""
                     let noteTextField = addNoteAlert.textFields![0] as UITextField
                     if let noteString = noteTextField.text {
+                        choreNoteString = noteString
+                        if noteString.isEmpty {
+                            if let oldNote = chore.choreNote {
+                                choreNoteString = oldNote
+                            }
+                        }
                         //save text to the chore.
-                        self.ref?.child("chores/\(key)/chore_note").setValue(noteString)
+                        self.ref?.child("chores/\(key)/chore_note").setValue(choreNoteString)
                         self.ref?.child("chores/\(key)/chore_completed_notified").setValue("yes")
                         
                         addNoteAlert.dismiss(animated: true, completion: nil)

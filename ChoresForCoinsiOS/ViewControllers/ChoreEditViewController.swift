@@ -58,7 +58,13 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadpage()
+    }
+    
+    func loadpage(){
         choreValueTextField.delegate = self
         choreNameTextField.delegate = self
         usernameTextField.delegate = self
@@ -69,27 +75,19 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         //define ref variable
         ref = Database.database().reference()
         
+        isUserParent()
         checkDatabase()
+        
+        //gets the custom parent id created in the registration
+        getParentId()
         
         // set up date pickers
         createDatePickerStart()
         createDatePickerDue()
         
-        //gets the custom parent id created in the registration
-        getParentId()
-        
-//        //pre populate choe information from exisitng chore.
-//        displayChoreInfo()
-        
         // set up child picker
-        getChildren()
         createChildPicker()
-        
-    }
     
-    override func viewWillAppear(_ animated: Bool) {
-        isUserParent()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -363,6 +361,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
             ref?.child("chores").child(cid).observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if snapshot.exists(){
+                    self.getChildren()
                     
                     let value = snapshot.value as? NSDictionary
                     
@@ -527,6 +526,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     func createChildPicker() {
+
         // create toolbar for done button
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
