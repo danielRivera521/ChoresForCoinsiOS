@@ -44,6 +44,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     var requestRedeem = false
     var tempCoinValue = 0
     var storedCoinValue = 0
+    var coinConversion: Double = 0
     
     
     
@@ -70,10 +71,11 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         // get coinvalue from db and set it to label
         //getRunningTotal()
         
-        if let coinvalue = coinValue {
+        if let coinvalue = self.coinValue {
             coinTotalTextField.text = String(coinvalue)
             coinValue = coinvalue
             storedCoinValue = coinvalue
+            tempCoinValue = coinvalue
         }
         
         if let uid = Auth.auth().currentUser?.uid {
@@ -181,7 +183,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
-                    
+                    self.getConversionRate()
                 }
             }
         }
@@ -339,6 +341,18 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         coinTotalTextField.text = ""
     }
     
+    func getConversionRate(){
+        if let unwrappedParentID = parentID {
+            
+            Database.database().reference().child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
+                }
+            })
+        }
+        
+    }
+    
     
     // MARK: Actions
     
@@ -387,7 +401,9 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     
     //calls an alert window to ensure that the parent is redeeming the coins for the selected child.
     @IBAction func redeemCoins(_ sender: UIButton) {
-        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem \(tempCoinValue) coins for \(childName!)", preferredStyle: .alert)
+        let convertedValue = coinConversion * Double(tempCoinValue)
+        let dollarValueString = String(format: "$%.02f", convertedValue)
+        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem \(tempCoinValue) coins for a value of \(dollarValueString) for \(childName!)", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
             

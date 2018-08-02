@@ -518,7 +518,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if let nameString = children[row].username{
             
-            let compoundString = "Assigned to: \(nameString)"
+            //let compoundString = "Assigned to: \(nameString)"
+            let compoundString = "\(nameString)"
             selectedRow = row
             
             usernameTextField.text = compoundString
@@ -546,7 +547,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
                 
-                let compoundString = "Assigned to: \(nameString)"
+                //let compoundString = "Assigned to: \(nameString)"
+                let compoundString = "\(nameString)"
                 selectedRow = 0
                 
                 usernameTextField.text = compoundString
@@ -676,7 +678,7 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
                 }
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            
+            self.didDelete = false
             deleteAlert.addAction(deleteAction)
             deleteAlert.addAction(cancelAction)
             
@@ -723,6 +725,11 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
+    
+    @IBAction func goToDetails(_ sender: UIButton) {
+        self.didDelete = false
+        performSegue(withIdentifier: "unwindToDetails", sender: self)
+    }
 }
 
 extension ChoreEditViewController: ChoreEditDelegate {

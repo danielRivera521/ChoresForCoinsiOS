@@ -20,6 +20,7 @@ class ChoreListViewController: UIViewController {
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var redeemAlertImageView: UIImageView!
+    @IBOutlet weak var animCoinEarnedView: UIImageView!
     
     // MARK: - Properties
     
@@ -42,6 +43,8 @@ class ChoreListViewController: UIViewController {
     var requestRedeem = false
     
     var runningProfile: RunningTotal?
+    
+    var coinAnim = [UIImage] ()
     
     // MARK: - ViewController methods
     
@@ -69,6 +72,11 @@ class ChoreListViewController: UIViewController {
         ref?.removeAllObservers()
         firstView = false
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        // determines if the coins earned anim should play
+        checkForCoinsEarned()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +160,53 @@ class ChoreListViewController: UIViewController {
             
         }
         
+    }
+    
+    func checkForCoinsEarned() {
+        if let uid = Auth.auth().currentUser?.uid {
+            Database.database().reference().child("user/\(uid)/just_completed_chore").observeSingleEvent(of: .value) { (snapshot) in
+                if let value = snapshot.value as? Bool {
+                    if value {
+                        
+                        self.animCoinEarnedView.isHidden = false
+                        
+                        // creates an array of all the frames of the animation
+                        for i in 0...119 {
+                            if i < 10 {
+                                print(i)
+                                self.coinAnim.append(UIImage(named: "anim_coin_add_00\(i)")!)
+                            }  else if i < 100 {
+                                print(i)
+                                self.coinAnim.append(UIImage(named: "anim_coin_add_0\(i)")!)
+                            } else {
+                                print(i)
+                                self.coinAnim.append(UIImage(named: "anim_coin_add_\(i)")!)
+                            }
+                        }
+                        
+                        self.animCoinEarnedView.animationImages = self.coinAnim
+                        self.animCoinEarnedView.animationDuration = 2
+                        self.animCoinEarnedView.animationRepeatCount = 1
+                        
+                        //animChoreComplete.startAnimating()
+                        
+                        // start playing the animation
+                        self.animCoinEarnedView.startAnimatingWithCompletionBlock {
+                            self.animCoinEarnedView.stopAnimating()
+                            self.animCoinEarnedView.isHidden = true
+                        }
+                        
+                        // play animation
+                        print("coin earned animation should be playing")
+                        
+                        // since a chore was completed and the anim played, need to set this value to false so it doesn't keep happening
+                        if let uid = self.userID {
+                            Database.database().reference().child("user/\(uid)/just_completed_chore").setValue(false)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func getRunningTotal(){
@@ -290,6 +345,7 @@ class ChoreListViewController: UIViewController {
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    self.getConversionRate()
                 }
             }
         }
@@ -433,16 +489,12 @@ class ChoreListViewController: UIViewController {
     }
     
     func getConversionRate(){
-        if let unwrappedParentID = parentID{
+        if let unwrappedParentID = parentID {
             
-            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
+            ref?.child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
                 }
-                
             })
         }
         

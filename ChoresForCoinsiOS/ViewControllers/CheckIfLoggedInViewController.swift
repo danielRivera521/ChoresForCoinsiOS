@@ -15,9 +15,17 @@ class CheckIfLoggedInViewController: UIViewController {
         super.viewDidLoad()
         
         Auth.auth().addStateDidChangeListener { auth, user in
-            if let user = user {
+//            if let user = user {
+//                // User is signed in.
+//                print("\(user)")
+//                self.performSegue(withIdentifier: "toMain", sender: self)
+//            } else {
+//                // No user is signed in.
+//                self.performSegue(withIdentifier: "toSignInFromRoot", sender: self)
+//            }
+            
+            if Auth.auth().currentUser != nil {
                 // User is signed in.
-                print("\(user)")
                 self.performSegue(withIdentifier: "toMain", sender: self)
             } else {
                 // No user is signed in.

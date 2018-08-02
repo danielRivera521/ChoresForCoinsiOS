@@ -86,6 +86,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
+                    self.getConversionRate()
                 }
             }
         }
@@ -269,6 +270,10 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             ref.child("\(choreId!)").updateChildValues(["chore_completed" : true])
             ref.child("\(choreId!)/date_completed").setValue(dateString)
             ref.child("\(choreId!)/assigned_child_id").setValue(userID!)
+            
+            // sets that a chore was completed, which means coins will be awarded. Back in Chores list, it will check for this value and if true, it will play coins earned anim and set this value to false
+            Database.database().reference().child("user/\(userID!)/just_completed_chore").setValue(true)
+            
             if let displayName = Auth.auth().currentUser?.displayName{
                 
                 // let displayText = "Completed by \(displayName)"
@@ -342,16 +347,12 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func getConversionRate(){
-        if let unwrappedParentID = parentID{
+        if let unwrappedParentID = parentID {
             
-            Database.database().reference().child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
+            Database.database().reference().child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
                 }
-                
             })
         }
         

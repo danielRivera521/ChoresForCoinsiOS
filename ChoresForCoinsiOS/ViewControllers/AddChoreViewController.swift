@@ -187,7 +187,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if let nameString = children[row].username{
             
-            let compoundString = "Assigned to: \(nameString)"
+            //let compoundString = "Assigned to: \(nameString)"
+            let compoundString = "\(nameString)"
             selectedRow = row
             
             usernameTextField.text = compoundString
@@ -212,10 +213,17 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //when doneis pressed if the field is empty, the picker will selected the first child.
     @objc func donePressedChild() {
+        if children.count == 0 {
+            // dismiss picker
+            self.view.endEditing(true)
+            return
+        }
+        
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
                 
-                let compoundString = "Assigned to: \(nameString)"
+                //let compoundString = "Assigned to: \(nameString)"
+                let compoundString = "\(nameString)"
                 selectedRow = 0
                 
                 usernameTextField.text = compoundString
@@ -518,7 +526,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 let id = value?["parent_id"] as? String
                 if let actualID = id{
                     self.parentID = actualID
-                    
+                    self.getConversionRate()
                 }
             }
         }
@@ -552,16 +560,12 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //gets the conversion rate set by the parent in their settings
     func getConversionRate(){
-        if let unwrappedParentID = parentID{
+        if let unwrappedParentID = parentID {
             
-            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
+            ref?.child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
                 }
-                
             })
         }
         
@@ -661,7 +665,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
         } else {
             if let cName = Auth.auth().currentUser?.displayName{
-                usernameTextField.text = "Assigned to \(cName)"
+                // usernameTextField.text = "Assigned to \(cName)"
+                usernameTextField.text = "\(cName)"
             }
         }
         //checks if the coin value text field is empty and a integer or sets the processSegue is set to false.

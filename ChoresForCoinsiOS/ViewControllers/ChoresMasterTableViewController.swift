@@ -67,11 +67,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
@@ -81,6 +76,23 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         isUserParent()
         
         
+        //cresates chore list
+        createChores()
+        // set background color to the table
+        getBackground()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        //gets the firebase generated id
+        userID = (Auth.auth().currentUser?.uid)!
+
+        //gets the custom parent id created in the registration
+        getParentId()
+
+        isUserParent()
+
+
         //cresates chore list
         createChores()
         // set background color to the table
@@ -184,7 +196,7 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
         let imageView = UIImageView(image: self.bgImage)
         self.tableView.backgroundView = imageView
-        self.tableView.reloadData()
+        //self.tableView.reloadData()
     }
     
     // gets all children with same parent id as user

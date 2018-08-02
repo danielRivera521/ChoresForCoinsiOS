@@ -115,45 +115,27 @@ class ProfilePictureSelectViewController: UIViewController, UIImagePickerControl
     }
     
     @IBAction func takeProfilePic(_ sender: UIButton) {
+        //instantiates the imagePicker
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        // if the device's camera is functioning and available, set imagePickers source as the camera
-        // if not, use photo library instead
-        
-        let photoOptionAlert = UIAlertController(title: "Profile Photo", message: "Select an Option", preferredStyle: .actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: .default) { (action) in
-            if UIImagePickerController.isSourceTypeAvailable(.camera) {
-                self.imagePicker.sourceType = .camera
-                self.imagePicker.cameraCaptureMode = .photo
-                
-                // lets user edit photos taken with camera or in photo library
-                self.imagePicker.allowsEditing = true
-                // sets the media type to the same as the camera or photo library
-                
-                
-                // present the image picker
-                self.present(self.imagePicker, animated: true, completion: nil)
-            } else {
-                AlertController.showAlert(self, title: "Error", message: "Camera is not Available")
-            }
-        }
-        let photoLibAction = UIAlertAction(title: "Photo Library", style: .default) { (photoAction) in
-            self.imagePicker.sourceType = .photoLibrary
+        //if the camera is not available, use the photo library
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.sourceType = .camera
+            imagePicker.cameraCaptureMode = .photo
+        } else {
             
-            // lets user edit photos taken with camera or in photo library
-            self.imagePicker.allowsEditing = true
-            // sets the media type to the same as the camera or photo library
-            
-            
-            // present the image picker
-            self.present(self.imagePicker, animated: true, completion: nil)
+            //may remove this option if current image from camera is necessary.
+            imagePicker.sourceType = .photoLibrary
         }
         
-        photoOptionAlert.addAction(cameraAction)
-        photoOptionAlert.addAction(photoLibAction)
+        //image can be edited and sets the mediatype to the source type which is the camera
+        imagePicker.allowsEditing = true
         
-        present(photoOptionAlert, animated: true, completion: nil)
+        //imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)
+        
+        
+        self.present(imagePicker, animated: true, completion: nil)
         
         
         
