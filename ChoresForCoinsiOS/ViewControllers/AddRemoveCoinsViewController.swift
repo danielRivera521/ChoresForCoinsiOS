@@ -70,10 +70,11 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
         // get coinvalue from db and set it to label
         //getRunningTotal()
         
-        if let coinvalue = coinValue {
+        if let coinvalue = self.coinValue {
             coinTotalTextField.text = String(coinvalue)
             coinValue = coinvalue
             storedCoinValue = coinvalue
+            tempCoinValue = coinvalue
         }
         
         if let uid = Auth.auth().currentUser?.uid {
