@@ -67,6 +67,11 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
         //gets the firebase generated id
         userID = (Auth.auth().currentUser?.uid)!
         
@@ -78,11 +83,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         
         //cresates chore list
         createChores()
-        
-        getBackground()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         // set background color to the table
         getBackground()
         
@@ -222,10 +222,15 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ChoresMasterTableViewCell
 
         let choreItem = chores[indexPath.row]
-        
+        if addRedDotToChore(chore: choreItem){
+            cell.choreNotifyDot.isHidden = false
+        } else {
+            cell.choreNotifyDot.isHidden = true
+        }
         cell.choreNameCellLabel.text = choreItem.name
         cell.imageCellImageView.isHidden = true
     
+        cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
         if let completed = choreItem.completed {
             if completed {
                 cell.completedImageCellImageView.image = #imageLiteral(resourceName: "checkmark")
@@ -267,7 +272,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                                 //choreItem has a username else
                             } else {
                                 //set the username for the choreItem Object
-                                // choreItem.choreUsername = "Failed to Complete"
                                 choreItem.choreUsername = "Past Due"
                             }
                             
@@ -275,8 +279,6 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
                         
                     }
                 }
-                
-                cell.completedImageCellImageView.image = #imageLiteral(resourceName: "redX")
             }
         }
         
@@ -340,6 +342,17 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
             splitViewController?.showDetailViewController(detailViewController, sender: nil)
         }
     }
+    func addRedDotToChore(chore: Chore) -> Bool{
+        if let uid = chore.assignChild {
+            if userID! == uid {
+                if let notifiedChore = chore.notifyAssigned{
+                    return !notifiedChore
+                }
+            }
+        }
+        
+        return false
+    }
     
     func alertCompletedAndAddNote(chore: Chore){
         notifyString = "no"
@@ -387,5 +400,5 @@ class ChoresMasterTableViewController: UITableViewController, UISplitViewControl
         }
     }
     
-   // @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {}
+    @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {}
 }

@@ -240,8 +240,6 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             
         }
         
-        
-        
         performSegue(withIdentifier: "segueToList", sender: self)
     }
     

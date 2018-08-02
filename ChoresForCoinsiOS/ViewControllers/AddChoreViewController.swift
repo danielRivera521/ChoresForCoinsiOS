@@ -145,6 +145,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // format date
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
+            picker.setDate(Date(), animated: true)
             let dateString = formatter.string(from: picker.date)
             startDateTextField.text = "\(dateString)"
         }
@@ -152,6 +153,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // format date
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
+            picker.setDate(Date(), animated: true)
             let dateString = formatter.string(from: picker.date)
             dueDateTextField.text = "\(dateString)"
         }
@@ -638,20 +640,29 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
         
-        //checks if the chore has been assigned.
-        if let assignee = usernameTextField.text {
-            if !assignee.isEmpty{
-                //do nothing
-            } else {
+        if isActiveUserParent {
+            
+            //checks if the chore has been assigned.
+            if let assignee = usernameTextField.text {
+                if !assignee.isEmpty{
+                    //do nothing
+                } else {
+                    
+                    processSegue = false
+                    AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
+                    
+                }
                 
+            } else {
                 processSegue = false
                 AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
-                
             }
             
+            
         } else {
-            processSegue = false
-            AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
+            if let cName = Auth.auth().currentUser?.displayName{
+                usernameTextField.text = "Assigned to \(cName)"
+            }
         }
         //checks if the coin value text field is empty and a integer or sets the processSegue is set to false.
         if let coinValue = choreValueTextField.text{
@@ -659,7 +670,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 //do nothing
             } else {
                 choreValueTextField.becomeFirstResponder()
-                AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+                AlertController.showAlert(self, title: "Coin Value Not Detected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
                 processSegue = false
             }
         } else {
@@ -705,6 +716,9 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 ref?.child("chores/\(currentChoreId)/chore_note").setValue(choreNoteTextView.text)
                 
                 ref?.child("chores/\(currentChoreId)/number_coins").setValue(choreValueTextField.text)
+                
+                ref?.child("chores/\(currentChoreId)/assignee_notified").setValue(false)
+                
                 
                 if let pID = self.parentID{
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)

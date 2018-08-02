@@ -32,10 +32,10 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     var parentID: String?
     var children = [ChildUser] ()
     var chores: [Chore] = [Chore]()
-    var childrenCoinsTotal = PieChartDataEntry ()
-    var childrenCoinsAllTimeTotal = PieChartDataEntry ()
-    var childrenCompletedChores = PieChartDataEntry ()
-    var childrenToDoChores = PieChartDataEntry ()
+//    var childrenCoinsTotal = PieChartDataEntry ()
+//    var childrenCoinsAllTimeTotal = PieChartDataEntry ()
+//    var childrenCompletedChores = PieChartDataEntry ()
+//    var childrenToDoChores = PieChartDataEntry ()
     var childrenWeeklyChores = [[Double]] ()
     var monthName: String = ""
     var requestRedeem = false
@@ -210,13 +210,14 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         }
+        print("current Coins: \(unwrappedCurrentCoins), Total Coins: \(unwrappedTotalCoins)")
         return (unwrappedCurrentCoins, unwrappedTotalCoins)
         
     }
     
     func getChoreCompletedData(uid: String)->(Double,Double){
         var completedChores: Double = 0
-        var incompleteChores: Double = 0
+        let incompleteChores: Double = Double(chores.count)
         
         for chore in chores{
             
@@ -226,14 +227,12 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                     if let complete = chore.completed{
                         if complete{
                             completedChores += 1
-                        } else {
-                            incompleteChores += 1
                         }
                     }
                 }
             }
         }
-        
+         print("current Coins: \(completedChores), Total Coins: \(incompleteChores)")
         return (completedChores, incompleteChores)
         
     }
@@ -455,6 +454,11 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func updateCoinsChartData(index: Int) -> PieChartData {
+        let childrenCoinsTotal = PieChartDataEntry()
+        let childrenCoinsAllTimeTotal = PieChartDataEntry()
+        
+        childrenCoinsTotal.value = 0
+        childrenCoinsAllTimeTotal.value = 0
         
         let uid = children[index].key
         let coinData = getCoinGraphData(uid: uid)
@@ -467,21 +471,41 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
         chartDataSet.colors = colors as! [NSUIColor]
         chartDataSet.selectionShift = 0
         
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        formatter.maximumFractionDigits = 0
+        formatter.multiplier = 1.0
+        
+        chartData.setValueFormatter(DefaultValueFormatter(formatter: formatter))
+        
         return chartData
     }
     
     func updateChoresChartData(index: Int) -> PieChartData {
+        
+        let childrenCompletedChores = PieChartDataEntry()
+        let childrenToDoChores = PieChartDataEntry()
+        
+        childrenCompletedChores.value = 0
+        childrenToDoChores.value = 0
+        
         let uid = children[index].key
         let choreData = getChoreCompletedData(uid: uid)
         
         childrenCompletedChores.value = choreData.0
         childrenToDoChores.value = choreData.1
         
-        let chartDataSet = PieChartDataSet(values: [childrenCompletedChores, childrenToDoChores], label: "Completed/Incomplete")
+        let chartDataSet = PieChartDataSet(values: [childrenCompletedChores, childrenToDoChores], label: "Completed/Total")
         let chartData = PieChartData(dataSet: chartDataSet)
         let colors = [UIColor(named: "CFCOrange"), UIColor(named: "CFCDarkOrange")]
         chartDataSet.colors = colors as! [NSUIColor]
         chartDataSet.selectionShift = 0
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        formatter.maximumFractionDigits = 0
+        formatter.multiplier = 1.0
+        
+        chartData.setValueFormatter(DefaultValueFormatter(formatter: formatter))
         
         return chartData
     }
@@ -496,12 +520,15 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
             lineChartEntry.append(value)
         }
         
-        
-        
-        
         let line1 = LineChartDataSet(values: lineChartEntry, label: "Chores Completed for \(monthName)")
         let data = LineChartData()
         data.addDataSet(line1)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        formatter.maximumFractionDigits = 0
+        formatter.multiplier = 1.0
+        
+        data.setValueFormatter(DefaultValueFormatter(formatter: formatter))
         
         
         return data
