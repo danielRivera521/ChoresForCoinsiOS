@@ -518,7 +518,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if let nameString = children[row].username{
             
-            let compoundString = "Assigned to: \(nameString)"
+            //let compoundString = "Assigned to: \(nameString)"
+            let compoundString = "\(nameString)"
             selectedRow = row
             
             usernameTextField.text = compoundString
@@ -546,7 +547,8 @@ class ChoreEditViewController: UIViewController, UIImagePickerControllerDelegate
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
                 
-                let compoundString = "Assigned to: \(nameString)"
+                //let compoundString = "Assigned to: \(nameString)"
+                let compoundString = "\(nameString)"
                 selectedRow = 0
                 
                 usernameTextField.text = compoundString

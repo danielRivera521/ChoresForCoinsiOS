@@ -187,7 +187,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if let nameString = children[row].username{
             
-            let compoundString = "Assigned to: \(nameString)"
+            //let compoundString = "Assigned to: \(nameString)"
+            let compoundString = "\(nameString)"
             selectedRow = row
             
             usernameTextField.text = compoundString
@@ -215,7 +216,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if (usernameTextField.text?.isEmpty)! {
             if let nameString = children[0].username{
                 
-                let compoundString = "Assigned to: \(nameString)"
+                //let compoundString = "Assigned to: \(nameString)"
+                let compoundString = "\(nameString)"
                 selectedRow = 0
                 
                 usernameTextField.text = compoundString
@@ -657,7 +659,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
         } else {
             if let cName = Auth.auth().currentUser?.displayName{
-                usernameTextField.text = "Assigned to \(cName)"
+                // usernameTextField.text = "Assigned to \(cName)"
+                usernameTextField.text = "\(cName)"
             }
         }
         //checks if the coin value text field is empty and a integer or sets the processSegue is set to false.
