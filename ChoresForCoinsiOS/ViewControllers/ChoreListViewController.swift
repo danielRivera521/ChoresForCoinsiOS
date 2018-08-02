@@ -173,10 +173,13 @@ class ChoreListViewController: UIViewController {
                         // creates an array of all the frames of the animation
                         for i in 0...119 {
                             if i < 10 {
+                                print(i)
                                 self.coinAnim.append(UIImage(named: "anim_coin_add_00\(i)")!)
                             }  else if i < 100 {
+                                print(i)
                                 self.coinAnim.append(UIImage(named: "anim_coin_add_0\(i)")!)
                             } else {
+                                print(i)
                                 self.coinAnim.append(UIImage(named: "anim_coin_add_\(i)")!)
                             }
                         }

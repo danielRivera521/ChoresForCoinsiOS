@@ -344,7 +344,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     func getConversionRate(){
         if let unwrappedParentID = parentID {
             
-            ref?.child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+            Database.database().reference().child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let coinValue = snapshot.value as? Double {
                     self.coinConversion = coinValue
                 }
@@ -403,7 +403,7 @@ class AddRemoveCoinsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func redeemCoins(_ sender: UIButton) {
         let convertedValue = coinConversion * Double(tempCoinValue)
         let dollarValueString = String(format: "$%.02f", convertedValue)
-        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem \(tempCoinValue) coins for a value of $\(dollarValueString) for \(childName!)", preferredStyle: .alert)
+        let redeemAlert = UIAlertController(title: "Coin Redemption", message: "Do you wish to redeem \(tempCoinValue) coins for a value of \(dollarValueString) for \(childName!)", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Redeem", style: .default) { (alertAction) in
             
