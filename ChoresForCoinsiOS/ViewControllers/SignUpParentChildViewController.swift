@@ -18,9 +18,6 @@ class SignUpParentChildViewController: UIViewController, FUIAuthDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-         // getBackground()
-
     }
     
     override func viewDidAppear(_ animated: Bool) {

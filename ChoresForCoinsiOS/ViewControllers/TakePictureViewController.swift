@@ -21,6 +21,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var redeemAlertImageView: UIImageView!
+    @IBOutlet weak var animChoreComplete: UIImageView!
     
     var userID: String?
     var parentID: String?
@@ -36,6 +37,9 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     private var imagePicker: UIImagePickerController!
     
     var animRedeemAlertContainer = [UIImage] ()
+    
+    // array of animation frames
+    var coinAnim = [UIImage] ()
     
     
     override func viewDidLoad() {
@@ -63,6 +67,8 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     override func viewWillAppear(_ animated: Bool) {
         isUserParent()
         getPhoto()
+        
+        createChoreCompleteAnim()
     }
     
     override func didReceiveMemoryWarning() {
@@ -233,6 +239,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             }
             
         }
+        
         performSegue(withIdentifier: "segueToList", sender: self)
     }
     
@@ -264,7 +271,8 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             ref.child("\(choreId!)/assigned_child_id").setValue(userID!)
             if let displayName = Auth.auth().currentUser?.displayName{
                 
-                let displayText = "Completed by \(displayName)"
+                // let displayText = "Completed by \(displayName)"
+                let displayText = "\(displayName)"
                 ref.child("\(choreId!)/chore_username").setValue(displayText)
                 
                 let now = Date()
@@ -381,6 +389,14 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "segueToList" {
+//            if let destination = segue.destination as? ChoresMasterTableViewController {
+//                destination.completedChore = true
+//            }
+//        }
+//    }
+    
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
         Database.database().reference().child("user/\(userID!)/user_parent").observeSingleEvent(of: .value, with: { (snapshot) in
@@ -396,7 +412,7 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func childRedeem(_ sender: UIButton) {
         if coinValue <= 0 {
-            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "You do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
             if !requestRedeem{
             getConversionRate()
@@ -429,6 +445,34 @@ class TakePictureViewController: UIViewController, UIImagePickerControllerDelega
             }
         }
 
+    }
+    
+    func createChoreCompleteAnim() {
+        
+        animChoreComplete.isHidden = false
+        
+        // creates an array of all the frames of the animation
+        for i in 0...119 {
+            if i < 10 {
+                coinAnim.append(UIImage(named: "anim_chore_completed_00\(i)")!)
+            }  else if i < 100 {
+                coinAnim.append(UIImage(named: "anim_chore_completed_0\(i)")!)
+            } else {
+                coinAnim.append(UIImage(named: "anim_chore_completed_\(i)")!)
+            }
+        }
+        
+        animChoreComplete.animationImages = coinAnim
+        animChoreComplete.animationDuration = 2
+        animChoreComplete.animationRepeatCount = 1
+        
+        //animChoreComplete.startAnimating()
+        
+        // start playing the animation
+        animChoreComplete.startAnimatingWithCompletionBlock {
+            self.animChoreComplete.stopAnimating()
+            self.animChoreComplete.isHidden = true
+        }
     }
     
     @IBAction func doGoBack(_ sender: UIButton) {

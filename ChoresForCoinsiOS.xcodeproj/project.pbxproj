@@ -33,6 +33,7 @@
 		B00D30142109B0570076152F /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00D30132109B0570076152F /* CreditsViewController.swift */; };
 		B00DCA3B20FC653E00EED0E7 /* OverviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */; };
 		B012685B20D83EB9005BECE0 /* ParentChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */; };
+		B027F8662111BBBC0002D3BE /* CheckIfLoggedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B027F8652111BBBC0002D3BE /* CheckIfLoggedInViewController.swift */; };
 		B044111C20DE0F08000453C3 /* ParentCoinChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */; };
 		B044111E20DE49D7000453C3 /* ChildUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111D20DE49D7000453C3 /* ChildUser.swift */; };
 		B044112020DE4A0F000453C3 /* RunningTotal.swift in Sources */ = {isa = PBXBuildFile; fileRef = B044111F20DE4A0F000453C3 /* RunningTotal.swift */; };
@@ -84,6 +85,7 @@
 		B00D30132109B0570076152F /* CreditsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		B00DCA3A20FC653E00EED0E7 /* OverviewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTableViewCell.swift; sourceTree = "<group>"; };
 		B012685A20D83EB9005BECE0 /* ParentChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildViewController.swift; sourceTree = "<group>"; };
+		B027F8652111BBBC0002D3BE /* CheckIfLoggedInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIfLoggedInViewController.swift; sourceTree = "<group>"; };
 		B044111B20DE0F08000453C3 /* ParentCoinChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentCoinChildViewController.swift; sourceTree = "<group>"; };
 		B044111D20DE49D7000453C3 /* ChildUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildUser.swift; sourceTree = "<group>"; };
 		B044111F20DE4A0F000453C3 /* RunningTotal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningTotal.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				B00A5EBB21098750000B813B /* ChildSettingsViewController.swift */,
 				B00A5EBC21098750000B813B /* ParentSettingsViewController.swift */,
 				B00D30132109B0570076152F /* CreditsViewController.swift */,
+				B027F8652111BBBC0002D3BE /* CheckIfLoggedInViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				B08B83E42108522C0082D1B1 /* OnboardingViewController.swift in Sources */,
 				B00D30142109B0570076152F /* CreditsViewController.swift in Sources */,
 				65EF0C9120D438A500DD9A3F /* DataService.swift in Sources */,
+				B027F8662111BBBC0002D3BE /* CheckIfLoggedInViewController.swift in Sources */,
 				B052D6B620FDC8A1004C25C8 /* ChoresMasterTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

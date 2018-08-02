@@ -119,6 +119,7 @@ class ChoresDetailSplitViewController: UIViewController {
             let chorePastDue = value?["past_due"] as? String
             let choreUserName = value?["user_name"] as? String
             let completedName = value?["chore_username"] as? String
+            let choreAssignedID = value?["assigned_child_id"] as? String
             
             if let choreName = chorName{
                 self.choreNameLabel.text = choreName
@@ -168,6 +169,14 @@ class ChoresDetailSplitViewController: UIViewController {
             } else {
 
                 
+            }
+            
+            if let uid = self.userID {
+                if let choreAssignee = choreAssignedID {
+                    if uid == choreAssignee {
+                        Database.database().reference().child("chores/\(self.choreId!)/assignee_notified").setValue(true)
+                    }
+                }
             }
             
             if let choreDueString = chorePastDue {

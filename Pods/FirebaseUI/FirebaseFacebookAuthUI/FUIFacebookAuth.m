@@ -61,11 +61,6 @@ static NSString *const kFacebookDisplayName = @"FacebookDisplayName";
       @brief The presenting view controller for interactive sign-in.
    */
   UIViewController *_presentingViewController;
-
-  /** @var _email
-      @brief The email address associated with this account.
-   */
-  NSString *_email;
 }
 
 - (instancetype)initWithPermissions:(NSArray *)permissions {
@@ -149,20 +144,10 @@ static NSString *const kFacebookDisplayName = @"FacebookDisplayName";
       NSError *newError = [FUIAuthErrorUtils userCancelledSignInError];
       [self completeSignInFlowWithAccessToken:nil error:newError];
     } else {
-      // Retrieve email.
-      [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{ @"fields" : @"email" }]
-          startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result,
-                                       NSError *error) {
-        self->_email = result[@"email"];
-      }];
       [self completeSignInFlowWithAccessToken:result.token.tokenString
                                         error:nil];
     }
   }];
-}
-
-- (NSString *)email {
-  return _email;
 }
 
 - (void)signOut {

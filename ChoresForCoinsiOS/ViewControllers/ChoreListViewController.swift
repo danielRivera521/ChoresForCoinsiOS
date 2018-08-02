@@ -38,6 +38,7 @@ class ChoreListViewController: UIViewController {
     var bgImg: UIImage?
     var animRedeemView: UIImageView?
     var animRedeemAlertContainer = [UIImage] ()
+    
     var requestRedeem = false
     
     var runningProfile: RunningTotal?
@@ -466,7 +467,7 @@ class ChoreListViewController: UIViewController {
     
     @IBAction func childRedeem(_ sender: UIButton) {
         if coinValue <= 0 {
-            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "You do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
             if !requestRedeem {
                 getConversionRate()
@@ -506,7 +507,7 @@ class ChoreListViewController: UIViewController {
     }
     
     @IBAction func unwindToChoreList(segue:UIStoryboardSegue) {
-        print("UnwindToChoreList method")
+        
     }
     
 }

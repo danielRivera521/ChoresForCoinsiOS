@@ -55,11 +55,6 @@ static NSString *const kSignInWithGoogle = @"SignInWithGoogle";
       @brief The callback which should be invoked when the sign in flow completes (or is cancelled.)
    */
   FIRAuthProviderSignInCompletionBlock _pendingSignInCallback;
-
-  /** @var _email
-      @brief The email address associated with this account.
-   */
-  NSString *_email;
 }
 
 - (instancetype)init {
@@ -148,10 +143,6 @@ static NSString *const kSignInWithGoogle = @"SignInWithGoogle";
   return [signIn handleURL:URL sourceApplication:sourceApplication annotation:nil];
 }
 
-- (NSString *)email {
-  return _email;
-}
-
 #pragma mark - GIDSignInDelegate methods
 
 - (void)signIn:(GIDSignIn *)signIn
@@ -170,7 +161,6 @@ static NSString *const kSignInWithGoogle = @"SignInWithGoogle";
     }
     return;
   }
-  _email = user.profile.email;
   UIActivityIndicatorView *activityView =
       [FUIAuthBaseViewController addActivityIndicator:_presentingViewController.view];
   [activityView startAnimating];

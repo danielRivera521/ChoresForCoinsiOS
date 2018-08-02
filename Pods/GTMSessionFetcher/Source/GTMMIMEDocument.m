@@ -102,9 +102,8 @@ static void SearchDataForBytes(NSData *data, const void *targetBytes, NSUInteger
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%@ %p (headers %lu keys, body %lu bytes)",
-          [self class], self, (unsigned long)_headers.count,
-          (unsigned long)_bodyData.length];
+  return [NSString stringWithFormat:@"%@ %p (headers %tu keys, body %tu bytes)",
+          [self class], self, _headers.count, _bodyData.length];
 }
 
 - (BOOL)isEqual:(GTMMIMEDocumentPart *)other {
@@ -140,8 +139,8 @@ static void SearchDataForBytes(NSData *data, const void *targetBytes, NSUInteger
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%@ %p (%lu parts)",
-          [self class], self, (unsigned long)_parts.count];
+  return [NSString stringWithFormat:@"%@ %p (%tu parts)",
+          [self class], self, _parts.count];
 }
 
 #pragma mark - Joining Parts

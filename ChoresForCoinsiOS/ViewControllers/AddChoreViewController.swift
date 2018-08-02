@@ -12,7 +12,7 @@ import Firebase
 class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UITextViewDelegate {
     
     
-    // MARK: Outlets
+    // MARK: - Outlets
     
     @IBOutlet weak var choreImageUIButton: UIButton!
     @IBOutlet weak var choreNameTextField: UITextField!
@@ -30,9 +30,10 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var redDot: UIImageView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var redeemAlertImageView: UIImageView!
+    @IBOutlet weak var parentNotesLabel: UILabel!
     
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var isFirstLoad = true
     var coinValue = 0
@@ -68,7 +69,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var requestRedeem = false
     
     
-    // MARK: View Controller functions
+    // MARK: - View Controller functions
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,6 +133,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //set placeholder for Username and hide and disable the chore notes section
         usernameTextField.placeholder = "Click to Assign chore to a child"
         choreNoteTextView.isHidden = true
+        parentNotesLabel.isHidden = true
         
         //sets both start and end date fields with the current date.
         startDateTextField.delegate = self
@@ -143,6 +145,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // format date
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
+            picker.setDate(Date(), animated: true)
             let dateString = formatter.string(from: picker.date)
             startDateTextField.text = "\(dateString)"
         }
@@ -150,6 +153,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // format date
             let formatter = DateFormatter()
             formatter.dateStyle = .medium
+            picker.setDate(Date(), animated: true)
             let dateString = formatter.string(from: picker.date)
             dueDateTextField.text = "\(dateString)"
         }
@@ -159,7 +163,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK: Chore Description TextView Delegate
+    //MARK: - Chore Description TextView Delegate
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = nil
@@ -222,7 +226,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
-    // MARK: Custom functions
+    // MARK: - Custom functions
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // dismiss keyboard when user touches outside of keyboard
@@ -607,7 +611,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return true
     }
     
-    // MARK: Actions
+    // MARK: - Actions
     
     @IBAction func toCoinView(_ sender: UIButton) {
         // checks if user is parent. If yes, go to parent coin view, else show redeem view
@@ -636,20 +640,29 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
         
-        //checks if the chore has been assigned.
-        if let assignee = usernameTextField.text {
-            if !assignee.isEmpty{
-                //do nothing
-            } else {
+        if isActiveUserParent {
+            
+            //checks if the chore has been assigned.
+            if let assignee = usernameTextField.text {
+                if !assignee.isEmpty{
+                    //do nothing
+                } else {
+                    
+                    processSegue = false
+                    AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
+                    
+                }
                 
+            } else {
                 processSegue = false
                 AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
-                
             }
             
+            
         } else {
-            processSegue = false
-            AlertController.showAlert(self, title: "Assign Child", message: "Please assign a child to the chore.")
+            if let cName = Auth.auth().currentUser?.displayName{
+                usernameTextField.text = "Assigned to \(cName)"
+            }
         }
         //checks if the coin value text field is empty and a integer or sets the processSegue is set to false.
         if let coinValue = choreValueTextField.text{
@@ -657,7 +670,7 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 //do nothing
             } else {
                 choreValueTextField.becomeFirstResponder()
-                AlertController.showAlert(self, title: "Coin Value Not Dectected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
+                AlertController.showAlert(self, title: "Coin Value Not Detected", message: "Please enter a numeric integar value for how many coins this chore is worth.")
                 processSegue = false
             }
         } else {
@@ -704,6 +717,9 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 
                 ref?.child("chores/\(currentChoreId)/number_coins").setValue(choreValueTextField.text)
                 
+                ref?.child("chores/\(currentChoreId)/assignee_notified").setValue(false)
+                
+                
                 if let pID = self.parentID{
                     ref?.child("chores/\(currentChoreId)/parent_id").setValue(pID)
                 }
@@ -722,7 +738,8 @@ class AddChoreViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     
                 } else {
                     if let childName = displayName{
-                        ref?.child("chores/\(currentChoreId)/user_name").setValue("Assigned to: \(childName)")
+                        // ref?.child("chores/\(currentChoreId)/user_name").setValue("Assigned to: \(childName)")
+                        ref?.child("chores/\(currentChoreId)/user_name").setValue("\(childName)")
                     }
                 }
                 

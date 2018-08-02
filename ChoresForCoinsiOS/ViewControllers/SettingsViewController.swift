@@ -313,7 +313,7 @@ class SettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func childRedeem(_ sender: UIButton) {
         if coinValue <= 0 {
-            AlertController.showAlert(self, title: "Cannot Redeem", message: "YOu do not have any coins to redeem. Try completing some chores to get some coins")
+            AlertController.showAlert(self, title: "Cannot Redeem", message: "You do not have any coins to redeem. Try completing some chores to get some coins")
         } else {
             if !requestRedeem{
             getConversionRate()

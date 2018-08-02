@@ -23,8 +23,6 @@
 #import "FUIAuthUtils.h"
 #import "FUIAuth_Internal.h"
 #import "FUIEmailEntryViewController.h"
-#import "FUIPrivacyAndTermsOfServiceView.h"
-
 
 /** @var kErrorUserInfoEmailKey
     @brief The key for the email address in the userinfo dictionary of a sign in error.
@@ -58,12 +56,10 @@ static const CGFloat kButtonContainerBottomMargin = 56.0f;
 
 @implementation FUIAuthPickerViewController {
   UIView *_buttonContainerView;
-
-  IBOutlet FUIPrivacyAndTermsOfServiceView *_privacyPolicyAndTOSView;
 }
 
 - (instancetype)initWithAuthUI:(FUIAuth *)authUI {
-  return [self initWithNibName:@"FUIAuthPickerViewController"
+  return [self initWithNibName:NSStringFromClass([self class])
                         bundle:[FUIAuthUtils bundleNamed:FUIAuthBundleName]
                         authUI:authUI];
 }
@@ -103,7 +99,7 @@ static const CGFloat kButtonContainerBottomMargin = 56.0f;
     ++numberOfButtons;
   }
   CGFloat buttonContainerViewHeight =
-      kSignInButtonHeight * numberOfButtons + kSignInButtonVerticalMargin * (numberOfButtons);
+      kSignInButtonHeight * numberOfButtons + kSignInButtonVerticalMargin * (numberOfButtons - 1);
   CGRect buttonContainerViewFrame = CGRectMake(0, 0, kSignInButtonWidth, buttonContainerViewHeight);
   _buttonContainerView = [[UIView alloc] initWithFrame:buttonContainerViewFrame];
   [self.view addSubview:_buttonContainerView];
@@ -137,8 +133,6 @@ static const CGFloat kButtonContainerBottomMargin = 56.0f;
     emailButton.accessibilityIdentifier = kEmailButtonAccessibilityID;
     [_buttonContainerView addSubview:emailButton];
   }
-  _privacyPolicyAndTOSView.authUI = self.authUI;
-  [_privacyPolicyAndTOSView useFullMessage];
 }
 
 - (void)viewDidLayoutSubviews {

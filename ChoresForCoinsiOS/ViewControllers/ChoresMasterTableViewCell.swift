@@ -16,7 +16,8 @@ class ChoresMasterTableViewCell: UITableViewCell {
     @IBOutlet weak var imageCellImageView: UIImageView!
     @IBOutlet weak var completedImageCellImageView: UIImageView!
     @IBOutlet weak var choreValueCellLabel: UILabel!
-
+    @IBOutlet weak var choreNotifyDot: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

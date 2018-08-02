@@ -356,8 +356,8 @@ class ProfileEditViewController: UIViewController, FUIAuthDelegate, MFMailCompos
         do {
             // sign out
             try authUI?.signOut()
-            //self.performSegue(withIdentifier: "goToAuth", sender: self)
-            self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            self.performSegue(withIdentifier: "toSignInFromLogout", sender: self)
+            //self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
         } catch {
             // handle error
         }
