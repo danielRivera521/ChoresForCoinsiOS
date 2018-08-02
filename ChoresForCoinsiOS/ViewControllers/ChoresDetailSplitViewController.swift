@@ -419,6 +419,7 @@ class ChoresDetailSplitViewController: UIViewController {
                     emptyBGCover.isHidden = false
                     selectChoreLabel.isHidden = false
                     choreNameLabel.text = "Chore Name"
+                    choreImageImageView.image = #imageLiteral(resourceName: "placeholderImg")
                     usernameLabel.text = ""
                     startDateLabel.text = "MM/DD/YYYY"
                     dueDateLabel.text = "MM/DD/YYYY"
