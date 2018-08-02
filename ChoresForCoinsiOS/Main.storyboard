@@ -862,28 +862,6 @@ Andrew Harrington</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9M-tZ-0ow" userLabel="RedeemChildView">
-                                <rect key="frame" x="187.66666666666663" y="93" width="187.33333333333337" height="81"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-o4-KzL">
-                                        <rect key="frame" x="0.0" y="16.333333333333329" width="187.33333333333334" height="48"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="REDEEM">
-                                            <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="LXN-51-erk"/>
-                                            <action selector="childRedeem:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="dYX-wv-n4O"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594179999996" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="width" secondItem="Z9M-tZ-0ow" secondAttribute="width" id="Ig1-63-jMS"/>
-                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerX" secondItem="Z9M-tZ-0ow" secondAttribute="centerX" id="iVr-qe-wNm"/>
-                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerY" secondItem="Z9M-tZ-0ow" secondAttribute="centerY" id="tmF-gx-48M"/>
-                                </constraints>
-                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="whiteBG" translatesAutoresizingMaskIntoConstraints="NO" id="Hns-AM-LnV">
                                 <rect key="frame" x="0.0" y="-19.666666666666686" width="375" height="812.33333333333348"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1200,6 +1178,28 @@ Andrew Harrington</string>
                                     <constraint firstItem="L9L-lR-LBL" firstAttribute="centerY" secondItem="ITP-Cg-ahr" secondAttribute="centerY" id="w3z-p0-xUz"/>
                                     <constraint firstItem="sEX-mf-IS6" firstAttribute="width" secondItem="sEX-mf-IS6" secondAttribute="height" multiplier="1:1" id="xZg-Ja-2kZ"/>
                                     <constraint firstItem="ITP-Cg-ahr" firstAttribute="centerY" secondItem="oAR-Uz-Bxr" secondAttribute="centerY" id="zI3-4d-WZh"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9M-tZ-0ow" userLabel="RedeemChildView">
+                                <rect key="frame" x="187" y="93" width="187.33333333333337" height="81"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKb-o4-KzL">
+                                        <rect key="frame" x="0.0" y="16.333333333333329" width="187.33333333333334" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="REDEEM">
+                                            <color key="titleColor" red="0.1327331853" green="0.1327331853" blue="0.1327331853" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="childRedeem:" destination="0aj-d2-s3B" eventType="touchUpInside" id="LXN-51-erk"/>
+                                            <action selector="childRedeem:" destination="4xr-Yg-kUN" eventType="touchUpInside" id="dYX-wv-n4O"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.79917594179999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="width" secondItem="Z9M-tZ-0ow" secondAttribute="width" id="Ig1-63-jMS"/>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerX" secondItem="Z9M-tZ-0ow" secondAttribute="centerX" id="iVr-qe-wNm"/>
+                                    <constraint firstItem="hKb-o4-KzL" firstAttribute="centerY" secondItem="Z9M-tZ-0ow" secondAttribute="centerY" id="tmF-gx-48M"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Parent Notes:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="azE-aL-mcG">
@@ -5818,7 +5818,7 @@ Andrew Harrington</string>
         <segue reference="mSl-Ec-VBM"/>
         <segue reference="q0e-xW-FaS"/>
         <segue reference="TeC-CK-6Cx"/>
-        <segue reference="Yia-uk-i10"/>
-        <segue reference="7DE-Oe-Cje"/>
+        <segue reference="0Cp-zN-Xa7"/>
+        <segue reference="3RF-ku-Rgp"/>
     </inferredMetricsTieBreakers>
 </document>

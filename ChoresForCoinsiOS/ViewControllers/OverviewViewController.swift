@@ -191,6 +191,7 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
                 if let actualID = id{
                     self.parentID = actualID
                     //self.getChildren()
+                    self.getConversionRate()
                 }
             }
         }
@@ -405,16 +406,12 @@ class OverviewViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func getConversionRate(){
-        if let unwrappedParentID = parentID{
+        if let unwrappedParentID = parentID {
             
-            ref?.child("app_settings").child(unwrappedParentID).observeSingleEvent(of: .value, with: { (snapshot) in
-                
-                let value = snapshot.value as? NSDictionary
-                if let conversionValue = value?["coin_dollar_value"] as? Double{
-                    
-                    self.coinConversion = conversionValue
+            ref?.child("app_settings/\(unwrappedParentID)/coin_dollar_value").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let coinValue = snapshot.value as? Double {
+                    self.coinConversion = coinValue
                 }
-                
             })
         }
         
